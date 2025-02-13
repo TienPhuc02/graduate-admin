@@ -1,7 +1,4 @@
 @import 'antd/dist/reset.css';
-/*
-npx tailwindcss -i ./src/index.css -o ./src/styles.css --watch
-*/
 
 * {
   margin: 0;
@@ -10,4 +7,10 @@ npx tailwindcss -i ./src/index.css -o ./src/styles.css --watch
 }
 body {
   font-family: 'Manrope', sans-serif;
+}
+:where(.css-dev-only-do-not-override-iakz5z).ant-menu-light.ant-menu-root.ant-menu-inline,
+:where(.css-dev-only-do-not-override-iakz5z).ant-menu-light > .ant-menu.ant-menu-root.ant-menu-inline,
+:where(.css-dev-only-do-not-override-iakz5z).ant-menu-light.ant-menu-root.ant-menu-vertical,
+:where(.css-dev-only-do-not-override-iakz5z).ant-menu-light > .ant-menu.ant-menu-root.ant-menu-vertical {
+  border-inline-end: 0px solid rgba(25, 25, 25, 0.1);
 }
