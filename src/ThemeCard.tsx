@@ -1,6 +1,6 @@
 import { Card, theme } from 'antd'
 import { useContext } from 'react'
-import ThemeContext from './context/ThemeContext'
+import ThemeContext from './providers/ThemeContext'
 
 const ThemedCard = () => {
   const themeContext = useContext(ThemeContext)

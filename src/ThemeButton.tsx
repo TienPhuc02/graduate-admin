@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 import { useContext } from 'react'
-import ThemeContext from './context/ThemeContext'
+import ThemeContext from './providers/ThemeContext'
 
 const ThemeButton = () => {
   const themeContext = useContext(ThemeContext)
