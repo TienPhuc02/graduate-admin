@@ -13,3 +13,7 @@ export const loginAPI = (email: string, password: string) => {
     }
   )
 }
+export const getUsersAPI = (query: string) => {
+  const urlBackend = `/user?${query}`
+  return axios.get<IBackendRes<IModelPaginate<IAdminUsers>>>(urlBackend)
+}
