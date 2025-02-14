@@ -1,4 +1,3 @@
-import GitLab from '@/components/commons/icons/GitLab'
 import Github from '@/components/commons/icons/IconGithub'
 import Google from '@/components/commons/icons/IconGoogle'
 import IconLogo from '@/components/commons/icons/IconLogo'
