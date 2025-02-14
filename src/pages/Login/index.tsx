@@ -16,20 +16,16 @@ const PageLogin = () => {
         <LoginForm
           onFinish={async (values) => {
             try {
-              console.log('Dữ liệu form:', values)
               const res = await loginAPI(values.email, values.password)
 
               if (res && res.data) {
                 message.success('Đăng nhập thành công!')
-                console.log('Phản hồi từ API:', res)
-                console.log('Navigating...') // Kiểm tra xem có log ra không
                 navigate('/')
                 localStorage.setItem('access_token', res.data?.data.accessToken as string)
               } else {
                 message.error(res.data?.message || 'Đăng nhập thất bại, vui lòng thử lại!')
               }
-            } catch (error) {
-              console.error('Lỗi khi gọi API:', error)
+            } catch {
               message.error('Có lỗi xảy ra, vui lòng thử lại!')
             }
           }}

@@ -1,17 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import {
-  DashboardOutlined,
-  // DesktopOutlined,
-  // FileOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  MoonFilled,
-  SunFilled,
-  // TeamOutlined,
-  UserOutlined
-} from '@ant-design/icons'
+import { DashboardOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
-import { Breadcrumb, Button, Layout, Menu, theme } from 'antd'
+import { Breadcrumb, Button, Layout, Menu, Switch, theme } from 'antd'
 import ThemeContext from '../../../providers/ThemeContext'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 
@@ -67,7 +57,6 @@ const LayoutAdminHome = () => {
         <Menu
           style={{ background: colorBgLayout }}
           theme={themeContext?.isDarkMode ? 'dark' : 'light'}
-          // defaultSelectedKeys={[keyMenu]}
           selectedKeys={[keyMenu]}
           mode='inline'
           items={items}
@@ -84,24 +73,20 @@ const LayoutAdminHome = () => {
           }}
         >
           <Button
-            type='text'
+            type='default'
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
               fontSize: '16px',
-              width: 50,
-              height: 50
+              width: 40,
+              height: 40
             }}
           />
-          <Button
-            type='text'
-            icon={themeContext?.isDarkMode ? <SunFilled /> : <MoonFilled />}
+          <Switch
+            checked={themeContext?.isDarkMode}
             onClick={themeContext?.toggleTheme}
-            style={{
-              fontSize: '16px',
-              width: 50,
-              height: 50
-            }}
+            checkedChildren='Dark'
+            unCheckedChildren='Light'
           />
         </Header>
         <Content style={{ margin: '0 16px' }}>
