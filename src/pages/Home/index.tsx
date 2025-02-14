@@ -1,6 +1,6 @@
-import LayoutAdminHome from '../../components/layouts/Home'
+import LayoutAdminHome from '@/components/layouts/Home'
 
-const AdminHome = () => {
+const PageAdminHome = () => {
   return (
     <div>
       <LayoutAdminHome />
@@ -8,4 +8,4 @@ const AdminHome = () => {
   )
 }
 
-export default AdminHome
+export default PageAdminHome
