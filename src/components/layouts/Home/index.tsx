@@ -1,22 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { DashboardOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
-import type { MenuProps } from 'antd'
+import { useContext, useEffect, useState } from 'react'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+
 import { Breadcrumb, Button, Layout, Menu, Switch, theme } from 'antd'
 import ThemeContext from '../../../providers/ThemeContext'
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { breadcrumbMap, items, keyMenuMap } from '@/constants'
 
 const { Header, Content, Footer, Sider } = Layout
-
-type MenuItem = Required<MenuProps>['items'][number]
-
-function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode, children?: MenuItem[]): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label
-  } as MenuItem
-}
 
 const LayoutAdminHome = () => {
   const location = useLocation()
@@ -28,22 +18,13 @@ const LayoutAdminHome = () => {
   const {
     token: { colorBgContainer, borderRadiusLG, colorBgLayout }
   } = theme.useToken()
-  const items: MenuItem[] = [
-    getItem(<Link to='/'>Trang chủ</Link>, '1', <DashboardOutlined />),
-    getItem(<Link to='/user'>Người dùng</Link>, '2', <UserOutlined />)
-  ]
   useEffect(() => {
-    const breadcrumbMap: Record<string, string> = {
-      '/': 'Trang chủ',
-      '/user': 'Người dùng'
-    }
-    const keyMenuMap: Record<string, string> = {
-      '/': '1',
-      '/user': '2'
-    }
     setBreadcrumb(breadcrumbMap[pathName] || 'Trang Chủ')
     setKeyMenu(keyMenuMap[pathName])
   }, [pathName])
+  console.log('🚀 ~ LayoutAdminHome ~ pathName:', pathName)
+
+  console.log(pathName.replace(/^\/+/, '').split('/'))
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
@@ -90,9 +71,40 @@ const LayoutAdminHome = () => {
           />
         </Header>
         <Content style={{ margin: '0 16px' }}>
+          {/* <Breadcrumb style={{ margin: '16px 0' }}>
+            {pathName
+              .replace(/^\/+/, '')
+              .split('/')
+              .map((item) => {
+                return (
+                  <Breadcrumb.Item>
+                    <Link to={item}>{item}</Link>
+                  </Breadcrumb.Item>
+                )
+              })}
+          </Breadcrumb> */}
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>{breadcrumb}</Breadcrumb.Item>
+            {pathName
+              .replace(/^\/+/, '')
+              .split('/')
+              .reduce((acc: { path: string; label: string }[], segment, index, arr) => {
+                if (!segment) return acc
+
+                const path = `/${arr.slice(0, index + 1).join('/')}`
+                const label = breadcrumbMap[path] || segment
+                console.log('🚀 ~ .reduce ~ label:', label)
+                console.log('🚀 ~ .reduce ~ path:', path)
+
+                acc.push({ path, label })
+                return acc
+              }, [])
+              .map(({ path, label }, index, arr) => {
+                const isLast = index === arr.length - 1
+
+                return <Breadcrumb.Item key={path}>{isLast ? label : <Link to={path}>{label}</Link>}</Breadcrumb.Item>
+              })}
           </Breadcrumb>
+
           <div
             style={{
               padding: 24,
