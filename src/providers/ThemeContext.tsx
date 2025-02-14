@@ -47,9 +47,14 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
             colorBorderSecondary: isDarkMode ? '#434343' : '#e8e8e8'
           },
           components: {
-            Layout: {
-              triggerBg: isDarkMode ? '#000000' : '#f0f2f5'
+            Button: {
+              colorPrimary: isDarkMode ? '#141414' : '#1677ff'
             },
+            Layout: {
+              triggerBg: isDarkMode ? '#000000' : '#f0f2f5',
+              lightTriggerBg: isDarkMode ? '#000000' : '#f0f2f5'
+            },
+
             Menu: {
               darkItemSelectedBg: isDarkMode ? '#1f1f1f' : '#e6f4ff',
               darkSubMenuItemBg: isDarkMode ? '#000000' : '#e6f4ff'
