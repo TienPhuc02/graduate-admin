@@ -7,12 +7,15 @@ declare global {
     data?: T
   }
   interface IModelPaginate<T> {
-    meta: {
-      current: number
-      pageSize: number
-      pages: number
-      total: number
-    }
-    result: T[]
+    results: T[]
+    meta:
+      | {
+          page: number
+          pageSize: number
+          totalUsers: number
+          totalPages: number
+        }
+      | undefined
+    gotBy: IUserPayload
   }
 }
