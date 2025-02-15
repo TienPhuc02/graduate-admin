@@ -1,9 +1,13 @@
+import { createUserAPI } from '@/services/api.services'
+import { ETypeUser } from '@/types/enum'
 import { UploadOutlined } from '@ant-design/icons'
-import { FooterToolbar, PageContainer, ProForm, ProFormText } from '@ant-design/pro-components'
-import { Button, Card, message, Upload, Modal } from 'antd'
+import { FooterToolbar, PageContainer, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components'
+import { Button, Card, Upload, Modal, message } from 'antd'
 import { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const LayoutCreateUser = () => {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [fileList, setFileList] = useState<any[]>([])
   const [previewImage, setPreviewImage] = useState<string | null>(null)
@@ -33,15 +37,31 @@ const LayoutCreateUser = () => {
   const handleFooterClick = async () => {
     try {
       const values = await formRef.current?.validateFields()
-      console.log('Dữ liệu form từ FooterToolbar:', values)
       handleSubmit(values)
     } catch (error) {
       console.error('Lỗi validate:', error)
     }
   }
 
-  const handleSubmit = async (values: any) => {
-    console.log('🚀 ~ handleSubmit ~ values:', values)
+  const handleSubmit = async (values: ICreateUserDTO) => {
+    try {
+      if (fileList.length > 0) {
+        const file = fileList[0].originFileObj
+        setLoading(true)
+        const res = await createUserAPI(file, values as ICreateUserDTO)
+        if (res && res.data) {
+          formRef.current?.resetFields()
+          setFileList([])
+          message.success(res.data.message)
+          navigate('/')
+        }
+        console.log('🚀 ~ handleSubmit ~ res:', res)
+      }
+    } catch (error) {
+      console.error('❌ Lỗi khi gửi dữ liệu:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -85,14 +105,16 @@ const LayoutCreateUser = () => {
             placeholder='Nhập địa chỉ'
             rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}
           />
-          <ProFormText.Password
-            name='password'
-            label='Mật khẩu'
-            placeholder='Nhập mật khẩu'
-            rules={[
-              { required: true, message: 'Vui lòng nhập mật khẩu' },
-              { min: 8, message: 'Mật khẩu ít nhất 8 ký tự' }
-            ]}
+          <ProFormSelect
+            name='role'
+            label='Vai trò'
+            valueEnum={{
+              student: ETypeUser.STUDENT,
+              admin: ETypeUser.ADMIN,
+              instructor: ETypeUser.INSTRUCTOR
+            }}
+            placeholder='Nhập vai trò'
+            rules={[{ required: true, message: 'Vui lòng nhập vai trò!' }]}
           />
 
           <Upload

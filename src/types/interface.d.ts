@@ -58,12 +58,14 @@ declare global {
     deletedAt?: Date
     createdAt?: Date
     updatedAt?: Date
-    // courses?: Course[]
-    // userAnswers?: UserAnswer[]
-    // orders?: Order[]
-    // enrolledCourses?: Course[]
-    // blogs?: Blog[]
-    // comments?: Comment[]
-    // histories?: History[]
+  }
+  export interface ICreateUserDTO {
+    role: ETypeUser
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber: string
+    address: string
+    profilePicture?: string
   }
 }

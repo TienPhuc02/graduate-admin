@@ -97,7 +97,8 @@ const columns: ProColumns<any>[] = [
   {
     title: 'Địa chỉ',
     dataIndex: 'address',
-    search: false
+    search: false,
+    ellipsis: true
   },
   {
     title: 'Xác minh',
