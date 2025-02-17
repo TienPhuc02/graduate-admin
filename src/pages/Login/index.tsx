@@ -21,12 +21,12 @@ const PageLogin = () => {
               if (res && res.data) {
                 message.success('Đăng nhập thành công!')
                 navigate('/')
-                localStorage.setItem('access_token', res.data?.data.accessToken as string)
+                localStorage.setItem('access_token', res.data?.accessToken)
               } else {
-                message.error(res.data?.message || 'Đăng nhập thất bại, vui lòng thử lại!')
+                message.error(res.message || 'Đăng nhập thất bại, vui lòng thử lại!')
               }
-            } catch {
-              message.error('Có lỗi xảy ra, vui lòng thử lại!')
+            } catch (error) {
+              message.error(`Có lỗi xảy ra, vui lòng thử lại! ${error}`)
             }
           }}
           logo={

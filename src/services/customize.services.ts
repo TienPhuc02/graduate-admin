@@ -30,6 +30,7 @@ const createInstanceAxios = (baseURL: string) => {
 
   instance.interceptors.response.use(
     function (response) {
+      console.log('🚀 ~ createInstanceAxios ~ response:', response)
       if (response && response.data) {
         return response.data
       }

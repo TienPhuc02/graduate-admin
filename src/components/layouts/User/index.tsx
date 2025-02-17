@@ -7,6 +7,7 @@ import { Button, Popconfirm } from 'antd'
 import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
 const columns: ProColumns<any>[] = [
   {
     dataIndex: 'index',
@@ -16,28 +17,33 @@ const columns: ProColumns<any>[] = [
   {
     title: 'Id',
     dataIndex: 'id',
+    valueType: 'text',
     search: false,
     ellipsis: true
   },
   {
     title: 'Tên Họ',
     dataIndex: 'firstName',
+    valueType: 'text',
     search: false,
     ellipsis: true
   },
   {
     title: ' Tên',
     dataIndex: 'lastName',
+    valueType: 'text',
     ellipsis: true
   },
   {
     title: 'Email',
     dataIndex: 'email',
+    valueType: 'text',
     search: true,
     ellipsis: true
   },
   {
     title: 'Số điện thoại',
+    valueType: 'text',
     dataIndex: 'phoneNumber',
     search: false
   },
@@ -64,6 +70,7 @@ const columns: ProColumns<any>[] = [
   },
   {
     title: 'Vai trò',
+    valueType: 'text',
     dataIndex: 'role',
     search: false
   },
@@ -84,16 +91,19 @@ const columns: ProColumns<any>[] = [
   {
     title: 'Đã xóa',
     dataIndex: 'isDeleted',
+    render: (_, record) => (record.isDeleted ? 'Đã xóa' : 'Chưa xóa'),
     search: false
   },
   {
     title: 'Địa chỉ',
     dataIndex: 'address',
-    search: false
+    search: false,
+    ellipsis: true
   },
   {
     title: 'Xác minh',
-    dataIndex: 'isVerify',
+    dataIndex: 'isVerified',
+    render: (_, record) => (record.isVerified ? 'Đã xác minh' : 'Chưa xác minh'),
     search: false
   },
   {
@@ -101,10 +111,12 @@ const columns: ProColumns<any>[] = [
     valueType: 'option',
     key: 'option',
     render(dom, entity) {
-      console.log(dom)
+      console.log('🚀 ~ render ~ entity:', entity)
       return (
         <div style={{ display: 'flex', gap: 20 }}>
-          <FaPencilAlt style={{ color: 'orange', cursor: 'pointer' }} onClick={() => {}} />
+          <Link to={`/user/update/${entity.id}`}>
+            <FaPencilAlt style={{ color: 'orange', cursor: 'pointer' }} onClick={() => {}} />
+          </Link>
           <Popconfirm
             title='Delete the user'
             description='Are you sure to delete this user?'
@@ -137,7 +149,6 @@ const LayoutAdminUser = () => {
         type: 'multiple'
       }}
       request={async (params, sort) => {
-        console.log('🚀 ~ request={ ~ sort:', sort)
         let query = ''
         if (params) {
           query += `page=${params.current}&pageSize=${params.pageSize}`
@@ -188,16 +199,18 @@ const LayoutAdminUser = () => {
       dateFormatter='string'
       headerTitle='Bảng người dùng'
       toolBarRender={() => [
-        <Button
-          key='button'
-          icon={<PlusOutlined />}
-          onClick={() => {
-            actionRef.current?.reload()
-          }}
-          type='primary'
-        >
-          Thêm mới
-        </Button>
+        <Link to='/user/create'>
+          <Button
+            key='button'
+            icon={<PlusOutlined />}
+            onClick={() => {
+              actionRef.current?.reload()
+            }}
+            type='primary'
+          >
+            Thêm mới
+          </Button>
+        </Link>
       ]}
     />
   )
