@@ -1,4 +1,4 @@
-import LayoutAdminHome from '@/components/layouts/Home'
+import LayoutAdminHome from '@/components/pages/Home'
 
 const PageAdminHome = () => {
   return (

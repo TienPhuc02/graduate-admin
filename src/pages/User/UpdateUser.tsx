@@ -1,4 +1,4 @@
-import LayoutUpdateUser from '@/components/layouts/User/UpdateUser'
+import LayoutUpdateUser from '@/components/pages/User/UpdateUser'
 import { useLocation } from 'react-router-dom'
 
 const PageUpdateUser = () => {

@@ -3,7 +3,7 @@ import { dateRangeValidate } from '@/services/helper'
 import { PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
-import { Button, Popconfirm } from 'antd'
+import { Button, message, Popconfirm } from 'antd'
 import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
@@ -176,6 +176,7 @@ const LayoutAdminUser = () => {
             pages: res.data.meta?.totalPages as number,
             total: res.data.meta?.totalUsers as number
           })
+          message.success(res.message)
         }
         return {
           data: res.data?.results,
