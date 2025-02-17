@@ -111,7 +111,7 @@ const columns: ProColumns<any>[] = [
     valueType: 'option',
     key: 'option',
     render(dom, entity) {
-      console.log('🚀 ~ render ~ entity:', entity)
+      console.log('🚀 ~ render ~ dom:', dom)
       return (
         <div style={{ display: 'flex', gap: 20 }}>
           <Link to={`/user/update/${entity.id}`}>
