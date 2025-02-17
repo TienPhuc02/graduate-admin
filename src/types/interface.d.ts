@@ -68,4 +68,12 @@ declare global {
     address: string
     profilePicture?: string
   }
+  export interface IUpdateUserDTO {
+    role: ETypeUser
+    firstName: string
+    lastName: string
+    phoneNumber: string
+    address: string
+    profilePicture?: string
+  }
 }

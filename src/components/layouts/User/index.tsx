@@ -111,9 +111,12 @@ const columns: ProColumns<any>[] = [
     valueType: 'option',
     key: 'option',
     render(dom, entity) {
+      console.log('🚀 ~ render ~ entity:', entity)
       return (
         <div style={{ display: 'flex', gap: 20 }}>
-          <FaPencilAlt style={{ color: 'orange', cursor: 'pointer' }} onClick={() => {}} />
+          <Link to={`/user/update/${entity.id}`}>
+            <FaPencilAlt style={{ color: 'orange', cursor: 'pointer' }} onClick={() => {}} />
+          </Link>
           <Popconfirm
             title='Delete the user'
             description='Are you sure to delete this user?'

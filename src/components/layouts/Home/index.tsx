@@ -12,14 +12,14 @@ const LayoutAdminHome = () => {
   const location = useLocation()
   const pathName = location.pathname
   const [collapsed, setCollapsed] = useState(false)
-  const [breadcrumb, setBreadcrumb] = useState(pathName)
+  // const [breadcrumb, setBreadcrumb] = useState(pathName)
   const [keyMenu, setKeyMenu] = useState<string>('')
   const themeContext = useContext(ThemeContext)
   const {
     token: { colorBgContainer, borderRadiusLG, colorBgLayout }
   } = theme.useToken()
   useEffect(() => {
-    setBreadcrumb(breadcrumbMap[pathName] || 'Trang Chủ')
+    // setBreadcrumb(breadcrumbMap[pathName] || 'Trang Chủ')
     setKeyMenu(keyMenuMap[pathName])
   }, [pathName])
   console.log('🚀 ~ LayoutAdminHome ~ pathName:', pathName)
@@ -71,18 +71,6 @@ const LayoutAdminHome = () => {
           />
         </Header>
         <Content style={{ margin: '0 16px' }}>
-          {/* <Breadcrumb style={{ margin: '16px 0' }}>
-            {pathName
-              .replace(/^\/+/, '')
-              .split('/')
-              .map((item) => {
-                return (
-                  <Breadcrumb.Item>
-                    <Link to={item}>{item}</Link>
-                  </Breadcrumb.Item>
-                )
-              })}
-          </Breadcrumb> */}
           <Breadcrumb style={{ margin: '16px 0' }}>
             {pathName
               .replace(/^\/+/, '')
