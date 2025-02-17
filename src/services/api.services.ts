@@ -30,28 +30,29 @@ export const createUserAPI = (file: any, data: ICreateUserDTO) => {
   bodyFormData.append('phoneNumber', data.phoneNumber)
   bodyFormData.append('profilePicture', file)
   bodyFormData.append('role', data.role)
+
   return axios<IBackendRes<ICustomResponse<IAdminUsers>>>({
     method: 'post',
     url: '/user',
-    data: data,
+    data: bodyFormData,
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   })
 }
-export const updateUserAPI = (file: any, data: ICreateUserDTO) => {
+
+export const updateUserAPI = (idUser: string, file: any, data: IUpdateUserDTO) => {
   const bodyFormData = new FormData()
   bodyFormData.append('firstName', data.firstName)
   bodyFormData.append('lastName', data.lastName)
-  bodyFormData.append('email', data.email)
   bodyFormData.append('address', data.address)
   bodyFormData.append('phoneNumber', data.phoneNumber)
   bodyFormData.append('profilePicture', file)
   bodyFormData.append('role', data.role)
   return axios<IBackendRes<ICustomResponse<IAdminUsers>>>({
     method: 'put',
-    url: '/user/:id',
-    data: data,
+    url: `/user/${idUser}`,
+    data: bodyFormData,
     headers: {
       'Content-Type': 'multipart/form-data'
     }

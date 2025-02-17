@@ -38,8 +38,8 @@ const LayoutCreateUser = () => {
     try {
       const values = await formRef.current?.validateFields()
       handleSubmit(values)
-    } catch (error) {
-      console.error('Lỗi validate:', error)
+    } catch {
+      message.error('Lỗi validate !!')
     }
   }
 
@@ -52,13 +52,12 @@ const LayoutCreateUser = () => {
         if (res && res.data) {
           formRef.current?.resetFields()
           setFileList([])
-          message.success(res.data.message)
-          navigate('/')
+          message.success(res.message)
+          navigate('/user')
         }
-        console.log('🚀 ~ handleSubmit ~ res:', res)
       }
-    } catch (error) {
-      console.error('❌ Lỗi khi gửi dữ liệu:', error)
+    } catch {
+      message.error('❌ Lỗi khi gửi dữ liệu !!')
     } finally {
       setLoading(false)
     }
@@ -118,6 +117,7 @@ const LayoutCreateUser = () => {
           />
 
           <Upload
+            name='profilePicture'
             maxCount={1}
             beforeUpload={() => false}
             fileList={fileList}

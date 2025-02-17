@@ -103,6 +103,7 @@ const columns: ProColumns<any>[] = [
   {
     title: 'Xác minh',
     dataIndex: 'isVerified',
+    ellipsis: true,
     render: (_, record) => (record.isVerified ? 'Đã xác minh' : 'Chưa xác minh'),
     search: false
   },

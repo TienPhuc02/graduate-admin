@@ -22,9 +22,7 @@ const LayoutAdminHome = () => {
     // setBreadcrumb(breadcrumbMap[pathName] || 'Trang Chủ')
     setKeyMenu(keyMenuMap[pathName])
   }, [pathName])
-  console.log('🚀 ~ LayoutAdminHome ~ pathName:', pathName)
 
-  console.log(pathName.replace(/^\/+/, '').split('/'))
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
@@ -80,8 +78,6 @@ const LayoutAdminHome = () => {
 
                 const path = `/${arr.slice(0, index + 1).join('/')}`
                 const label = breadcrumbMap[path] || segment
-                console.log('🚀 ~ .reduce ~ label:', label)
-                console.log('🚀 ~ .reduce ~ path:', path)
 
                 acc.push({ path, label })
                 return acc
