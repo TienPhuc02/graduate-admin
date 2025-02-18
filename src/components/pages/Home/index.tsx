@@ -76,15 +76,12 @@ const LayoutAdminHome = () => {
 
                 const path = `/${arr.slice(0, index + 1).join('/')}`
                 const label = breadcrumbMap[path] || segment
-                console.log('🚀 ~ .reduce ~ path:', path)
 
-                console.log('🚀 ~ .reduce ~ label:', label)
                 acc.push({ path, label })
                 return acc
               }, [])
               .map(({ path, label }, index, arr) => {
                 const isLast = index === arr.length - 1
-                console.log('🚀 ~ LayoutAdminHome ~ isLast:', isLast)
 
                 return <Breadcrumb.Item key={path}>{isLast ? label : <Link to={path}>{label}</Link>}</Breadcrumb.Item>
               })}

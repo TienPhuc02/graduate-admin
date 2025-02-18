@@ -6,6 +6,7 @@ import PageLogin from '@/pages/Login/index'
 import PageCreateUser from '@/pages/User/CreateUser'
 import PageUpdateUser from '@/pages/User/UpdateUser'
 import PageNotFound from '@/pages/NotFound'
+import AdminCourse from '@/pages/Course'
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: 'user/update/:id',
         element: <PageUpdateUser />
+      },
+      {
+        path: 'course',
+        element: <AdminCourse />
       }
     ]
   },

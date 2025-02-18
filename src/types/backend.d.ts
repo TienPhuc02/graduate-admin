@@ -12,8 +12,9 @@ declare global {
       | {
           page: number
           pageSize: number
-          totalUsers: number
+          totalUsers?: number
           totalPages: number
+          totalCourses?: number
         }
       | undefined
     gotBy: IUserPayload
