@@ -7,6 +7,7 @@ import PageCreateUser from '@/pages/User/CreateUser'
 import PageUpdateUser from '@/pages/User/UpdateUser'
 import PageNotFound from '@/pages/NotFound'
 import AdminCourse from '@/pages/Course'
+import PageCreateCourse from '@/pages/Course/CreateCourse'
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: 'course',
         element: <AdminCourse />
+      },
+      {
+        path: 'course/create',
+        element: <PageCreateCourse />
       }
     ]
   },

@@ -8,7 +8,7 @@ import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import DetailUser from './DetailUser'
-import { BadgeStatus, EErrorMessage, ETypeUser, SortOrder } from '@/types/enum'
+import { EBadgeStatus, EErrorMessage, ETypeUser, ESortOrder } from '@/types/enum'
 
 const LayoutAdminUser = () => {
   const actionRef = useRef<ActionType>(null)
@@ -87,7 +87,7 @@ const LayoutAdminUser = () => {
       dataIndex: 'isVerified',
       render: (_, record) => (
         <Badge
-          status={record.isVerified ? BadgeStatus.ACTIVE : BadgeStatus.INACTIVE}
+          status={record.isVerified ? EBadgeStatus.ACTIVE : EBadgeStatus.INACTIVE}
           text={record.isVerified ? 'Đã xác minh' : 'Chưa xác minh'}
         />
       ),
@@ -98,7 +98,7 @@ const LayoutAdminUser = () => {
       dataIndex: 'isDeleted',
       render: (_, record) => (
         <Badge
-          status={record.isDeleted ? BadgeStatus.INACTIVE : BadgeStatus.ACTIVE}
+          status={record.isDeleted ? EBadgeStatus.INACTIVE : EBadgeStatus.ACTIVE}
           text={record.isDeleted ? 'Đã xóa' : 'Hoạt động'}
         />
       ),
@@ -180,9 +180,9 @@ const LayoutAdminUser = () => {
               query += `&startDate=${params.createdAtRange[0]}&endDate=${params.createdAtRange[1]}`
             }
           }
-          query += `&sort=${sort?.createdAt === SortOrder.ASC ? 'createdAt' : '-createdAt'}`
+          query += `&sort=${sort?.createdAt === ESortOrder.ASC ? 'createdAt' : '-createdAt'}`
           if (sort && sort.updatedAt) {
-            query += `&sort=${sort?.updatedAt === SortOrder.ASC ? 'updatedAt' : '-updatedAt'}`
+            query += `&sort=${sort?.updatedAt === ESortOrder.ASC ? 'updatedAt' : '-updatedAt'}`
           }
           const res = await getUsersAPI(query)
           if (res.data) {

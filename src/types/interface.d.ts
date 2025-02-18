@@ -103,4 +103,16 @@ declare global {
     answer: string
     question: string
   }
+  export interface ICreateCourseDTO {
+    instructor: string
+    title: string
+    description: string
+    category: ECourseCategory
+    level: ECourseLevel
+    price: number
+    thumbnail: string
+    requirements: string[]
+    benefits: string[]
+    qna: Qna[]
+  }
 }

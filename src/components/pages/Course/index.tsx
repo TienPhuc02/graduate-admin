@@ -1,5 +1,5 @@
 import { deleteUserAPI, getCoursesAPI } from '@/services/api.services'
-import { BadgeStatus, ECourseCategory, EErrorMessage } from '@/types/enum'
+import { EBadgeStatus, ECourseCategory, EErrorMessage } from '@/types/enum'
 import { PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
@@ -61,7 +61,7 @@ const LayoutAdminCourse = () => {
     {
       title: 'Cập nhật',
       dataIndex: 'updatedAt',
-      valueType: 'dateTime',
+      valueType: 'date',
       sorter: true,
       search: false
     },
@@ -118,7 +118,7 @@ const LayoutAdminCourse = () => {
       dataIndex: 'status',
       render: (_, record) => (
         <Badge
-          status={record.status ? BadgeStatus.ACTIVE : BadgeStatus.INACTIVE}
+          status={record.status ? EBadgeStatus.ACTIVE : EBadgeStatus.INACTIVE}
           text={record.status ? 'Hoạt động' : 'Không hoạt động'}
         />
       ),
@@ -129,9 +129,9 @@ const LayoutAdminCourse = () => {
       dataIndex: 'level',
       valueType: 'select',
       valueEnum: {
-        beginner: { text: 'Cơ bản', status: 'Default' },
-        intermediate: { text: 'Trung cấp', status: 'Processing' },
-        advanced: { text: 'Nâng cao', status: 'Success' }
+        BEGINNER: { text: 'Cơ bản', status: 'Default' },
+        INTERMEDIATE: { text: 'Trung cấp', status: 'Processing' },
+        ADVANCED: { text: 'Nâng cao', status: 'Success' }
       },
       search: false
     },

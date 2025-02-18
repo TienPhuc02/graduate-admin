@@ -8,6 +8,6 @@
 }
 body {
 }
-#root > div > div > aside > div.ant-layout-sider-children > ul {
-  border-inline-end: none !important;
+.ant-pro-form-list-item {
+  display: block !important;
 }

@@ -15,7 +15,7 @@ export const loginAPI = (email: string, password: string) => {
 }
 
 //user
-export const getUsersAPI = (query: string) => {
+export const getUsersAPI = (query?: string) => {
   const urlBackend = `/user?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminUsers>>>(urlBackend)
 }
@@ -69,4 +69,37 @@ export const deleteUserAPI = (idUser: string) => {
 export const getCoursesAPI = (query: string) => {
   const urlBackend = `/course?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminCourses>>>(urlBackend)
+}
+export const createCourseAPI = (file: File, data: any) => {
+  const bodyFormData = new FormData()
+
+  bodyFormData.append('instructor', data.instructor)
+  bodyFormData.append('title', data.title)
+  bodyFormData.append('description', data.description)
+  bodyFormData.append('category', data.category)
+  bodyFormData.append('level', data.level)
+  bodyFormData.append('price', data.price)
+
+  if (file) {
+    bodyFormData.append('thumbnail', file)
+  }
+
+  data.requirements.forEach((req: { requirement: string }, index: number) => {
+    bodyFormData.append(`requirements[${index}]`, req.requirement)
+  })
+
+  data.benefits.forEach((ben: { benefit: string }, index: number) => {
+    bodyFormData.append(`benefits[${index}]`, ben.benefit)
+  })
+
+  data.qna.forEach((qa: { question: string; answer: string }, index: number) => {
+    bodyFormData.append(`qna[${index}][question]`, qa.question)
+    bodyFormData.append(`qna[${index}][answer]`, qa.answer)
+  })
+
+  return axios.post('/course', bodyFormData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
 }
