@@ -81,8 +81,9 @@ const LayoutAdminUser = () => {
       search: {
         transform: (value) => {
           return {
-            startDate: value[0],
-            endDate: value[1]
+            // startDate: value[0],
+            // endDate: value[1]
+            createdAtRange: value
           }
         }
       }
@@ -163,18 +164,19 @@ const LayoutAdminUser = () => {
           type: 'multiple'
         }}
         request={async (params, sort) => {
+          console.log('🚀 ~ request={ ~ params:', params)
           let query = ''
           if (params) {
             query += `page=${params.current}&pageSize=${params.pageSize}`
             if (params.email) {
-              query += `&email=/${params.email}/i`
+              query += `&email=${params.email}`
             }
-            if (params.fullName) {
-              query += `&lastName=/${params.lastName}/i`
+            if (params.lastName) {
+              query += `&lastName=${params.lastName}`
             }
-            const createDateRange = dateRangeValidate(params.createdAtRange)
-            if (createDateRange) {
-              query += `&createdAt>=${createDateRange[0]}&createdAt<=${createDateRange[1]}`
+            // const createDateRange = dateRangeValidate(params.createdAtRange)
+            if (params.createdAtRange) {
+              query += `&startDate=${params.createdAtRange[0]}&endDate=${params.createdAtRange[1]}`
             }
           }
           query += `&sort=-createdAt`
