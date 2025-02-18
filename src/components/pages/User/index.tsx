@@ -1,5 +1,4 @@
-import { getUsersAPI } from '@/services/api.services'
-import { dateRangeValidate } from '@/services/helper'
+import { deleteUserAPI, getUsersAPI } from '@/services/api.services'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
@@ -19,13 +18,24 @@ const LayoutAdminUser = () => {
     total: 0
   })
   const [selectedUser, setSelectedUser] = useState<IAdminUsers | null>(null)
-
+  const refreshTable = () => {
+    actionRef.current?.reload()
+  }
   const handleViewUser = (entity: any) => {
     setSelectedUser(entity)
   }
 
   const handleCloseDrawer = () => {
     setSelectedUser(null)
+  }
+  const confirm = async (entity: IAdminUsers) => {
+    try {
+      const res = await deleteUserAPI(entity.id)
+      message.success(res.message)
+      refreshTable()
+    } catch (error) {
+      console.log(error)
+    }
   }
   const columns: ProColumns<any>[] = [
     {
@@ -81,8 +91,6 @@ const LayoutAdminUser = () => {
       search: {
         transform: (value) => {
           return {
-            // startDate: value[0],
-            // endDate: value[1]
             createdAtRange: value
           }
         }
@@ -139,11 +147,11 @@ const LayoutAdminUser = () => {
               <FaPencilAlt style={{ color: 'orange', cursor: 'pointer' }} onClick={() => {}} />
             </Link>
             <Popconfirm
-              title='Delete the user'
-              description='Are you sure to delete this user?'
+              title='Xóa người dùng'
+              description='Có phải bạn muốn xóa người dùng này?'
               onConfirm={() => confirm(entity)}
-              okText='Yes'
-              cancelText='No'
+              okText='Xóa'
+              cancelText='Hủy'
             >
               <FiTrash style={{ color: 'red', cursor: 'pointer' }} />
             </Popconfirm>
@@ -174,7 +182,6 @@ const LayoutAdminUser = () => {
             if (params.lastName) {
               query += `&lastName=${params.lastName}`
             }
-            // const createDateRange = dateRangeValidate(params.createdAtRange)
             if (params.createdAtRange) {
               query += `&startDate=${params.createdAtRange[0]}&endDate=${params.createdAtRange[1]}`
             }
@@ -182,6 +189,9 @@ const LayoutAdminUser = () => {
           query += `&sort=-createdAt`
           if (sort && sort.createdAt) {
             query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
+          }
+          if (sort && sort.updatedAt) {
+            query += `&sort=${sort.updatedAt === 'ascend' ? 'updatedAt' : '-updatedAt'}`
           } else query += `&sort=-createdAt`
           const res = await getUsersAPI(query)
           if (res.data) {
