@@ -1,4 +1,5 @@
 import { deleteUserAPI, getCoursesAPI } from '@/services/api.services'
+import { BadgeStatus, ECourseCategory, EErrorMessage } from '@/types/enum'
 import { PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
@@ -27,7 +28,7 @@ const LayoutAdminCourse = () => {
       message.success(res.message)
       refreshTable()
     } catch {
-      message.error('Đã xảy ra lỗi khi xóa khóa học !!')
+      message.error(EErrorMessage.ERROR_VALIDATE)
     }
   }
 
@@ -84,9 +85,11 @@ const LayoutAdminCourse = () => {
       dataIndex: 'category',
       valueType: 'select',
       valueEnum: {
-        frontend: { text: 'Frontend', status: 'Default' },
-        backend: { text: 'Backend', status: 'Success' },
-        fullstack: { text: 'Fullstack', status: 'Processing' }
+        programming: { text: ECourseCategory.PROGRAMMING },
+        design: { text: ECourseCategory.DESIGN },
+        business: { text: ECourseCategory.BUSINESS },
+        marketing: { text: ECourseCategory.MARKETING },
+        data_science: { text: ECourseCategory.DATA_SCIENCE }
       },
       search: true
     },
@@ -114,7 +117,10 @@ const LayoutAdminCourse = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       render: (_, record) => (
-        <Badge status={record.status ? 'success' : 'error'} text={record.status ? 'Hoạt động' : 'Không hoạt động'} />
+        <Badge
+          status={record.status ? BadgeStatus.ACTIVE : BadgeStatus.INACTIVE}
+          text={record.status ? 'Hoạt động' : 'Không hoạt động'}
+        />
       ),
       search: true
     },

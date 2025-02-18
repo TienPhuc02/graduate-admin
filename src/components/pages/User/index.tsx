@@ -8,6 +8,7 @@ import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import DetailUser from './DetailUser'
+import { BadgeStatus, EErrorMessage, ETypeUser, SortOrder } from '@/types/enum'
 
 const LayoutAdminUser = () => {
   const actionRef = useRef<ActionType>(null)
@@ -34,7 +35,7 @@ const LayoutAdminUser = () => {
       message.success(res.message)
       refreshTable()
     } catch {
-      message.error("Đã xảy ra lỗi khi xóa người dùng !!")
+      message.error(EErrorMessage.ERROR_VALIDATE)
     }
   }
   const columns: ProColumns<any>[] = [
@@ -74,9 +75,11 @@ const LayoutAdminUser = () => {
     {
       title: 'Vai trò',
       dataIndex: 'role',
-      render: (role: any) => {
-        const color = role === 'admin' ? 'red' : role === 'user' ? 'blue' : 'green'
-        return <Tag color={color}>{role && role.toUpperCase()}</Tag>
+      render: (dom, record) => {
+        console.log('🚀 ~ LayoutAdminUser ~ dom:', dom)
+        const role = record.role
+        const color = role === ETypeUser.ADMIN ? 'red' : role === ETypeUser.STUDENT ? 'blue' : 'green'
+        return <Tag color={color}>{role.toUpperCase()}</Tag>
       }
     },
     {
@@ -84,7 +87,7 @@ const LayoutAdminUser = () => {
       dataIndex: 'isVerified',
       render: (_, record) => (
         <Badge
-          status={record.isVerified ? 'success' : 'error'}
+          status={record.isVerified ? BadgeStatus.ACTIVE : BadgeStatus.INACTIVE}
           text={record.isVerified ? 'Đã xác minh' : 'Chưa xác minh'}
         />
       ),
@@ -94,7 +97,10 @@ const LayoutAdminUser = () => {
       title: 'Trạng thái',
       dataIndex: 'isDeleted',
       render: (_, record) => (
-        <Badge status={record.isDeleted ? 'error' : 'success'} text={record.isDeleted ? 'Đã xóa' : 'Hoạt động'} />
+        <Badge
+          status={record.isDeleted ? BadgeStatus.INACTIVE : BadgeStatus.ACTIVE}
+          text={record.isDeleted ? 'Đã xóa' : 'Hoạt động'}
+        />
       ),
       search: false
     },
@@ -174,13 +180,10 @@ const LayoutAdminUser = () => {
               query += `&startDate=${params.createdAtRange[0]}&endDate=${params.createdAtRange[1]}`
             }
           }
-          query += `&sort=-createdAt`
-          if (sort && sort.createdAt) {
-            query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
-          }
+          query += `&sort=${sort?.createdAt === SortOrder.ASC ? 'createdAt' : '-createdAt'}`
           if (sort && sort.updatedAt) {
-            query += `&sort=${sort.updatedAt === 'ascend' ? 'updatedAt' : '-updatedAt'}`
-          } else query += `&sort=-createdAt`
+            query += `&sort=${sort?.updatedAt === SortOrder.ASC ? 'updatedAt' : '-updatedAt'}`
+          }
           const res = await getUsersAPI(query)
           if (res.data) {
             setMeta({
