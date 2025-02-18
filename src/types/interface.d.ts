@@ -77,4 +77,42 @@ declare global {
     address: string
     profilePicture?: string
   }
+
+  //course interface
+  export interface IAdminCourses {
+    id: string
+    title: string
+    description: string
+    category: string
+    qna: Qna[]
+    requirements: string[]
+    status: boolean
+    isDeleted: boolean
+    benefits: string[]
+    level: string
+    price: string
+    thumbnail: string
+    describe: null
+    createdAt: Date
+    updatedAt: Date
+    deletedAt: null
+    rating: null
+  }
+
+  export interface Qna {
+    answer: string
+    question: string
+  }
+  export interface ICreateCourseDTO {
+    instructor: string
+    title: string
+    description: string
+    category: ECourseCategory
+    level: ECourseLevel
+    price: number
+    thumbnail: string
+    requirements: string[]
+    benefits: string[]
+    qna: Qna[]
+  }
 }

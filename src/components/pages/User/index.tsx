@@ -2,12 +2,13 @@ import { deleteUserAPI, getUsersAPI } from '@/services/api.services'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
-import { Button, message, Popconfirm } from 'antd'
+import { Badge, Button, message, Popconfirm, Space, Tag, Tooltip } from 'antd'
 import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import DetailUser from './DetailUser'
+import { EBadgeStatus, EErrorMessage, ETypeUser, ESortOrder } from '@/types/enum'
 
 const LayoutAdminUser = () => {
   const actionRef = useRef<ActionType>(null)
@@ -33,8 +34,8 @@ const LayoutAdminUser = () => {
       const res = await deleteUserAPI(entity.id)
       message.success(res.message)
       refreshTable()
-    } catch (error) {
-      console.log(error)
+    } catch {
+      message.error(EErrorMessage.ERROR_VALIDATE)
     }
   }
   const columns: ProColumns<any>[] = [
@@ -44,121 +45,115 @@ const LayoutAdminUser = () => {
       width: 48
     },
     {
-      title: 'Id',
+      title: 'ID',
       dataIndex: 'id',
       valueType: 'text',
       search: false,
       ellipsis: true
     },
     {
-      title: 'Tên Họ',
-      dataIndex: 'firstName',
-      valueType: 'text',
-      search: false,
-      ellipsis: true
-    },
-    {
-      title: ' Tên',
-      dataIndex: 'lastName',
-      valueType: 'text',
-      ellipsis: true
+      title: 'Tên đầy đủ',
+      dataIndex: 'fullName',
+      render: (_, record) => `${record.firstName} ${record.lastName}`,
+      search: false
     },
     {
       title: 'Email',
       dataIndex: 'email',
       valueType: 'text',
       search: true,
-      ellipsis: true
+      ellipsis: true,
+      render: (email) => <Tooltip title={email}>{email}</Tooltip>
     },
     {
       title: 'Số điện thoại',
-      valueType: 'text',
       dataIndex: 'phoneNumber',
+      valueType: 'text',
+      search: false,
+      render: (phone) => <Tag color='blue'>{phone}</Tag>
+    },
+    {
+      title: 'Vai trò',
+      dataIndex: 'role',
+      render: (dom, record) => {
+        console.log('🚀 ~ LayoutAdminUser ~ dom:', dom)
+        const role = record.role
+        const color = role === ETypeUser.ADMIN ? 'red' : role === ETypeUser.STUDENT ? 'blue' : 'green'
+        return <Tag color={color}>{role.toUpperCase()}</Tag>
+      }
+    },
+    {
+      title: 'Xác minh',
+      dataIndex: 'isVerified',
+      render: (_, record) => (
+        <Badge
+          status={record.isVerified ? EBadgeStatus.ACTIVE : EBadgeStatus.INACTIVE}
+          text={record.isVerified ? 'Đã xác minh' : 'Chưa xác minh'}
+        />
+      ),
+      search: false
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'isDeleted',
+      render: (_, record) => (
+        <Badge
+          status={record.isDeleted ? EBadgeStatus.INACTIVE : EBadgeStatus.ACTIVE}
+          text={record.isDeleted ? 'Đã xóa' : 'Hoạt động'}
+        />
+      ),
       search: false
     },
     {
       title: 'Thời gian tạo',
-      key: 'created_at',
       dataIndex: 'createdAt',
       valueType: 'date',
-      sorter: true,
-      search: false
+      sorter: true
     },
     {
       title: 'Khoảng thời gian tạo',
       valueType: 'dateRange',
       hideInTable: true,
       search: {
-        transform: (value) => {
-          return {
-            createdAtRange: value
-          }
-        }
+        transform: (value) => ({
+          createdAtRange: value
+        })
       }
-    },
-    {
-      title: 'Vai trò',
-      valueType: 'text',
-      dataIndex: 'role',
-      search: false
-    },
-    {
-      title: 'Thời gian cập nhật',
-      dataIndex: 'updatedAt',
-      key: 'updated_at',
-      valueType: 'date',
-      sorter: true,
-      search: false
-    },
-    {
-      title: 'Thời gian xóa',
-      dataIndex: 'deletedAt',
-      valueType: 'date',
-      search: false
-    },
-    {
-      title: 'Đã xóa',
-      dataIndex: 'isDeleted',
-      render: (_, record) => (record.isDeleted ? 'Đã xóa' : 'Chưa xóa'),
-      search: false
     },
     {
       title: 'Địa chỉ',
       dataIndex: 'address',
       search: false,
-      ellipsis: true
-    },
-    {
-      title: 'Xác minh',
-      dataIndex: 'isVerified',
       ellipsis: true,
-      render: (_, record) => (record.isVerified ? 'Đã xác minh' : 'Chưa xác minh'),
-      search: false
+      render: (address) => <Tooltip title={address}>{address}</Tooltip>
     },
     {
-      title: 'Action',
+      title: 'Hành động',
       valueType: 'option',
       key: 'option',
-      render(dom, entity) {
-        console.log('🚀 ~ render ~ dom:', dom)
-        return (
-          <div style={{ display: 'flex', gap: 20 }}>
-            <Link to={`/user/update/${entity.id}`}>
-              <FaPencilAlt style={{ color: 'orange', cursor: 'pointer' }} onClick={() => {}} />
-            </Link>
-            <Popconfirm
-              title='Xóa người dùng'
-              description='Có phải bạn muốn xóa người dùng này?'
-              onConfirm={() => confirm(entity)}
-              okText='Xóa'
-              cancelText='Hủy'
-            >
+      render: (_, entity) => (
+        <Space size='middle'>
+          <Link to={`/user/update/${entity.id}`}>
+            <Tooltip title='Chỉnh sửa'>
+              <FaPencilAlt style={{ color: 'orange', cursor: 'pointer' }} />
+            </Tooltip>
+          </Link>
+          <Popconfirm
+            title='Xóa người dùng'
+            description='Bạn có chắc chắn muốn xóa người dùng này?'
+            onConfirm={() => confirm(entity)}
+            okText='Xóa'
+            cancelText='Hủy'
+          >
+            <Tooltip title='Xóa'>
               <FiTrash style={{ color: 'red', cursor: 'pointer' }} />
-            </Popconfirm>
+            </Tooltip>
+          </Popconfirm>
+          <Tooltip title='Xem chi tiết'>
             <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewUser(entity)} />
-          </div>
-        )
-      }
+          </Tooltip>
+        </Space>
+      )
     }
   ]
 
@@ -172,7 +167,6 @@ const LayoutAdminUser = () => {
           type: 'multiple'
         }}
         request={async (params, sort) => {
-          console.log('🚀 ~ request={ ~ params:', params)
           let query = ''
           if (params) {
             query += `page=${params.current}&pageSize=${params.pageSize}`
@@ -186,13 +180,10 @@ const LayoutAdminUser = () => {
               query += `&startDate=${params.createdAtRange[0]}&endDate=${params.createdAtRange[1]}`
             }
           }
-          query += `&sort=-createdAt`
-          if (sort && sort.createdAt) {
-            query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
-          }
+          query += `&sort=${sort?.createdAt === ESortOrder.ASC ? 'createdAt' : '-createdAt'}`
           if (sort && sort.updatedAt) {
-            query += `&sort=${sort.updatedAt === 'ascend' ? 'updatedAt' : '-updatedAt'}`
-          } else query += `&sort=-createdAt`
+            query += `&sort=${sort?.updatedAt === ESortOrder.ASC ? 'updatedAt' : '-updatedAt'}`
+          }
           const res = await getUsersAPI(query)
           if (res.data) {
             setMeta({

@@ -1,5 +1,5 @@
 import { createUserAPI } from '@/services/api.services'
-import { ETypeUser } from '@/types/enum'
+import { EErrorMessage, ETypeUser } from '@/types/enum'
 import { UploadOutlined } from '@ant-design/icons'
 import { FooterToolbar, PageContainer, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import { Button, Card, Upload, Modal, message } from 'antd'
@@ -39,7 +39,7 @@ const LayoutCreateUser = () => {
       const values = await formRef.current?.validateFields()
       handleSubmit(values)
     } catch {
-      message.error('Lỗi validate !!')
+      message.error(EErrorMessage.ERROR_VALIDATE)
     }
   }
 
@@ -57,7 +57,7 @@ const LayoutCreateUser = () => {
         }
       }
     } catch {
-      message.error('❌ Lỗi khi gửi dữ liệu !!')
+      message.error(EErrorMessage.ERROR_VALIDATE)
     } finally {
       setLoading(false)
     }

@@ -76,7 +76,6 @@ const LayoutUpdateUser = ({ idUser }: TLayoutUserProps) => {
     const fetchUserData = async () => {
       try {
         const res = await getUsersByIdAPI(idUser)
-        console.log('🚀 ~ fetchUserData ~ res:', res)
         if (res && res.data) {
           const userData = res?.data
 
