@@ -58,3 +58,7 @@ export const updateUserAPI = (idUser: string, file: any, data: IUpdateUserDTO) =
     }
   })
 }
+export const deleteUserAPI = (idUser: string) => {
+  const urlBackend = `/user/${idUser}`
+  return axios.post<IBackendRes<IAdminUsers>>(urlBackend)
+}

@@ -1,4 +1,4 @@
-import LayoutCreateUser from '@/components/layouts/User/CreateUser'
+import LayoutCreateUser from '@/components/pages/User/CreateUser'
 
 const PageCreateUser = () => {
   return (

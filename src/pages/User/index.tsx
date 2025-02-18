@@ -1,4 +1,4 @@
-import LayoutAdminUser from '../../components/layouts/User'
+import LayoutAdminUser from '../../components/pages/User'
 
 const AdminUser = () => {
   return (
