@@ -10,7 +10,7 @@ import {
   ProFormSelect,
   ProFormList
 } from '@ant-design/pro-components'
-import { Button, Card, Upload, Modal, message, Form, Input, Image } from 'antd'
+import { Button, Card, Upload, Modal, message, Image } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
