@@ -141,3 +141,7 @@ export const updateCourseAPI = (idCourse: string, file: File, data: IUpdateCours
     }
   })
 }
+export const deleteCourseAPI = (idCourse: string) => {
+  const urlBackend = `/course/${idCourse}`
+  return axios.post<IBackendRes<IAdminCourses>>(urlBackend)
+}

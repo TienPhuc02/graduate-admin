@@ -1,4 +1,4 @@
-import { deleteUserAPI, getCoursesAPI } from '@/services/api.services'
+import { deleteCourseAPI, getCoursesAPI } from '@/services/api.services'
 import { EBadgeStatus, ECourseCategory, EErrorMessage } from '@/types/enum'
 import { PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
@@ -24,7 +24,7 @@ const LayoutAdminCourse = () => {
 
   const confirm = async (entity: IAdminCourses) => {
     try {
-      const res = await deleteUserAPI(entity.id)
+      const res = await deleteCourseAPI(entity.id)
       message.success(res.message)
       refreshTable()
     } catch {
@@ -117,6 +117,7 @@ const LayoutAdminCourse = () => {
     {
       title: 'Trạng thái',
       dataIndex: 'status',
+      ellipsis: true,
       render: (_, record) => (
         <Badge
           status={record.status ? EBadgeStatus.ACTIVE : EBadgeStatus.INACTIVE}
