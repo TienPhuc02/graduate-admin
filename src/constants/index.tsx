@@ -9,7 +9,8 @@ export const breadcrumbMap: Record<string, string> = {
   '/user/create': 'Tạo mới người dùng',
   '/user/update': 'Cập Nhật người dùng',
   '/course': 'Khóa học',
-  '/course/create': 'Tạo mới khóa học'
+  '/course/create': 'Tạo mới khóa học',
+  '/course/update': 'Cập nhật khóa học'
 }
 export const keyMenuMap: Record<string, string> = {
   '/': '1',
@@ -17,7 +18,8 @@ export const keyMenuMap: Record<string, string> = {
   '/user/create': '2',
   '/user/update': '2',
   '/course': '3',
-  '/course/create': '3'
+  '/course/create': '3',
+  '/course/update': '3'
 }
 export const items: TMenuItem[] = [
   getItem(<Link to='/'>Trang chủ</Link>, '1', <DashboardOutlined />),

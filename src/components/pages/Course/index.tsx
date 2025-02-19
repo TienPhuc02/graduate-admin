@@ -84,6 +84,7 @@ const LayoutAdminCourse = () => {
       title: 'Danh mục',
       dataIndex: 'category',
       valueType: 'select',
+      ellipsis: true,
       valueEnum: {
         programming: { text: ECourseCategory.PROGRAMMING },
         design: { text: ECourseCategory.DESIGN },

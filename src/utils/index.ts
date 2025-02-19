@@ -11,3 +11,9 @@ export function getItem(
     label
   } as TMenuItem
 }
+export async function fetchImageAsFile(imageUrl: string) {
+  const response = await fetch(imageUrl)
+  const fileName = imageUrl.split('/').pop()!
+  const blob = await response.blob()
+  return new File([blob], fileName, { type: blob.type })
+}

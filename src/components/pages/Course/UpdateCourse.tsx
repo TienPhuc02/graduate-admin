@@ -1,6 +1,7 @@
 // import { createCourseAPI } from '@/services/api.services'
-import { createCourseAPI, getUsersAPI } from '@/services/api.services'
+import { createCourseAPI, getCourseByIdAPI, getUsersAPI, updateCourseAPI } from '@/services/api.services'
 import { ECourseCategory, EErrorMessage, ECourseLevel } from '@/types/enum'
+import { fetchImageAsFile } from '@/utils'
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons'
 import {
   FooterToolbar,
@@ -13,8 +14,10 @@ import {
 import { Button, Card, Upload, Modal, message, Image } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-const LayoutCreateCourse = () => {
+type TLayoutCourseProps = {
+  idCourse: string
+}
+const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [fileList, setFileList] = useState<any[]>([])
@@ -52,19 +55,21 @@ const LayoutCreateCourse = () => {
       message.error(EErrorMessage.ERROR_VALIDATE)
     }
   }
-
+  console.log('fileList>>', fileList)
   const handleSubmit = async (values: ICreateCourseDTO) => {
     console.log('🚀 ~ handleSubmit ~ values:', values)
     try {
       if (fileList.length > 0) {
         const file = fileList[0].originFileObj
         setLoading(true)
-        const res = await createCourseAPI(file, values)
+        const res = await updateCourseAPI(idCourse, file, values)
         if (res && res.data) {
           formRef.current?.resetFields()
           setFileList([])
           message.success(res.message)
           navigate('/course')
+        } else {
+          message.error(res.message)
         }
       }
     } catch {
@@ -76,7 +81,6 @@ const LayoutCreateCourse = () => {
   useEffect(() => {
     const fetchInstructor = async () => {
       const res = await getUsersAPI()
-      console.log('🚀 ~ fetchInstructor ~ res:', res)
       if (res && res.data) {
         setListInstructor(res.data.results)
       }
@@ -84,9 +88,52 @@ const LayoutCreateCourse = () => {
 
     fetchInstructor()
   }, [])
+  useEffect(() => {
+    if (!idCourse) return
+
+    const fetchCourseData = async () => {
+      try {
+        const res = await getCourseByIdAPI(idCourse)
+        if (res && res.data) {
+          const courseData = res.data
+          console.log('courseData>>', courseData)
+          formRef.current?.setFieldsValue({
+            instructor: courseData.instructor?.id,
+            title: courseData.title,
+            description: courseData.description,
+            category: courseData.category,
+            level: courseData.level,
+            price: courseData.price,
+            requirements: courseData.requirements?.map((req) => ({ requirement: req })),
+            benefits: courseData.benefits?.map((ben) => ({ benefit: ben })),
+            qna: courseData.qna?.map((q) => ({ question: q.question, answer: q.answer }))
+          })
+
+          if (courseData.thumbnail) {
+            console.log('courseData.thumbnail>>', courseData.thumbnail)
+            fetchImageAsFile(courseData.thumbnail).then((file) => {
+              console.log('File:', file)
+              setFileList([
+                {
+                  uid: '-1',
+                  name: file.name,
+                  status: 'done',
+                  originFileObj: file
+                }
+              ])
+            })
+          }
+        }
+      } catch {
+        message.error('Lỗi khi lấy dữ liệu khóa học !!')
+      }
+    }
+
+    fetchCourseData()
+  }, [idCourse])
 
   return (
-    <PageContainer title='Tạo khóa học'>
+    <PageContainer title='Cập nhật khóa học'>
       <Card>
         <ProForm
           formRef={formRef}
@@ -242,7 +289,7 @@ const LayoutCreateCourse = () => {
 
           <FooterToolbar>
             <Button type='primary' onClick={handleFooterClick} loading={loading}>
-              Tạo khóa học
+              Cập nhật khóa học
             </Button>
           </FooterToolbar>
         </ProForm>
@@ -251,4 +298,4 @@ const LayoutCreateCourse = () => {
   )
 }
 
-export default LayoutCreateCourse
+export default LayoutUpdateCourse

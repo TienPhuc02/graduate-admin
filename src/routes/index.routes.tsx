@@ -8,6 +8,7 @@ import PageUpdateUser from '@/pages/User/UpdateUser'
 import PageNotFound from '@/pages/NotFound'
 import AdminCourse from '@/pages/Course'
 import PageCreateCourse from '@/pages/Course/CreateCourse'
+import PageUpdateCourse from '@/pages/Course/UpdateCourse'
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: 'course/create',
         element: <PageCreateCourse />
+      },
+      {
+        path: 'course/update/:id',
+        element: <PageUpdateCourse />
       }
     ]
   },
