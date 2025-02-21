@@ -118,4 +118,15 @@ declare global {
   }
 
   export interface IUpdateCourseDTO extends ICreateCourseDTO {}
+
+  export interface IAdminLecture {
+    id: string
+    course: Course
+    title?: string
+    // lessons: Lesson[]
+    createdAt: Date
+    updatedAt: Date
+    isDeleted: boolean
+    deletedAt?: Date | null
+  }
 }

@@ -66,7 +66,7 @@ export const deleteUserAPI = (idUser: string) => {
 }
 
 //course
-export const getCoursesAPI = (query: string) => {
+export const getCoursesAPI = (query?: string) => {
   const urlBackend = `/course?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminCourses>>>(urlBackend)
 }
@@ -144,4 +144,18 @@ export const updateCourseAPI = (idCourse: string, file: File, data: IUpdateCours
 export const deleteCourseAPI = (idCourse: string) => {
   const urlBackend = `/course/${idCourse}`
   return axios.post<IBackendRes<IAdminCourses>>(urlBackend)
+}
+
+//lecture
+
+export const getLectureAPI = (query: string) => {
+  const urlBackend = `/lecture?${query}`
+  return axios.get<IBackendRes<IModelPaginate<IAdminLecture>>>(urlBackend)
+}
+export const createLectureAPI = ({ courseId, title }: { title: string; courseId: string }) => {
+  const urlBackend = `/lecture`
+  return axios.post<IBackendRes<IAdminLecture>>(urlBackend, {
+    courseId,
+    title
+  })
 }

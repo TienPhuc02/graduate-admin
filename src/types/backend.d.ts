@@ -15,6 +15,7 @@ declare global {
           totalUsers?: number
           totalPages: number
           totalCourses?: number
+          totalLectures?: number
         }
       | undefined
     gotBy: IUserPayload

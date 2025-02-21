@@ -1,4 +1,3 @@
-// import { createCourseAPI } from '@/services/api.services'
 import { createCourseAPI, getUsersAPI } from '@/services/api.services'
 import { ECourseCategory, EErrorMessage, ECourseLevel } from '@/types/enum'
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons'
