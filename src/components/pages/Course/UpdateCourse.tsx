@@ -24,7 +24,6 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null)
   const [previewOpen, setPreviewOpen] = useState(false)
   const [listInstructor, setListInstructor] = useState<IAdminUsers[] | null>(null)
-  console.log('🚀 ~ LayoutCreateCourse ~ listInstructor:', listInstructor)
   const formRef = useRef<any>(null)
 
   const handleUploadChange = ({ fileList }: any) => {
@@ -55,9 +54,7 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
       message.error(EErrorMessage.ERROR_VALIDATE)
     }
   }
-  console.log('fileList>>', fileList)
   const handleSubmit = async (values: ICreateCourseDTO) => {
-    console.log('🚀 ~ handleSubmit ~ values:', values)
     try {
       if (fileList.length > 0) {
         const file = fileList[0].originFileObj
@@ -96,7 +93,6 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
         const res = await getCourseByIdAPI(idCourse)
         if (res && res.data) {
           const courseData = res.data
-          console.log('courseData>>', courseData)
           formRef.current?.setFieldsValue({
             instructor: courseData.instructor?.id,
             title: courseData.title,
@@ -110,9 +106,7 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
           })
 
           if (courseData.thumbnail) {
-            console.log('courseData.thumbnail>>', courseData.thumbnail)
             fetchImageAsFile(courseData.thumbnail).then((file) => {
-              console.log('File:', file)
               setFileList([
                 {
                   uid: '-1',

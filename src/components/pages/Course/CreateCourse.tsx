@@ -21,7 +21,6 @@ const LayoutCreateCourse = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null)
   const [previewOpen, setPreviewOpen] = useState(false)
   const [listInstructor, setListInstructor] = useState<IAdminUsers[] | null>(null)
-  console.log('🚀 ~ LayoutCreateCourse ~ listInstructor:', listInstructor)
   const formRef = useRef<any>(null)
 
   const handleUploadChange = ({ fileList }: any) => {
@@ -54,7 +53,6 @@ const LayoutCreateCourse = () => {
   }
 
   const handleSubmit = async (values: ICreateCourseDTO) => {
-    console.log('🚀 ~ handleSubmit ~ values:', values)
     try {
       if (fileList.length > 0) {
         const file = fileList[0].originFileObj
@@ -76,7 +74,6 @@ const LayoutCreateCourse = () => {
   useEffect(() => {
     const fetchInstructor = async () => {
       const res = await getUsersAPI()
-      console.log('🚀 ~ fetchInstructor ~ res:', res)
       if (res && res.data) {
         setListInstructor(res.data.results)
       }
