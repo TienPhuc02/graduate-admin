@@ -116,7 +116,6 @@ const LayoutUpdateLesson = ({ idLesson }: { idLesson: string }) => {
     const fetchLessonData = async () => {
       try {
         const res = await getLessonByIdAPI(idLesson)
-        console.log('🚀 ~ fetchLectureData ~ res:', res)
         if (res && res.data) {
           const lessonData = res.data
           formRef.current?.setFieldsValue({
@@ -129,8 +128,6 @@ const LayoutUpdateLesson = ({ idLesson }: { idLesson: string }) => {
           }
           setVideoPreview(() => lessonData.contentUrl as string)
           setPdfPreview(() => lessonData.pdfUrl as string)
-          console.log('Video URL:', lessonData.contentUrl)
-          console.log('PDF URL:', lessonData.pdfUrl)
         } else {
           setError(true)
         }

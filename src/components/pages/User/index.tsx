@@ -75,8 +75,7 @@ const LayoutAdminUser = () => {
     {
       title: 'Vai trò',
       dataIndex: 'role',
-      render: (dom, record) => {
-        console.log('🚀 ~ LayoutAdminUser ~ dom:', dom)
+      render: (_, record) => {
         const role = record.role
         const color = role === ETypeUser.ADMIN ? 'red' : role === ETypeUser.STUDENT ? 'blue' : 'green'
         return <Tag color={color}>{role.toUpperCase()}</Tag>

@@ -207,7 +207,6 @@ export const createLessonAPI = (videoFile: File | null, pdfFile: File | null, da
     bodyFormData.append('pdfUrl', pdfFile)
   }
 
-  console.log('🚀 ~ createLessonAPI ~ bodyFormData:', bodyFormData)
   return axios<IBackendRes<ICustomResponse<IAdminLessons>>>({
     method: 'post',
     url: '/lesson',
