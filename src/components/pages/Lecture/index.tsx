@@ -65,7 +65,12 @@ const LayoutAdminLecture = () => {
       search: true,
       ellipsis: true,
       render: (_, record) => {
-        return record?.course?.title || '-'
+        const title = record?.course?.title || '-'
+        return (
+          <Tooltip title={title}>
+            <span>{title}</span>
+          </Tooltip>
+        )
       }
     },
     {
