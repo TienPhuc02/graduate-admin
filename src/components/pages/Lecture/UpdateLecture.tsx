@@ -1,4 +1,4 @@
-import { createLectureAPI, getCoursesAPI } from '@/services/api.services'
+import { createLectureAPI, getCoursesAPI, getLectureByIdAPI, updateLectureAPI } from '@/services/api.services'
 import { EErrorMessage } from '@/types/enum'
 import { PlusOutlined } from '@ant-design/icons'
 import { FooterToolbar, PageContainer, ProForm, ProFormText, ProFormSelect } from '@ant-design/pro-components'
@@ -6,7 +6,7 @@ import { Button, Card, message } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const LayoutCreateLecture = () => {
+const LayoutUpdateLecture = ({ idLecture }: { idLecture: string }) => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [listCourses, setListCourses] = useState<any[]>([])
@@ -24,7 +24,7 @@ const LayoutCreateLecture = () => {
   const handleSubmit = async (values: { title: string; courseId: string }) => {
     try {
       setLoading(true)
-      const res = await createLectureAPI(values)
+      const res = await updateLectureAPI({ ...values, idLecture })
       if (res && res.data) {
         formRef.current?.resetFields()
         message.success(res.message)
@@ -46,9 +46,28 @@ const LayoutCreateLecture = () => {
     }
     fetchCourses()
   }, [])
+  useEffect(() => {
+    if (!idLecture) return
 
+    const fetchLectureData = async () => {
+      try {
+        const res = await getLectureByIdAPI(idLecture)
+        if (res && res.data) {
+          const lectureDate = res.data
+          formRef.current?.setFieldsValue({
+            courseId: lectureDate.course?.id,
+            title: lectureDate.title
+          })
+        }
+      } catch {
+        message.error('Lỗi khi lấy dữ liệu bài giảng !!')
+      }
+    }
+
+    fetchLectureData()
+  }, [idLecture])
   return (
-    <PageContainer title='Tạo bài giảng'>
+    <PageContainer title='Cập nhật bài giảng'>
       <Card>
         <ProForm
           formRef={formRef}
@@ -73,7 +92,7 @@ const LayoutCreateLecture = () => {
           />
           <FooterToolbar>
             <Button type='primary' onClick={handleFooterClick} loading={loading} icon={<PlusOutlined />}>
-              Tạo bài giảng
+              Cập nhật bài giảng
             </Button>
           </FooterToolbar>
         </ProForm>
@@ -82,4 +101,4 @@ const LayoutCreateLecture = () => {
   )
 }
 
-export default LayoutCreateLecture
+export default LayoutUpdateLecture

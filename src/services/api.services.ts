@@ -159,3 +159,22 @@ export const createLectureAPI = ({ courseId, title }: { title: string; courseId:
     title
   })
 }
+export const getLectureByIdAPI = (idLecture: string) => {
+  const urlBackend = `/lecture/${idLecture}`
+  return axios.get<IBackendRes<IAdminLecture>>(urlBackend)
+}
+export const updateLectureAPI = ({
+  courseId,
+  title,
+  idLecture
+}: {
+  title: string
+  courseId: string
+  idLecture: string
+}) => {
+  const urlBackend = `/lecture/${idLecture}`
+  return axios.put<IBackendRes<IAdminLecture>>(urlBackend, {
+    courseId,
+    title
+  })
+}

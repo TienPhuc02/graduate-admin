@@ -98,7 +98,7 @@ const LayoutAdminLecture = () => {
       key: 'option',
       render: (_, entity) => (
         <Space size='middle'>
-          <Link to={`/lecture-course/update/${entity.id}`}>
+          <Link to={`/lecture/update/${entity.id}`}>
             <Tooltip title='Chỉnh sửa'>
               <FaPencilAlt style={{ color: 'orange', cursor: 'pointer' }} />
             </Tooltip>
@@ -133,7 +133,6 @@ const LayoutAdminLecture = () => {
           if (params.title) query += `&title=${params.title}`
           query += `&sort=${sort?.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
           const res = await getLectureAPI(query)
-          console.log('🚀 ~ request={ ~ res:', res)
           if (res.data) {
             setMeta({
               current: '' + res.data.meta?.page,
