@@ -1,6 +1,6 @@
-import { deleteUserAPI, getCoursesAPI } from '@/services/api.services'
+import { deleteCourseAPI, getCoursesAPI } from '@/services/api.services'
 import { EBadgeStatus, ECourseCategory, EErrorMessage } from '@/types/enum'
-import { PlusOutlined } from '@ant-design/icons'
+import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
 import { Badge, Button, message, Popconfirm, Space, Tag, Tooltip } from 'antd'
@@ -8,6 +8,7 @@ import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
+import DetailCourse from './DetailCourse'
 
 const LayoutAdminCourse = () => {
   const actionRef = useRef<ActionType>(null)
@@ -17,14 +18,20 @@ const LayoutAdminCourse = () => {
     pages: 0,
     total: 0
   })
+  const [selectedCourse, setSelectedCourse] = useState<IAdminCourses | null>(null)
 
+  const handleViewCourse = (entity: IAdminCourses) => {
+    setSelectedCourse(entity)
+  }
   const refreshTable = () => {
     actionRef.current?.reload()
   }
-
+  const handleCloseDrawer = () => {
+    setSelectedCourse(null)
+  }
   const confirm = async (entity: IAdminCourses) => {
     try {
-      const res = await deleteUserAPI(entity.id)
+      const res = await deleteCourseAPI(entity.id)
       message.success(res.message)
       refreshTable()
     } catch {
@@ -50,13 +57,14 @@ const LayoutAdminCourse = () => {
       dataIndex: 'title',
       valueType: 'text',
       ellipsis: true,
-      search: false
+      search: true
     },
     {
       title: 'Mô tả',
       dataIndex: 'description',
       valueType: 'text',
-      ellipsis: true
+      ellipsis: true,
+      search: false
     },
     {
       title: 'Cập nhật',
@@ -84,6 +92,7 @@ const LayoutAdminCourse = () => {
       title: 'Danh mục',
       dataIndex: 'category',
       valueType: 'select',
+      ellipsis: true,
       valueEnum: {
         programming: { text: ECourseCategory.PROGRAMMING },
         design: { text: ECourseCategory.DESIGN },
@@ -116,6 +125,11 @@ const LayoutAdminCourse = () => {
     {
       title: 'Trạng thái',
       dataIndex: 'status',
+      ellipsis: true,
+      valueEnum: {
+        true: { text: EBadgeStatus.ACTIVE },
+        false: { text: EBadgeStatus.INACTIVE }
+      },
       render: (_, record) => (
         <Badge
           status={record.status ? EBadgeStatus.ACTIVE : EBadgeStatus.INACTIVE}
@@ -139,8 +153,11 @@ const LayoutAdminCourse = () => {
       title: 'Giá',
       dataIndex: 'price',
       valueType: 'money',
-      search: false
+      search: false,
+      render: (_, entity) =>
+        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(parseInt(entity.price))
     },
+
     {
       title: 'Ngày tạo',
       dataIndex: 'createdAt',
@@ -170,78 +187,87 @@ const LayoutAdminCourse = () => {
               <FiTrash style={{ color: 'red', cursor: 'pointer' }} />
             </Tooltip>
           </Popconfirm>
+          <Tooltip title='Xem chi tiết'>
+            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewCourse(entity)} />
+          </Tooltip>
         </Space>
       )
     }
   ]
 
   return (
-    <ProTable<IAdminCourses>
-      columns={columns}
-      actionRef={actionRef}
-      cardBordered
-      request={async (params, sort) => {
-        let query = ''
-        if (params) {
-          query += `page=${params.current}&pageSize=${params.pageSize}`
-          if (params.title) {
-            query += `&title=${params.title}`
+    <>
+      <ProTable<IAdminCourses>
+        columns={columns}
+        actionRef={actionRef}
+        cardBordered
+        request={async (params, sort) => {
+          let query = ''
+          if (params) {
+            query += `page=${params.current}&pageSize=${params.pageSize}`
+            if (params.title) {
+              query += `&title=${params.title}`
+            }
+            if (params.status) {
+              query += `&status=${params.status}`
+            }
+            if (params.category) {
+              query += `&category=${params.category}`
+            }
+            if (params.createdAtRange) {
+              query += `&startDate=${params.createdAtRange[0]}&endDate=${params.createdAtRange[1]}`
+            }
+            if (params.priceRange) {
+              query += `&minPrice=${params.priceRange[0]}&maxPrice=${params.priceRange[1]}`
+            }
           }
-          if (params.category) {
-            query += `&category=${params.category}`
+          query += `&sort=-createdAt`
+          if (sort && sort.createdAt) {
+            query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
           }
-          if (params.createdAtRange) {
-            query += `&startDate=${params.createdAtRange[0]}&endDate=${params.createdAtRange[1]}`
+          if (sort && sort.updatedAt) {
+            query += `&sort=${sort.updatedAt === 'ascend' ? 'updatedAt' : '-updatedAt'}`
+          } else query += `&sort=-createdAt`
+          const res = await getCoursesAPI(query)
+          if (res.data) {
+            setMeta({
+              current: '' + res.data.meta?.page,
+              pageSize: '' + res.data.meta?.pageSize,
+              pages: res.data.meta?.totalPages as number,
+              total: res.data.meta?.totalCourses as number
+            })
+            message.success(res.message)
+          } else {
+            message.error(res.message)
           }
-          if (params.priceRange) {
-            query += `&minPrice=${params.priceRange[0]}&maxPrice=${params.priceRange[1]}`
+          return {
+            data: res.data?.results,
+            success: true,
+            total: res.data?.meta?.totalCourses
           }
-        }
-        query += `&sort=-createdAt`
-        if (sort && sort.createdAt) {
-          query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
-        }
-        if (sort && sort.updatedAt) {
-          query += `&sort=${sort.updatedAt === 'ascend' ? 'updatedAt' : '-updatedAt'}`
-        } else query += `&sort=-createdAt`
-        const res = await getCoursesAPI(query)
-        if (res.data) {
-          setMeta({
-            current: '' + res.data.meta?.page,
-            pageSize: '' + res.data.meta?.pageSize,
-            pages: res.data.meta?.totalPages as number,
-            total: res.data.meta?.totalCourses as number
-          })
-          message.success(res.message)
-        } else {
-          message.error(res.message)
-        }
-        return {
-          data: res.data?.results,
-          success: true,
-          total: res.data?.meta?.totalUsers
-        }
-      }}
-      rowKey='id'
-      pagination={{
-        current: +meta.current,
-        pageSize: +meta.pageSize,
-        total: meta.total,
-        showSizeChanger: true,
-        onChange: (page) => {
-          setMeta({ ...meta, current: page + '' })
-        }
-      }}
-      search={{ labelWidth: 'auto' }}
-      headerTitle='Bảng khóa học'
-      toolBarRender={() => [
-        <Link to='/course/create'>
-          <Button key='button' icon={<PlusOutlined />} type='primary'>
-            Thêm mới
-          </Button>
-        </Link>
-      ]}
-    />
+        }}
+        rowKey='id'
+        pagination={{
+          current: +meta.current,
+          pageSize: +meta.pageSize,
+          total: meta.total,
+          showSizeChanger: true,
+          onChange: (page) => {
+            setMeta({ ...meta, current: page + '' })
+          }
+        }}
+        search={{ labelWidth: 'auto' }}
+        headerTitle='Bảng khóa học'
+        toolBarRender={() => [
+          <Link to='/course/create'>
+            <Button key='button' icon={<PlusOutlined />} type='primary'>
+              Thêm mới
+            </Button>
+          </Link>
+        ]}
+      />
+      <DetailCourse selectedCourse={selectedCourse} onClose={handleCloseDrawer} />
+    </>
   )
 }
 export default LayoutAdminCourse

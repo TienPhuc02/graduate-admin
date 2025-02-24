@@ -81,6 +81,7 @@ declare global {
   //course interface
   export interface IAdminCourses {
     id: string
+    instructor?: IAdminUsers
     title: string
     description: string
     category: string
@@ -110,9 +111,22 @@ declare global {
     category: ECourseCategory
     level: ECourseLevel
     price: number
-    thumbnail: string
-    requirements: string[]
-    benefits: string[]
-    qna: Qna[]
+    thumbnail?: File | string
+    requirements: { requirement: string }[]
+    benefits: { benefit: string }[]
+    qna: { question: string; answer: string }[]
+  }
+
+  export interface IUpdateCourseDTO extends ICreateCourseDTO {}
+
+  export interface IAdminLectures {
+    id: string
+    course: Course
+    title?: string
+    // lessons: Lesson[]
+    createdAt: Date
+    updatedAt: Date
+    isDeleted: boolean
+    deletedAt?: Date | null
   }
 }

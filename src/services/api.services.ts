@@ -66,11 +66,15 @@ export const deleteUserAPI = (idUser: string) => {
 }
 
 //course
-export const getCoursesAPI = (query: string) => {
+export const getCoursesAPI = (query?: string) => {
   const urlBackend = `/course?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminCourses>>>(urlBackend)
 }
-export const createCourseAPI = (file: File, data: any) => {
+export const getCourseByIdAPI = (idCourse: string) => {
+  const urlBackend = `/course/${idCourse}`
+  return axios.get<IBackendRes<IAdminCourses>>(urlBackend)
+}
+export const createCourseAPI = (file: File, data: ICreateCourseDTO) => {
   const bodyFormData = new FormData()
 
   bodyFormData.append('instructor', data.instructor)
@@ -78,7 +82,7 @@ export const createCourseAPI = (file: File, data: any) => {
   bodyFormData.append('description', data.description)
   bodyFormData.append('category', data.category)
   bodyFormData.append('level', data.level)
-  bodyFormData.append('price', data.price)
+  bodyFormData.append('price', String(data.price))
 
   if (file) {
     bodyFormData.append('thumbnail', file)
@@ -102,4 +106,80 @@ export const createCourseAPI = (file: File, data: any) => {
       'Content-Type': 'multipart/form-data'
     }
   })
+}
+
+export const updateCourseAPI = (idCourse: string, file: File, data: IUpdateCourseDTO) => {
+  const bodyFormData = new FormData()
+
+  bodyFormData.append('instructor', data.instructor)
+  bodyFormData.append('title', data.title)
+  bodyFormData.append('description', data.description)
+  bodyFormData.append('category', data.category)
+  bodyFormData.append('level', data.level)
+  bodyFormData.append('price', String(data.price))
+
+  if (file) {
+    bodyFormData.append('thumbnail', file)
+  }
+
+  data.requirements.forEach((req: { requirement: string }, index: number) => {
+    bodyFormData.append(`requirements[${index}]`, req.requirement)
+  })
+
+  data.benefits.forEach((ben: { benefit: string }, index: number) => {
+    bodyFormData.append(`benefits[${index}]`, ben.benefit)
+  })
+
+  data.qna.forEach((qa: { question: string; answer: string }, index: number) => {
+    bodyFormData.append(`qna[${index}][question]`, qa.question)
+    bodyFormData.append(`qna[${index}][answer]`, qa.answer)
+  })
+
+  return axios.put(`/course/${idCourse}`, bodyFormData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+export const deleteCourseAPI = (idCourse: string) => {
+  const urlBackend = `/course/${idCourse}`
+  return axios.post<IBackendRes<IAdminCourses>>(urlBackend)
+}
+
+//lecture
+
+export const getLectureAPI = (query: string) => {
+  const urlBackend = `/lecture?${query}`
+  return axios.get<IBackendRes<IModelPaginate<IAdminLectures>>>(urlBackend)
+}
+export const createLectureAPI = ({ courseId, title }: { title: string; courseId: string }) => {
+  const urlBackend = `/lecture`
+  return axios.post<IBackendRes<IAdminLectures>>(urlBackend, {
+    courseId,
+    title
+  })
+}
+export const getLectureByIdAPI = (idLecture: string) => {
+  const urlBackend = `/lecture/${idLecture}`
+  return axios.get<IBackendRes<IAdminLectures>>(urlBackend)
+}
+export const updateLectureAPI = ({
+  courseId,
+  title,
+  idLecture
+}: {
+  title: string
+  courseId: string
+  idLecture: string
+}) => {
+  const urlBackend = `/lecture/${idLecture}`
+  return axios.put<IBackendRes<IAdminLectures>>(urlBackend, {
+    courseId,
+    title
+  })
+}
+
+export const deleteLectureAPI = (idCourse: string) => {
+  const urlBackend = `/lecture/${idCourse}`
+  return axios.post<IBackendRes<IAdminLectures>>(urlBackend)
 }
