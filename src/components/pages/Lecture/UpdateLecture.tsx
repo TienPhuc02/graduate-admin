@@ -1,3 +1,4 @@
+import PageNotFound from '@/pages/NotFound'
 import { getCoursesAPI, getLectureByIdAPI, updateLectureAPI } from '@/services/api.services'
 import { EErrorMessage } from '@/types/enum'
 import { PlusOutlined } from '@ant-design/icons'
@@ -11,7 +12,7 @@ const LayoutUpdateLecture = ({ idLecture }: { idLecture: string }) => {
   const [loading, setLoading] = useState(false)
   const [listCourses, setListCourses] = useState<any[]>([])
   const formRef = useRef<any>(null)
-
+  const [error, setError] = useState(false)
   const handleFooterClick = async () => {
     try {
       const values = await formRef.current?.validateFields()
@@ -58,6 +59,8 @@ const LayoutUpdateLecture = ({ idLecture }: { idLecture: string }) => {
             courseId: lectureDate.course?.id,
             title: lectureDate.title
           })
+        } else {
+          setError(true)
         }
       } catch {
         message.error('Lỗi khi lấy dữ liệu bài giảng !!')
@@ -66,6 +69,9 @@ const LayoutUpdateLecture = ({ idLecture }: { idLecture: string }) => {
 
     fetchLectureData()
   }, [idLecture])
+  if (error) {
+    return <PageNotFound />
+  }
   return (
     <PageContainer title='Cập nhật bài giảng'>
       <Card>

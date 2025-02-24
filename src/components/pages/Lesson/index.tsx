@@ -48,7 +48,8 @@ const LayoutAdminLesson = () => {
     {
       title: 'Khóa học',
       dataIndex: ['lectureCourse', 'title'],
-      valueType: 'text'
+      valueType: 'text',
+      ellipsis: true
     },
     {
       title: 'Tiêu đề',
@@ -58,10 +59,11 @@ const LayoutAdminLesson = () => {
     {
       title: 'Loại nội dung',
       dataIndex: 'contentType',
+      width: 200,
       render: (_, { contentType }) => (
         <>
           {contentType.map((type) => (
-            <Tag color={type === 'VIDEO' ? 'blue' : 'green'} key={type}>
+            <Tag color={type === 'VIDEO' ? 'blue' : type === 'TEXT' ? 'orange' : 'green'} key={type}>
               {type}
             </Tag>
           ))}
@@ -120,6 +122,7 @@ const LayoutAdminLesson = () => {
     {
       title: 'Trạng thái',
       dataIndex: 'isDeleted',
+      ellipsis: true,
       render: (_, { isDeleted }) => (
         <Badge status={isDeleted ? 'error' : 'success'} text={isDeleted ? 'Đã xóa' : 'Hoạt động'} />
       )

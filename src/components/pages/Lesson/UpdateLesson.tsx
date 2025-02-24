@@ -1,6 +1,5 @@
-import { createLessonAPI, getLectureAPI } from '@/services/api.services'
+import { createLessonAPI, getLectureAPI, getLessonByIdAPI } from '@/services/api.services'
 import { EErrorMessage, EContentLessonType } from '@/types/enum'
-import { Editor as TinyMCEEditor } from 'tinymce'
 import { UploadOutlined } from '@ant-design/icons'
 import {
   FooterToolbar,
@@ -15,14 +14,15 @@ import { Editor } from '@tinymce/tinymce-react'
 import { Button, Card, message } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import PageNotFound from '@/pages/NotFound'
 
-const LayoutCreateLesson = () => {
+const LayoutUpdateLesson = ({ idLesson }: { idLesson: string }) => {
   const navigate = useNavigate()
   const editorRef = useRef<any>(null)
   const [loading, setLoading] = useState(false)
   const [videoFileList, setVideoFileList] = useState<any[]>([])
   const [pdfFileList, setPdfFileList] = useState<any[]>([])
-
+  const [error, setError] = useState(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   const [pdfPreview, setPdfPreview] = useState<string | null>(null)
   const [listLecture, setListLecture] = useState<IAdminLectures[] | null>(null)
@@ -110,6 +110,37 @@ const LayoutCreateLesson = () => {
 
     fetchLecture()
   }, [])
+  useEffect(() => {
+    if (!idLesson) return
+
+    const fetchLessonData = async () => {
+      try {
+        const res = await getLessonByIdAPI(idLesson)
+        if (res && res.data) {
+          const lessonData = res.data
+          formRef.current?.setFieldsValue({
+            title: lessonData.title,
+            contentType: lessonData.contentType,
+            lectureCourseId: lessonData.lectureCourse?.id
+          })
+          if (editorRef.current) {
+            editorRef.current.setContent(lessonData.contentText || '')
+          }
+          setVideoPreview(() => lessonData.contentUrl as string)
+          setPdfPreview(() => lessonData.pdfUrl as string)
+        } else {
+          setError(true)
+        }
+      } catch {
+        message.error('Lỗi khi lấy dữ liệu bài học !!')
+      }
+    }
+
+    fetchLessonData()
+  }, [idLesson])
+  if (error) {
+    return <PageNotFound />
+  }
   return (
     <PageContainer title='Tạo bài học'>
       <Card>
@@ -155,7 +186,11 @@ const LayoutCreateLesson = () => {
           >
             <Editor
               apiKey={`${import.meta.env.VITE_API_KEY_TINYMCE}`}
-              onInit={(_evt: any, editor: TinyMCEEditor) => (editorRef.current = editor)}
+              onInit={(_evt, editor) => (editorRef.current = editor)}
+              initialValue={formRef.current?.getFieldValue('contentText') || ''}
+              onEditorChange={(content) => {
+                formRef.current?.setFieldsValue({ contentText: content })
+              }}
               init={{
                 height: 300,
                 menubar: false,
@@ -165,6 +200,7 @@ const LayoutCreateLesson = () => {
               }}
             />
           </ProFormItem>
+
           <ProFormUploadButton
             name='contentUrl'
             label='Tải lên video bài giảng'
@@ -235,4 +271,4 @@ const LayoutCreateLesson = () => {
   )
 }
 
-export default LayoutCreateLesson
+export default LayoutUpdateLesson
