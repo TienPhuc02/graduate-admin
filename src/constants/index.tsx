@@ -3,6 +3,7 @@ import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { IoMdBook } from 'react-icons/io'
 import { MdMenuBook } from 'react-icons/md'
+import { MdOutlinePlayLesson } from 'react-icons/md'
 //Admin Home
 export const breadcrumbMap: Record<string, string> = {
   '/': 'Trang chủ',
@@ -26,11 +27,15 @@ export const keyMenuMap: Record<string, string> = {
   '/course/update': '3',
   '/lecture': '4',
   '/lecture/create': '4',
-  '/lecture/update': '4'
+  '/lecture/update': '4',
+  '/lesson': '5',
+  '/lesson/create': '5',
+  '/lesson/update': '5'
 }
 export const items: TMenuItem[] = [
   getItem(<Link to='/'>Trang chủ</Link>, '1', <DashboardOutlined />),
   getItem(<Link to='/user'>Người dùng</Link>, '2', <UserOutlined />),
   getItem(<Link to='/course'>Khóa học</Link>, '3', <IoMdBook />),
-  getItem(<Link to='/lecture'>Bài giảng</Link>, '4', <MdMenuBook />)
+  getItem(<Link to='/lecture'>Bài giảng</Link>, '4', <MdMenuBook />),
+  getItem(<Link to='/lesson'>Bài học</Link>, '5', <MdOutlinePlayLesson />)
 ]

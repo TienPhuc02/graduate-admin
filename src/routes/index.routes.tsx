@@ -12,6 +12,8 @@ import PageUpdateCourse from '@/pages/Course/UpdateCourse'
 import AdminLecture from '@/pages/Lecture'
 import PageCreateLecture from '@/pages/Lecture/CreateLecture'
 import PageUpdateLecture from '@/pages/Lecture/UpdateLecture'
+import AdminLesson from '@/pages/Lesson'
+import PageCreateLesson from '@/pages/Lesson/CreateLesson'
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +64,14 @@ export const router = createBrowserRouter([
       {
         path: 'lecture/update/:id',
         element: <PageUpdateLecture />
+      },
+      {
+        path: 'lesson',
+        element: <AdminLesson />
+      },
+      {
+        path: 'lesson/create',
+        element: <PageCreateLesson />
       }
     ]
   },

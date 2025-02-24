@@ -1,5 +1,5 @@
-import { deleteLectureAPI, getLectureAPI } from '@/services/api.services'
-import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
+import { deleteLectureAPI, getLessonAPI } from '@/services/api.services'
+import { PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
 import { Badge, Button, message, Popconfirm, Space, Tag, Tooltip } from 'antd'
@@ -7,9 +7,8 @@ import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-import DetailLecture from './DetailLecture'
 
-const LayoutAdminLecture = () => {
+const LayoutAdminLesson = () => {
   const actionRef = useRef<ActionType>(null)
   const [meta, setMeta] = useState({
     current: '1',
@@ -17,97 +16,94 @@ const LayoutAdminLecture = () => {
     pages: 0,
     total: 0
   })
-  const [selectedLecture, setSelectedLecture] = useState<IAdminLectures | null>(null)
+  // const [selectedLesson, setSelectedLesson] = useState<IAdminLessons | null>(null)
 
-  const handleViewLecture = (entity: IAdminLectures) => {
-    setSelectedLecture(entity)
-  }
+  // const handleViewLesson = (entity: IAdminLessons) => {
+  //   setSelectedLesson(entity)
+  // }
   const refreshTable = () => {
     actionRef.current?.reload()
   }
-  const handleCloseDrawer = () => {
-    setSelectedLecture(null)
-  }
+  // const handleCloseDrawer = () => {
+  //   setSelectedLesson(null)
+  // }
 
-  const confirm = async (entity: any) => {
+  const confirm = async (entity: IAdminLessons) => {
     try {
       const res = await deleteLectureAPI(entity.id)
       message.success(res.message)
       refreshTable()
     } catch {
-      message.error('Có lỗi xảy ra khi xóa khóa học.')
+      message.error('Có lỗi xảy ra khi xóa bài học.')
     }
   }
 
-  const columns: ProColumns<IAdminLectures>[] = [
-    {
-      dataIndex: 'index',
-      valueType: 'indexBorder',
-      width: 48
-    },
+  const columns: ProColumns<IAdminLessons>[] = [
     {
       title: 'ID',
       dataIndex: 'id',
       valueType: 'text',
-      search: false,
       ellipsis: true
     },
     {
-      title: 'Tiêu đề bài giảng',
+      title: 'Khóa học',
+      dataIndex: ['lectureCourse', 'title'],
+      valueType: 'text'
+    },
+    {
+      title: 'Tiêu đề',
       dataIndex: 'title',
-      valueType: 'text',
-      search: true,
-      ellipsis: true
+      valueType: 'text'
     },
     {
-      title: 'Tên khóa học',
-      valueType: 'text',
-      dataIndex: ['course', 'title'],
-      search: true,
-      ellipsis: true,
-      render: (_, record) => {
-        const title = record?.course?.title || '-'
-        return (
-          <Tooltip title={title}>
-            <span>{title}</span>
-          </Tooltip>
+      title: 'Loại nội dung',
+      dataIndex: 'contentType',
+      render: (_, { contentType }) => (
+        <>
+          {contentType.map((type) => (
+            <Tag color={type === 'VIDEO' ? 'blue' : 'green'} key={type}>
+              {type}
+            </Tag>
+          ))}
+        </>
+      )
+    },
+    {
+      title: 'URL Nội dung',
+      dataIndex: 'contentUrl',
+      render: (_, record) =>
+        record ? (
+          <Link to={record.contentUrl as string} target='_blank'>
+            Xem video
+          </Link>
+        ) : (
+          '-'
         )
-      }
     },
     {
-      title: 'Cập nhật',
-      dataIndex: 'updatedAt',
-      valueType: 'date',
-      sorter: true,
-      search: false
+      title: 'URL PDF',
+      dataIndex: 'pdfUrl',
+      render: (_, record) =>
+        record ? (
+          <Link to={record.pdfUrl as string} target='_blank'>
+            Xem PDF
+          </Link>
+        ) : (
+          '-'
+        )
     },
     {
-      title: 'Thời gian xóa',
-      dataIndex: 'deletedAt',
-      valueType: 'dateTime',
-      search: false
+      title: 'Nội dung Văn bản',
+      dataIndex: 'contentText',
+      valueType: 'text',
+      ellipsis: true,
+      render: (_, record) => <div dangerouslySetInnerHTML={{ __html: record.contentText ?? '' }} />
     },
     {
-      title: 'Trạng thái xóa',
-      width: 150,
-      dataIndex: 'isDeleted',
-      render: (_, record) => (
-        <Tag color={record.isDeleted ? 'red' : 'green'}>{record.isDeleted ? 'Đã xóa' : 'Chưa xóa'}</Tag>
-      ),
-      search: false
-    },
-    {
-      title: 'Số lượng bài học',
-      dataIndex: 'lessons',
-      search: false
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'isDeleted',
-      render: (_, record) => (
-        <Badge status={record.isDeleted ? 'error' : 'success'} text={record.isDeleted ? 'Đã xóa' : 'Hoạt động'} />
-      ),
-      search: false
+      title: 'Thứ tự',
+      dataIndex: 'orderLesson',
+      valueType: 'digit',
+      render: (order) => order ?? 'Chưa có'
     },
     {
       title: 'Thời gian tạo',
@@ -116,19 +112,37 @@ const LayoutAdminLecture = () => {
       sorter: true
     },
     {
+      title: 'Thời gian cập nhật',
+      dataIndex: 'updatedAt',
+      valueType: 'date',
+      sorter: true
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'isDeleted',
+      render: (_, { isDeleted }) => (
+        <Badge status={isDeleted ? 'error' : 'success'} text={isDeleted ? 'Đã xóa' : 'Hoạt động'} />
+      )
+    },
+    {
+      title: 'Thời gian xóa',
+      dataIndex: 'deletedAt',
+      valueType: 'date'
+    },
+    {
       title: 'Hành động',
       valueType: 'option',
       key: 'option',
       render: (_, entity) => (
         <Space size='middle'>
-          <Link to={`/lecture/update/${entity.id}`}>
+          <Link to={`/lesson/update/${entity.id}`}>
             <Tooltip title='Chỉnh sửa'>
               <FaPencilAlt style={{ color: 'orange', cursor: 'pointer' }} />
             </Tooltip>
           </Link>
           <Popconfirm
-            title='Xóa bài giảng'
-            description='Bạn có chắc chắn muốn xóa bài giảng này?'
+            title='Xóa bài học'
+            description='Bạn có chắc chắn muốn xóa bài học này?'
             onConfirm={() => confirm(entity)}
             okText='Xóa'
             cancelText='Hủy'
@@ -138,7 +152,7 @@ const LayoutAdminLecture = () => {
             </Tooltip>
           </Popconfirm>
           <Tooltip title='Xem chi tiết'>
-            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewLecture(entity)} />
+            {/* <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewLesson(entity)} /> */}
           </Tooltip>
         </Space>
       )
@@ -155,7 +169,7 @@ const LayoutAdminLecture = () => {
           let query = `page=${params.current}&pageSize=${params.pageSize}`
           if (params.title) query += `&title=${params.title}`
           query += `&sort=${sort?.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
-          const res = await getLectureAPI(query)
+          const res = await getLessonAPI(query)
           if (res.data) {
             setMeta({
               current: '' + res.data.meta?.page,
@@ -187,18 +201,17 @@ const LayoutAdminLecture = () => {
           labelWidth: 'auto'
         }}
         dateFormatter='string'
-        headerTitle='Danh sách bài giảng'
+        headerTitle='Danh sách bài học'
         toolBarRender={() => [
-          <Link to='/lecture/create'>
+          <Link to='/lesson/create'>
             <Button key='button' icon={<PlusOutlined />} type='primary'>
               Thêm mới
             </Button>
           </Link>
         ]}
       />
-      <DetailLecture selectedLecture={selectedLecture} onClose={handleCloseDrawer} />
     </>
   )
 }
 
-export default LayoutAdminLecture
+export default LayoutAdminLesson

@@ -16,6 +16,7 @@
     "@ant-design/icons": "^5.6.0",
     "@ant-design/pro-components": "^2.8.4",
     "@reduxjs/toolkit": "^2.5.1",
+    "@tinymce/tinymce-react": "^6.0.0",
     "antd": "^5.23.4",
     "async-mutex": "^0.5.0",
     "axios": "^1.7.9",
@@ -25,13 +26,14 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.29.0",
     "sass": "^1.84.0",
+    "tinymce": "^7.7.0",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
     "@types/node": "^22.13.2",
     "@types/react": "^18.3.18",
-    "@types/react-dom": "^19.0.3",
+    "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",

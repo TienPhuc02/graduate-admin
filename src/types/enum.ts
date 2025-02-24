@@ -3,7 +3,11 @@ export enum ECourseLevel {
   INTERMEDIATE = 'INTERMEDIATE',
   ADVANCED = 'ADVANCED'
 }
-
+export enum EContentLessonType {
+  VIDEO = 'VIDEO',
+  TEXT = 'TEXT',
+  PDF = 'PDF'
+}
 export enum ECourseCategory {
   PROGRAMMING = 'PROGRAMMING',
   DESIGN = 'DESIGN',

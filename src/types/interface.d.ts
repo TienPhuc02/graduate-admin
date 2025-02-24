@@ -123,10 +123,35 @@ declare global {
     id: string
     course: Course
     title?: string
-    // lessons: Lesson[]
+    lessons: IAdminLessons[]
     createdAt: Date
     updatedAt: Date
     isDeleted: boolean
     deletedAt?: Date | null
+  }
+  export interface IAdminLessons {
+    id: string
+    lectureCourse: IAdminLectures
+    title?: string
+    contentType: EContentLessonType[]
+    contentUrl?: string
+    pdfUrl?: string
+    contentText?: string
+    order?: number
+    createdAt: Date
+    updatedAt: Date
+    isDeleted: boolean
+    deletedAt?: Date | null
+  }
+  export interface ICreateLessonDTO {
+    title: string
+    contentType: EContentLessonType[]
+    contentUrl?: string
+    pdfUrl?: string
+    lectureCourseId: string
+    contentText: string
+    order?: number
+    isDeleted?: boolean
+    deletedAt?: Date
   }
 }
