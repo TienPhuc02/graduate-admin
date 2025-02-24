@@ -63,7 +63,15 @@ const LayoutAdminLecture = () => {
       valueType: 'text',
       dataIndex: ['course', 'title'],
       search: true,
-      ellipsis: true
+      ellipsis: true,
+      render: (_, record) => {
+        const title = record?.course?.title || '-'
+        return (
+          <Tooltip title={title}>
+            <span>{title}</span>
+          </Tooltip>
+        )
+      }
     },
     {
       title: 'Cập nhật',
