@@ -56,7 +56,8 @@ const LayoutAdminLecture = () => {
       title: 'Tiêu đề bài giảng',
       dataIndex: 'title',
       valueType: 'text',
-      search: true
+      search: true,
+      ellipsis: true
     },
     {
       title: 'Tên khóa học',

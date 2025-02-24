@@ -70,6 +70,7 @@ const LayoutAdminCourse = () => {
       title: 'Cập nhật',
       dataIndex: 'updatedAt',
       valueType: 'date',
+      ellipsis: true,
       sorter: true,
       search: false
     },
@@ -147,7 +148,8 @@ const LayoutAdminCourse = () => {
         INTERMEDIATE: { text: 'Trung cấp', status: 'Processing' },
         ADVANCED: { text: 'Nâng cao', status: 'Success' }
       },
-      search: false
+      search: false,
+      ellipsis: true
     },
     {
       title: 'Giá',
@@ -163,7 +165,8 @@ const LayoutAdminCourse = () => {
       dataIndex: 'createdAt',
       valueType: 'date',
       sorter: true,
-      search: false
+      search: false,
+      ellipsis: true
     },
     {
       title: 'Hành động',
