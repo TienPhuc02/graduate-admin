@@ -208,7 +208,7 @@ export const createLessonAPI = (videoFile: File | null, pdfFile: File | null, da
   }
 
   console.log('🚀 ~ createLessonAPI ~ bodyFormData:', bodyFormData)
-  return axios<IBackendRes<ICustomResponse<IAdminUsers>>>({
+  return axios<IBackendRes<ICustomResponse<IAdminLessons>>>({
     method: 'post',
     url: '/lesson',
     data: bodyFormData,
@@ -216,4 +216,9 @@ export const createLessonAPI = (videoFile: File | null, pdfFile: File | null, da
       'Content-Type': 'multipart/form-data'
     }
   })
+}
+
+export const getLessonByIdAPI = (idLesson: string) => {
+  const urlBackend = `/lesson/${idLesson}`
+  return axios.get<IBackendRes<IAdminLessons>>(urlBackend)
 }

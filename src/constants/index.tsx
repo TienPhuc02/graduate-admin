@@ -15,7 +15,9 @@ export const breadcrumbMap: Record<string, string> = {
   '/course/update': 'Cập nhật khóa học',
   '/lecture': 'Bài giảng',
   '/lecture/create': 'Tạo mới bài giảng',
-  '/lecture/update': 'Cập nhật bài giảng'
+  '/lesson': 'Bài giảng',
+  '/lesson/create': 'Tạo mới bài học',
+  '/lesson/update': 'Cập nhật bài học'
 }
 export const keyMenuMap: Record<string, string> = {
   '/': '1',
