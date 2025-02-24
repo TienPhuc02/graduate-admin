@@ -1,4 +1,4 @@
-import { Drawer, Badge, Typography, Image } from 'antd'
+import { Drawer, Typography } from 'antd'
 import { ProDescriptions } from '@ant-design/pro-components'
 
 const { Title } = Typography

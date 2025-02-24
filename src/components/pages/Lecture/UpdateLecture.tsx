@@ -1,4 +1,4 @@
-import { createLectureAPI, getCoursesAPI, getLectureByIdAPI, updateLectureAPI } from '@/services/api.services'
+import { getCoursesAPI, getLectureByIdAPI, updateLectureAPI } from '@/services/api.services'
 import { EErrorMessage } from '@/types/enum'
 import { PlusOutlined } from '@ant-design/icons'
 import { FooterToolbar, PageContainer, ProForm, ProFormText, ProFormSelect } from '@ant-design/pro-components'
