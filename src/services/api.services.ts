@@ -150,18 +150,18 @@ export const deleteCourseAPI = (idCourse: string) => {
 
 export const getLectureAPI = (query: string) => {
   const urlBackend = `/lecture?${query}`
-  return axios.get<IBackendRes<IModelPaginate<IAdminLecture>>>(urlBackend)
+  return axios.get<IBackendRes<IModelPaginate<IAdminLectures>>>(urlBackend)
 }
 export const createLectureAPI = ({ courseId, title }: { title: string; courseId: string }) => {
   const urlBackend = `/lecture`
-  return axios.post<IBackendRes<IAdminLecture>>(urlBackend, {
+  return axios.post<IBackendRes<IAdminLectures>>(urlBackend, {
     courseId,
     title
   })
 }
 export const getLectureByIdAPI = (idLecture: string) => {
   const urlBackend = `/lecture/${idLecture}`
-  return axios.get<IBackendRes<IAdminLecture>>(urlBackend)
+  return axios.get<IBackendRes<IAdminLectures>>(urlBackend)
 }
 export const updateLectureAPI = ({
   courseId,
@@ -173,8 +173,13 @@ export const updateLectureAPI = ({
   idLecture: string
 }) => {
   const urlBackend = `/lecture/${idLecture}`
-  return axios.put<IBackendRes<IAdminLecture>>(urlBackend, {
+  return axios.put<IBackendRes<IAdminLectures>>(urlBackend, {
     courseId,
     title
   })
+}
+
+export const deleteLectureAPI = (idCourse: string) => {
+  const urlBackend = `/lecture/${idCourse}`
+  return axios.post<IBackendRes<IAdminLectures>>(urlBackend)
 }

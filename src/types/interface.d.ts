@@ -119,7 +119,7 @@ declare global {
 
   export interface IUpdateCourseDTO extends ICreateCourseDTO {}
 
-  export interface IAdminLecture {
+  export interface IAdminLectures {
     id: string
     course: Course
     title?: string

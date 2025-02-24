@@ -1,4 +1,4 @@
-import { getLectureAPI } from '@/services/api.services'
+import { deleteLectureAPI, getLectureAPI } from '@/services/api.services'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
@@ -7,6 +7,7 @@ import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
+import DetailLecture from './DetailLecture'
 
 const LayoutAdminLecture = () => {
   const actionRef = useRef<ActionType>(null)
@@ -16,22 +17,29 @@ const LayoutAdminLecture = () => {
     pages: 0,
     total: 0
   })
+  const [selectedLecture, setSelectedLecture] = useState<IAdminLectures | null>(null)
 
+  const handleViewLecture = (entity: IAdminLectures) => {
+    setSelectedLecture(entity)
+  }
   const refreshTable = () => {
     actionRef.current?.reload()
+  }
+  const handleCloseDrawer = () => {
+    setSelectedLecture(null)
   }
 
   const confirm = async (entity: any) => {
     try {
-      //   const res = await deleteLectureCourseAPI(entity.id)
-      //   message.success(res.message)
+      const res = await deleteLectureAPI(entity.id)
+      message.success(res.message)
       refreshTable()
     } catch {
       message.error('Có lỗi xảy ra khi xóa khóa học.')
     }
   }
 
-  const columns: ProColumns<IAdminLecture>[] = [
+  const columns: ProColumns<IAdminLectures>[] = [
     {
       dataIndex: 'index',
       valueType: 'indexBorder',
@@ -49,6 +57,15 @@ const LayoutAdminLecture = () => {
       dataIndex: 'title',
       valueType: 'text',
       search: true
+    },
+    {
+      title: 'Tên khóa học',
+      valueType: 'text',
+      search: true,
+      ellipsis: true,
+      render: (_, record) => {
+        return record?.course?.title || '-'
+      }
     },
     {
       title: 'Cập nhật',
@@ -75,7 +92,6 @@ const LayoutAdminLecture = () => {
     {
       title: 'Số lượng bài học',
       dataIndex: 'lessons',
-      //   render: (lessons) => lessons.length,
       search: false
     },
     {
@@ -115,7 +131,7 @@ const LayoutAdminLecture = () => {
             </Tooltip>
           </Popconfirm>
           <Tooltip title='Xem chi tiết'>
-            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} />
+            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewLecture(entity)} />
           </Tooltip>
         </Space>
       )
@@ -173,6 +189,7 @@ const LayoutAdminLecture = () => {
           </Link>
         ]}
       />
+      <DetailLecture selectedLecture={selectedLecture} onClose={handleCloseDrawer} />
     </>
   )
 }

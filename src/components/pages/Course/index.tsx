@@ -20,7 +20,7 @@ const LayoutAdminCourse = () => {
   })
   const [selectedCourse, setSelectedCourse] = useState<IAdminCourses | null>(null)
 
-  const handleViewUser = (entity: IAdminCourses) => {
+  const handleViewCourse = (entity: IAdminCourses) => {
     setSelectedCourse(entity)
   }
   const refreshTable = () => {
@@ -188,7 +188,7 @@ const LayoutAdminCourse = () => {
             </Tooltip>
           </Popconfirm>
           <Tooltip title='Xem chi tiết'>
-            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewUser(entity)} />
+            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewCourse(entity)} />
           </Tooltip>
         </Space>
       )
@@ -243,7 +243,7 @@ const LayoutAdminCourse = () => {
           return {
             data: res.data?.results,
             success: true,
-            total: res.data?.meta?.totalUsers
+            total: res.data?.meta?.totalCourses
           }
         }}
         rowKey='id'
