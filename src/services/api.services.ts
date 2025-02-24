@@ -148,7 +148,7 @@ export const deleteCourseAPI = (idCourse: string) => {
 
 //lecture
 
-export const getLectureAPI = (query: string) => {
+export const getLectureAPI = (query?: string) => {
   const urlBackend = `/lecture?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminLectures>>>(urlBackend)
 }
@@ -182,4 +182,38 @@ export const updateLectureAPI = ({
 export const deleteLectureAPI = (idCourse: string) => {
   const urlBackend = `/lecture/${idCourse}`
   return axios.post<IBackendRes<IAdminLectures>>(urlBackend)
+}
+
+//lesson
+export const getLessonAPI = (query?: string) => {
+  const urlBackend = `/lesson?${query}`
+  return axios.get<IBackendRes<IModelPaginate<IAdminLessons>>>(urlBackend)
+}
+export const createLessonAPI = (videoFile: File | null, pdfFile: File | null, data: ICreateLessonDTO) => {
+  const bodyFormData = new FormData()
+
+  bodyFormData.append('title', data.title)
+  bodyFormData.append('lectureCourseId', data.lectureCourseId)
+  bodyFormData.append('contentText', data.contentText)
+  data.contentType.forEach((type) => {
+    bodyFormData.append('contentType[]', type)
+  })
+
+  if (videoFile) {
+    bodyFormData.append('contentUrl', videoFile)
+  }
+
+  if (pdfFile) {
+    bodyFormData.append('pdfUrl', pdfFile)
+  }
+
+  console.log('🚀 ~ createLessonAPI ~ bodyFormData:', bodyFormData)
+  return axios<IBackendRes<ICustomResponse<IAdminUsers>>>({
+    method: 'post',
+    url: '/lesson',
+    data: bodyFormData,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
 }
