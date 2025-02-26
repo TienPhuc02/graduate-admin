@@ -142,6 +142,24 @@ const LayoutCreateCourse = () => {
             placeholder='Nhập giá khóa học'
             rules={[{ required: true, message: 'Vui lòng nhập giá khóa học' }]}
           />
+          <ProFormText
+            name='viewsCourse'
+            label='Số lượng xem'
+            placeholder='Nhập số lượng xem khóa học'
+            rules={[{ required: true, message: 'Vui lòng nhập số lượng xem khóa học' }]}
+          />
+          <ProFormText
+            name='duration'
+            label='Thời lượng'
+            placeholder='Nhập thời lượng khóa học'
+            rules={[{ required: true, message: 'Vui lòng nhập thời lượng khóa học' }]}
+          />
+          <ProFormText
+            name='rating'
+            label='Đánh giá'
+            placeholder='Nhập đánh giá khóa học'
+            rules={[{ required: true, message: 'Vui lòng nhập đánh giá khóa học' }]}
+          />
           <Upload
             name='thumbnail'
             maxCount={1}

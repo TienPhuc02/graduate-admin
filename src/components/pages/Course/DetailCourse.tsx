@@ -29,6 +29,9 @@ const DetailCourse = ({ selectedCourse, onClose }: { selectedCourse: IAdminCours
           />
         </ProDescriptions.Item>
         <ProDescriptions.Item label='Cấp độ'>{selectedCourse.level}</ProDescriptions.Item>
+        <ProDescriptions.Item label='Đánh giá'>{selectedCourse.rating}</ProDescriptions.Item>
+        <ProDescriptions.Item label='Thời lượng'>{selectedCourse.duration}</ProDescriptions.Item>
+        <ProDescriptions.Item label='Số lượng xem'>{selectedCourse.viewsCourse}</ProDescriptions.Item>
         <ProDescriptions.Item label='Giá'>
           {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
             parseInt(selectedCourse.price)
