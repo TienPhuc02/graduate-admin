@@ -261,3 +261,9 @@ export const getCommentsAPI = (query?: string) => {
   const urlBackend = `/comment?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminComment>>>(urlBackend)
 }
+
+//blog
+export const getBlogsAPI = (query?: string) => {
+  const urlBackend = `/blog?${query}`
+  return axios.get<IBackendRes<IModelPaginate<IAdminBlog>>>(urlBackend)
+}

@@ -5,6 +5,7 @@ import { IoMdBook } from 'react-icons/io'
 import { MdMenuBook } from 'react-icons/md'
 import { MdOutlinePlayLesson } from 'react-icons/md'
 import { FaRegCommentDots } from 'react-icons/fa'
+import { RiBloggerLine } from 'react-icons/ri'
 //Admin Home
 export const breadcrumbMap: Record<string, string> = {
   '/': 'Trang chủ',
@@ -21,7 +22,10 @@ export const breadcrumbMap: Record<string, string> = {
   '/lesson/update': 'Cập nhật bài học',
   '/comment': 'Bình luận',
   '/comment/create': 'Tạo mới bình luận',
-  '/comment/update': 'Cập nhật bình luận'
+  '/comment/update': 'Cập nhật bình luận',
+  '/blog': 'Bài viêt',
+  '/blog/create': 'Tạo mới bài viết',
+  '/blog/update': 'Cập nhật bài viết'
 }
 export const keyMenuMap: Record<string, string> = {
   '/': '1',
@@ -39,7 +43,10 @@ export const keyMenuMap: Record<string, string> = {
   '/lesson/update': '5',
   '/comment': '6',
   '/comment/create': '6',
-  '/comment/update': '6'
+  '/comment/update': '6',
+  '/blog': '7',
+  '/blog/create': '7',
+  '/blog/update': '7'
 }
 export const items: TMenuItem[] = [
   getItem(<Link to='/'>Trang chủ</Link>, '1', <DashboardOutlined />),
@@ -47,5 +54,6 @@ export const items: TMenuItem[] = [
   getItem(<Link to='/course'>Khóa học</Link>, '3', <IoMdBook />),
   getItem(<Link to='/lecture'>Bài giảng</Link>, '4', <MdMenuBook />),
   getItem(<Link to='/lesson'>Bài học</Link>, '5', <MdOutlinePlayLesson />),
-  getItem(<Link to='/comment'>Bình luận</Link>, '6', <FaRegCommentDots />)
+  getItem(<Link to='/comment'>Bình luận</Link>, '6', <FaRegCommentDots />),
+  getItem(<Link to='/blog'>Bài viết</Link>, '7', <RiBloggerLine />)
 ]
