@@ -137,7 +137,6 @@ declare global {
     contentUrl?: string
     pdfUrl?: string
     contentText?: string
-    order?: number
     createdAt: Date
     updatedAt: Date
     isDeleted: boolean
@@ -150,8 +149,6 @@ declare global {
     pdfUrl?: string
     lectureCourseId: string
     contentText: string
-    order?: number
-    isDeleted?: boolean
-    deletedAt?: Date
   }
+  export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }

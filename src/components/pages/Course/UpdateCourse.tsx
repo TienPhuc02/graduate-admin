@@ -1,6 +1,7 @@
+import PageNotFound from '@/pages/NotFound'
 import { getCourseByIdAPI, getUsersAPI, updateCourseAPI } from '@/services/api.services'
 import { ECourseCategory, EErrorMessage, ECourseLevel } from '@/types/enum'
-import { fetchImageAsFile } from '@/utils'
+import { fetchAssetsAsFile } from '@/utils'
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons'
 import {
   FooterToolbar,
@@ -21,6 +22,7 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
   const [loading, setLoading] = useState(false)
   const [fileList, setFileList] = useState<any[]>([])
   const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const [error, setError] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
   const [listInstructor, setListInstructor] = useState<IAdminUsers[] | null>(null)
   const formRef = useRef<any>(null)
@@ -105,7 +107,7 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
           })
 
           if (courseData.thumbnail) {
-            fetchImageAsFile(courseData.thumbnail).then((file) => {
+            fetchAssetsAsFile(courseData.thumbnail).then((file) => {
               setFileList([
                 {
                   uid: '-1',
@@ -116,6 +118,8 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
               ])
             })
           }
+        } else {
+          setError(true)
         }
       } catch {
         message.error('Lỗi khi lấy dữ liệu khóa học !!')
@@ -124,7 +128,9 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
 
     fetchCourseData()
   }, [idCourse])
-
+  if (error) {
+    return <PageNotFound />
+  }
   return (
     <PageContainer title='Cập nhật khóa học'>
       <Card>

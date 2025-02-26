@@ -1,3 +1,4 @@
+import PageNotFound from '@/pages/NotFound'
 import { getUsersByIdAPI, updateUserAPI } from '@/services/api.services'
 import { ETypeUser } from '@/types/enum'
 import { UploadOutlined } from '@ant-design/icons'
@@ -13,6 +14,7 @@ const LayoutUpdateUser = ({ idUser }: TLayoutUserProps) => {
   const [loading, setLoading] = useState(false)
   const [fileList, setFileList] = useState<any[]>([])
   const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const [error, setError] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
   const formRef = useRef<any>(null)
 
@@ -100,6 +102,8 @@ const LayoutUpdateUser = ({ idUser }: TLayoutUserProps) => {
               }
             ])
           }
+        } else {
+          setError(true)
         }
       } catch {
         message.error('Lỗi khi lấy dữ liệu user !!')
@@ -108,6 +112,9 @@ const LayoutUpdateUser = ({ idUser }: TLayoutUserProps) => {
 
     fetchUserData()
   }, [idUser])
+  if (error) {
+    return <PageNotFound />
+  }
   return (
     <PageContainer title='Cập nhật người dùng'>
       <Card>

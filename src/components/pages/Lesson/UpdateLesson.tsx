@@ -1,4 +1,4 @@
-import { createLessonAPI, getLectureAPI, getLessonByIdAPI } from '@/services/api.services'
+import { getLectureAPI, getLessonByIdAPI, updateLessonAPI } from '@/services/api.services'
 import { EErrorMessage, EContentLessonType } from '@/types/enum'
 import { UploadOutlined } from '@ant-design/icons'
 import {
@@ -15,6 +15,7 @@ import { Button, Card, message } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageNotFound from '@/pages/NotFound'
+import { fetchAssetsAsFile } from '@/utils'
 
 const LayoutUpdateLesson = ({ idLesson }: { idLesson: string }) => {
   const navigate = useNavigate()
@@ -79,7 +80,7 @@ const LayoutUpdateLesson = ({ idLesson }: { idLesson: string }) => {
         return
       }
       const contentHtml = editorRef.current ? editorRef.current.getContent() : ''
-      const res = await createLessonAPI(videoFile, pdfFile, {
+      const res = await updateLessonAPI(idLesson, videoFile, pdfFile, {
         ...values,
         contentText: contentHtml
       })
@@ -121,10 +122,35 @@ const LayoutUpdateLesson = ({ idLesson }: { idLesson: string }) => {
           formRef.current?.setFieldsValue({
             title: lessonData.title,
             contentType: lessonData.contentType,
-            lectureCourseId: lessonData.lectureCourse?.id
+            lectureCourseId: lessonData.lectureCourse?.id,
+            contentText: lessonData.contentText
           })
           if (editorRef.current) {
             editorRef.current.setContent(lessonData.contentText || '')
+          }
+          if (lessonData.pdfUrl) {
+            fetchAssetsAsFile(lessonData.pdfUrl).then((file) => {
+              setPdfFileList([
+                {
+                  uid: '-1',
+                  name: file.name,
+                  status: 'done',
+                  originFileObj: file
+                }
+              ])
+            })
+          }
+          if (lessonData.contentUrl) {
+            fetchAssetsAsFile(lessonData.contentUrl).then((file) => {
+              setVideoFileList([
+                {
+                  uid: '-1',
+                  name: file.name,
+                  status: 'done',
+                  originFileObj: file
+                }
+              ])
+            })
           }
           setVideoPreview(() => lessonData.contentUrl as string)
           setPdfPreview(() => lessonData.pdfUrl as string)
@@ -233,7 +259,7 @@ const LayoutUpdateLesson = ({ idLesson }: { idLesson: string }) => {
           )}
 
           <ProFormUploadButton
-            name='contentPdf'
+            name='pdfUrl'
             label='Tải lên PDF'
             title='Chọn PDF'
             icon={<UploadOutlined />}

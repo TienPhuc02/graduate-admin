@@ -221,3 +221,36 @@ export const getLessonByIdAPI = (idLesson: string) => {
   const urlBackend = `/lesson/${idLesson}`
   return axios.get<IBackendRes<IAdminLessons>>(urlBackend)
 }
+
+export const updateLessonAPI = (
+  idLesson: string,
+  videoFile: File | null,
+  pdfFile: File | null,
+  data: IUpdateLessonDTO
+) => {
+  const bodyFormData = new FormData()
+
+  bodyFormData.append('title', data.title)
+  bodyFormData.append('lectureCourseId', data.lectureCourseId)
+  bodyFormData.append('contentText', data.contentText)
+  data.contentType.forEach((type) => {
+    bodyFormData.append('contentType[]', type)
+  })
+
+  if (videoFile) {
+    bodyFormData.append('contentUrl', videoFile)
+  }
+
+  if (pdfFile) {
+    bodyFormData.append('pdfUrl', pdfFile)
+  }
+
+  return axios<IBackendRes<ICustomResponse<IAdminLessons>>>({
+    method: 'put',
+    url: `/lesson/${idLesson}`,
+    data: bodyFormData,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
