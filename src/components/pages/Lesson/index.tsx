@@ -46,7 +46,7 @@ const LayoutAdminLesson = () => {
       ellipsis: true
     },
     {
-      title: 'Khóa học',
+      title: 'Bài giảng',
       dataIndex: ['lectureCourse', 'title'],
       valueType: 'text',
       ellipsis: true
@@ -54,7 +54,8 @@ const LayoutAdminLesson = () => {
     {
       title: 'Tiêu đề',
       dataIndex: 'title',
-      valueType: 'text'
+      valueType: 'text',
+      ellipsis: true
     },
     {
       title: 'Loại nội dung',
@@ -74,7 +75,7 @@ const LayoutAdminLesson = () => {
       title: 'URL Nội dung',
       dataIndex: 'contentUrl',
       render: (_, record) =>
-        record ? (
+        record && record.contentUrl ? (
           <Link to={record.contentUrl as string} target='_blank'>
             Xem video
           </Link>
@@ -86,20 +87,13 @@ const LayoutAdminLesson = () => {
       title: 'URL PDF',
       dataIndex: 'pdfUrl',
       render: (_, record) =>
-        record ? (
+        record && record.pdfUrl ? (
           <Link to={record.pdfUrl as string} target='_blank'>
             Xem PDF
           </Link>
         ) : (
           '-'
         )
-    },
-    {
-      title: 'Nội dung Văn bản',
-      dataIndex: 'contentText',
-      valueType: 'text',
-      ellipsis: true,
-      render: (_, record) => <div dangerouslySetInnerHTML={{ __html: record.contentText ?? '' }} />
     },
     {
       title: 'Thứ tự',

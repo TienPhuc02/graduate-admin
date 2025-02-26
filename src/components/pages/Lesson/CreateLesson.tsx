@@ -197,7 +197,7 @@ const LayoutCreateLesson = () => {
           )}
 
           <ProFormUploadButton
-            name='contentPdf'
+            name='pdfUrl'
             label='Tải lên PDF'
             title='Chọn PDF'
             icon={<UploadOutlined />}
