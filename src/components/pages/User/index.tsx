@@ -18,7 +18,7 @@ const LayoutAdminUser = () => {
     pages: 0,
     total: 0
   })
-  const [selectedUser, setSelectedUser] = useState<IAdminUsers | null>(null)
+  const [selectedUser, setSelectedUser] = useState<IAdminUser | null>(null)
   const refreshTable = () => {
     actionRef.current?.reload()
   }
@@ -29,7 +29,7 @@ const LayoutAdminUser = () => {
   const handleCloseDrawer = () => {
     setSelectedUser(null)
   }
-  const confirm = async (entity: IAdminUsers) => {
+  const confirm = async (entity: IAdminUser) => {
     try {
       const res = await deleteUserAPI(entity.id)
       message.success(res.message)

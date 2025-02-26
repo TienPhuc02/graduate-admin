@@ -17,9 +17,9 @@ const LayoutAdminLecture = () => {
     pages: 0,
     total: 0
   })
-  const [selectedLecture, setSelectedLecture] = useState<IAdminLectures | null>(null)
+  const [selectedLecture, setSelectedLecture] = useState<IAdminLecture | null>(null)
 
-  const handleViewLecture = (entity: IAdminLectures) => {
+  const handleViewLecture = (entity: IAdminLecture) => {
     setSelectedLecture(entity)
   }
   const refreshTable = () => {
@@ -39,7 +39,7 @@ const LayoutAdminLecture = () => {
     }
   }
 
-  const columns: ProColumns<IAdminLectures>[] = [
+  const columns: ProColumns<IAdminLecture>[] = [
     {
       dataIndex: 'index',
       valueType: 'indexBorder',

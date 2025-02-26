@@ -7,7 +7,7 @@ const DetailLecture = ({
   selectedLecture,
   onClose
 }: {
-  selectedLecture: IAdminLectures | null
+  selectedLecture: IAdminLecture | null
   onClose: () => void
 }) => {
   if (!selectedLecture) return null

@@ -24,7 +24,7 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null)
   const [error, setError] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
-  const [listInstructor, setListInstructor] = useState<IAdminUsers[] | null>(null)
+  const [listInstructor, setListInstructor] = useState<IAdminUser[] | null>(null)
   const formRef = useRef<any>(null)
 
   const handleUploadChange = ({ fileList }: any) => {

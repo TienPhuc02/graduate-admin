@@ -30,9 +30,9 @@ const LayoutAdminCourse = () => {
     pages: 0,
     total: 0
   })
-  const [selectedCourse, setSelectedCourse] = useState<IAdminCourses | null>(null)
+  const [selectedCourse, setSelectedCourse] = useState<IAdminCourse | null>(null)
 
-  const handleViewCourse = (entity: IAdminCourses) => {
+  const handleViewCourse = (entity: IAdminCourse) => {
     setSelectedCourse(entity)
   }
   const refreshTable = () => {
@@ -41,7 +41,7 @@ const LayoutAdminCourse = () => {
   const handleCloseDrawer = () => {
     setSelectedCourse(null)
   }
-  const confirm = async (entity: IAdminCourses) => {
+  const confirm = async (entity: IAdminCourse) => {
     try {
       const res = await deleteCourseAPI(entity.id)
       message.success(res.message)
@@ -51,7 +51,7 @@ const LayoutAdminCourse = () => {
     }
   }
 
-  const columns: ProColumns<IAdminCourses>[] = [
+  const columns: ProColumns<IAdminCourse>[] = [
     {
       dataIndex: 'index',
       valueType: 'indexBorder',
@@ -295,7 +295,7 @@ const LayoutAdminCourse = () => {
 
   return (
     <>
-      <ProTable<IAdminCourses>
+      <ProTable<IAdminCourse>
         columns={columns}
         actionRef={actionRef}
         cardBordered

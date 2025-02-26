@@ -3,7 +3,7 @@ import { ProDescriptions } from '@ant-design/pro-components'
 
 const { Title } = Typography
 
-const DetailCourse = ({ selectedCourse, onClose }: { selectedCourse: IAdminCourses | null; onClose: () => void }) => {
+const DetailCourse = ({ selectedCourse, onClose }: { selectedCourse: IAdminCourse | null; onClose: () => void }) => {
   if (!selectedCourse) return null
 
   return (

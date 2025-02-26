@@ -40,7 +40,7 @@ declare global {
   }
 
   //user interface
-  export interface IAdminUsers {
+  export interface IAdminUser {
     id: string
     role: ETypeUser
     firstName?: string
@@ -79,9 +79,9 @@ declare global {
   }
 
   //course interface
-  export interface IAdminCourses {
+  export interface IAdminCourse {
     id: string
-    instructor?: IAdminUsers
+    instructor?: IAdminUser
     title: string
     description: string
     category: string
@@ -122,19 +122,19 @@ declare global {
 
   export interface IUpdateCourseDTO extends ICreateCourseDTO {}
 
-  export interface IAdminLectures {
+  export interface IAdminLecture {
     id: string
     course: Course
     title?: string
-    lessons: IAdminLessons[]
+    lessons: IAdminLesson[]
     createdAt: Date
     updatedAt: Date
     isDeleted: boolean
     deletedAt?: Date | null
   }
-  export interface IAdminLessons {
+  export interface IAdminLesson {
     id: string
-    lectureCourse: IAdminLectures
+    lectureCourse: IAdminLecture
     title?: string
     contentType: EContentLessonType[]
     contentUrl?: string
@@ -153,5 +153,23 @@ declare global {
     lectureCourseId: string
     contentText: string
   }
+  export interface IAdminComment {
+    id: string
+    user: User
+    course?: Course | null
+    blog?: Blog | null
+    text?: string | null
+    likesCount: number
+    parentCommentId?: string | null
+    parentComment?: IComment | null
+    replies?: IComment[]
+    isEdited: boolean
+    isDeleted: boolean
+    deletedAt?: Date | null
+    createdAt: Date
+    updatedAt: Date
+    status: 'pending' | 'approved' | 'rejected'
+  }
+
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }

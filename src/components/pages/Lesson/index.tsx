@@ -16,9 +16,9 @@ const LayoutAdminLesson = () => {
     pages: 0,
     total: 0
   })
-  // const [selectedLesson, setSelectedLesson] = useState<IAdminLessons | null>(null)
+  // const [selectedLesson, setSelectedLesson] = useState<IAdminLesson | null>(null)
 
-  // const handleViewLesson = (entity: IAdminLessons) => {
+  // const handleViewLesson = (entity: IAdminLesson) => {
   //   setSelectedLesson(entity)
   // }
   const refreshTable = () => {
@@ -28,7 +28,7 @@ const LayoutAdminLesson = () => {
   //   setSelectedLesson(null)
   // }
 
-  const confirm = async (entity: IAdminLessons) => {
+  const confirm = async (entity: IAdminLesson) => {
     try {
       const res = await deleteLectureAPI(entity.id)
       message.success(res.message)
@@ -38,12 +38,13 @@ const LayoutAdminLesson = () => {
     }
   }
 
-  const columns: ProColumns<IAdminLessons>[] = [
+  const columns: ProColumns<IAdminLesson>[] = [
     {
       title: 'ID',
       dataIndex: 'id',
       valueType: 'text',
-      ellipsis: true
+      ellipsis: true,
+      search: false
     },
     {
       title: 'Bài giảng',
@@ -74,6 +75,7 @@ const LayoutAdminLesson = () => {
     {
       title: 'URL Nội dung',
       dataIndex: 'contentUrl',
+      search: false,
       render: (_, record) =>
         record && record.contentUrl ? (
           <Link to={record.contentUrl as string} target='_blank'>
@@ -86,6 +88,7 @@ const LayoutAdminLesson = () => {
     {
       title: 'URL PDF',
       dataIndex: 'pdfUrl',
+      search: false,
       render: (_, record) =>
         record && record.pdfUrl ? (
           <Link to={record.pdfUrl as string} target='_blank'>
@@ -96,27 +99,24 @@ const LayoutAdminLesson = () => {
         )
     },
     {
-      title: 'Thứ tự',
-      dataIndex: 'orderLesson',
-      valueType: 'digit',
-      render: (order) => order ?? 'Chưa có'
-    },
-    {
       title: 'Thời gian tạo',
       dataIndex: 'createdAt',
       valueType: 'date',
-      sorter: true
+      sorter: true,
+      search: false
     },
     {
       title: 'Thời gian cập nhật',
       dataIndex: 'updatedAt',
       valueType: 'date',
-      sorter: true
+      sorter: true,
+      search: false
     },
     {
       title: 'Trạng thái',
       dataIndex: 'isDeleted',
       ellipsis: true,
+      search: false,
       render: (_, { isDeleted }) => (
         <Badge status={isDeleted ? 'error' : 'success'} text={isDeleted ? 'Đã xóa' : 'Hoạt động'} />
       )
@@ -124,12 +124,14 @@ const LayoutAdminLesson = () => {
     {
       title: 'Thời gian xóa',
       dataIndex: 'deletedAt',
-      valueType: 'date'
+      valueType: 'date',
+      search: false
     },
     {
       title: 'Hành động',
       valueType: 'option',
       key: 'option',
+
       render: (_, entity) => (
         <Space size='middle'>
           <Link to={`/lesson/update/${entity.id}`}>
@@ -172,7 +174,7 @@ const LayoutAdminLesson = () => {
               current: '' + res.data.meta?.page,
               pageSize: '' + res.data.meta?.pageSize,
               pages: res.data.meta?.totalPages as number,
-              total: res.data.meta?.totalLectures as number
+              total: res.data.meta?.totalLessons as number
             })
             message.success(res.message)
           } else {
@@ -181,7 +183,7 @@ const LayoutAdminLesson = () => {
           return {
             data: res.data?.results,
             success: true,
-            total: res.data?.meta?.totalLectures
+            total: res.data?.meta?.totalLessons
           }
         }}
         rowKey='id'
