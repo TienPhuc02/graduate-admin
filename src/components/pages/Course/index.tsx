@@ -1,6 +1,18 @@
 import { deleteCourseAPI, getCoursesAPI } from '@/services/api.services'
 import { EBadgeStatus, ECourseCategory, EErrorMessage } from '@/types/enum'
-import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+  AppstoreOutlined,
+  CalendarOutlined,
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  DeleteOutlined,
+  DollarOutlined,
+  EyeOutlined,
+  FileTextOutlined,
+  PlusOutlined,
+  StarFilled,
+  TagOutlined
+} from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
 import { Badge, Button, message, Popconfirm, Space, Tag, Tooltip } from 'antd'
@@ -53,35 +65,107 @@ const LayoutAdminCourse = () => {
       search: false
     },
     {
-      title: 'Tiêu đề',
+      title: (
+        <>
+          <FileTextOutlined style={{ marginRight: 5, color: '#1890ff' }} />
+          Tiêu đề
+        </>
+      ),
       dataIndex: 'title',
       valueType: 'text',
       ellipsis: true,
       search: true
     },
     {
-      title: 'Mô tả',
+      title: (
+        <>
+          <TagOutlined style={{ marginRight: 5, color: '#722ed1' }} />
+          Mô tả
+        </>
+      ),
       dataIndex: 'description',
       valueType: 'text',
       ellipsis: true,
       search: false
     },
     {
-      title: 'Cập nhật',
+      title: (
+        <>
+          <CalendarOutlined style={{ marginRight: 5, color: '#fa541c' }} />
+          Thời gian cập nhật
+        </>
+      ),
       dataIndex: 'updatedAt',
       valueType: 'date',
       ellipsis: true,
-      sorter: true,
       search: false
     },
+
     {
-      title: 'Thời gian xóa',
+      title: (
+        <>
+          <EyeOutlined style={{ marginRight: 5, color: '#1890ff' }} />
+          Số lượng xem
+        </>
+      ),
+      dataIndex: 'viewsCourse',
+      ellipsis: true,
+      search: false,
+      render: (_, record) => (
+        <span style={{ fontWeight: 'bold', color: '#1890ff' }}>{record.viewsCourse.toLocaleString()}</span>
+      )
+    },
+    {
+      title: (
+        <>
+          <StarFilled style={{ marginRight: 5, color: '#fadb14' }} />
+          Đánh giá
+        </>
+      ),
+      dataIndex: 'rating',
+      ellipsis: true,
+      search: false,
+      render: (_, record) => (
+        <span style={{ fontWeight: 'bold', color: '#faad14' }}>
+          {record.rating ? `${record.rating}/5 ⭐` : 'Chưa có'}
+        </span>
+      )
+    },
+    {
+      title: (
+        <>
+          <ClockCircleOutlined style={{ marginRight: 5, color: '#52c41a' }} />
+          Thời lượng
+        </>
+      ),
+      dataIndex: 'duration',
+      ellipsis: true,
+      search: false,
+      render: (_, record) => (
+        <span style={{ fontWeight: 'bold', color: '#52c41a' }}>
+          {record.duration ? `${record.duration} giờ` : 'Chưa cập nhật'}
+        </span>
+      )
+    },
+    {
+      title: (
+        <>
+          <DeleteOutlined style={{ marginRight: 5, color: '#ff4d4f' }} />
+          Thời gian xóa
+        </>
+      ),
+      width: 140,
       dataIndex: 'deletedAt',
       valueType: 'dateTime',
       search: false
     },
     {
-      title: 'Trạng thái xóa',
+      title: (
+        <>
+          <CheckCircleOutlined style={{ marginRight: 5, color: 'green' }} />
+          Trạng thái xóa
+        </>
+      ),
       width: 150,
       dataIndex: 'isDeleted',
       render: (_, record) => (
@@ -90,7 +174,12 @@ const LayoutAdminCourse = () => {
       search: false
     },
     {
-      title: 'Danh mục',
+      title: (
+        <>
+          <AppstoreOutlined style={{ marginRight: 5, color: '#13c2c2' }} />
+          Danh mục
+        </>
+      ),
       dataIndex: 'category',
       valueType: 'select',
       ellipsis: true,
@@ -152,9 +241,15 @@ const LayoutAdminCourse = () => {
       ellipsis: true
     },
     {
-      title: 'Giá',
+      title: (
+        <>
+          <DollarOutlined style={{ marginRight: 5, color: '#faad14' }} />
+          Giá
+        </>
+      ),
       dataIndex: 'price',
       valueType: 'money',
+      ellipsis: true,
       search: false,
       render: (_, entity) =>
         new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(parseInt(entity.price))

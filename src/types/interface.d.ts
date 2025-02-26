@@ -93,6 +93,9 @@ declare global {
     level: string
     price: string
     thumbnail: string
+    viewsCourse: number
+    duration: number
+    rating: number
     describe: null
     createdAt: Date
     updatedAt: Date
