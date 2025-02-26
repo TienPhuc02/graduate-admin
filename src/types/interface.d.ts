@@ -170,6 +170,12 @@ declare global {
     updatedAt: Date
     status: 'pending' | 'approved' | 'rejected'
   }
-
+  export interface ICreateCommentDTO {
+    userId: string
+    courseId?: string
+    blogId?: string
+    text: string
+    parentCommentId?: string
+  }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }
