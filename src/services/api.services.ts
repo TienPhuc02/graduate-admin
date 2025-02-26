@@ -17,11 +17,11 @@ export const loginAPI = (email: string, password: string) => {
 //user
 export const getUsersAPI = (query?: string) => {
   const urlBackend = `/user?${query}`
-  return axios.get<IBackendRes<IModelPaginate<IAdminUsers>>>(urlBackend)
+  return axios.get<IBackendRes<IModelPaginate<IAdminUser>>>(urlBackend)
 }
 export const getUsersByIdAPI = (idUser: string) => {
   const urlBackend = `/user/${idUser}`
-  return axios.get<IBackendRes<IAdminUsers>>(urlBackend)
+  return axios.get<IBackendRes<IAdminUser>>(urlBackend)
 }
 export const createUserAPI = (file: any, data: ICreateUserDTO) => {
   const bodyFormData = new FormData()
@@ -33,7 +33,7 @@ export const createUserAPI = (file: any, data: ICreateUserDTO) => {
   bodyFormData.append('profilePicture', file)
   bodyFormData.append('role', data.role)
 
-  return axios<IBackendRes<ICustomResponse<IAdminUsers>>>({
+  return axios<IBackendRes<ICustomResponse<IAdminUser>>>({
     method: 'post',
     url: '/user',
     data: bodyFormData,
@@ -51,7 +51,7 @@ export const updateUserAPI = (idUser: string, file: any, data: IUpdateUserDTO) =
   bodyFormData.append('phoneNumber', data.phoneNumber)
   bodyFormData.append('profilePicture', file)
   bodyFormData.append('role', data.role)
-  return axios<IBackendRes<ICustomResponse<IAdminUsers>>>({
+  return axios<IBackendRes<ICustomResponse<IAdminUser>>>({
     method: 'put',
     url: `/user/${idUser}`,
     data: bodyFormData,
@@ -62,17 +62,17 @@ export const updateUserAPI = (idUser: string, file: any, data: IUpdateUserDTO) =
 }
 export const deleteUserAPI = (idUser: string) => {
   const urlBackend = `/user/${idUser}`
-  return axios.post<IBackendRes<IAdminUsers>>(urlBackend)
+  return axios.post<IBackendRes<IAdminUser>>(urlBackend)
 }
 
 //course
 export const getCoursesAPI = (query?: string) => {
   const urlBackend = `/course?${query}`
-  return axios.get<IBackendRes<IModelPaginate<IAdminCourses>>>(urlBackend)
+  return axios.get<IBackendRes<IModelPaginate<IAdminCourse>>>(urlBackend)
 }
 export const getCourseByIdAPI = (idCourse: string) => {
   const urlBackend = `/course/${idCourse}`
-  return axios.get<IBackendRes<IAdminCourses>>(urlBackend)
+  return axios.get<IBackendRes<IAdminCourse>>(urlBackend)
 }
 export const createCourseAPI = (file: File, data: ICreateCourseDTO) => {
   const bodyFormData = new FormData()
@@ -143,25 +143,25 @@ export const updateCourseAPI = (idCourse: string, file: File, data: IUpdateCours
 }
 export const deleteCourseAPI = (idCourse: string) => {
   const urlBackend = `/course/${idCourse}`
-  return axios.post<IBackendRes<IAdminCourses>>(urlBackend)
+  return axios.post<IBackendRes<IAdminCourse>>(urlBackend)
 }
 
 //lecture
 
 export const getLectureAPI = (query?: string) => {
   const urlBackend = `/lecture?${query}`
-  return axios.get<IBackendRes<IModelPaginate<IAdminLectures>>>(urlBackend)
+  return axios.get<IBackendRes<IModelPaginate<IAdminLecture>>>(urlBackend)
 }
 export const createLectureAPI = ({ courseId, title }: { title: string; courseId: string }) => {
   const urlBackend = `/lecture`
-  return axios.post<IBackendRes<IAdminLectures>>(urlBackend, {
+  return axios.post<IBackendRes<IAdminLecture>>(urlBackend, {
     courseId,
     title
   })
 }
 export const getLectureByIdAPI = (idLecture: string) => {
   const urlBackend = `/lecture/${idLecture}`
-  return axios.get<IBackendRes<IAdminLectures>>(urlBackend)
+  return axios.get<IBackendRes<IAdminLecture>>(urlBackend)
 }
 export const updateLectureAPI = ({
   courseId,
@@ -173,7 +173,7 @@ export const updateLectureAPI = ({
   idLecture: string
 }) => {
   const urlBackend = `/lecture/${idLecture}`
-  return axios.put<IBackendRes<IAdminLectures>>(urlBackend, {
+  return axios.put<IBackendRes<IAdminLecture>>(urlBackend, {
     courseId,
     title
   })
@@ -181,13 +181,13 @@ export const updateLectureAPI = ({
 
 export const deleteLectureAPI = (idCourse: string) => {
   const urlBackend = `/lecture/${idCourse}`
-  return axios.post<IBackendRes<IAdminLectures>>(urlBackend)
+  return axios.post<IBackendRes<IAdminLecture>>(urlBackend)
 }
 
 //lesson
 export const getLessonAPI = (query?: string) => {
   const urlBackend = `/lesson?${query}`
-  return axios.get<IBackendRes<IModelPaginate<IAdminLessons>>>(urlBackend)
+  return axios.get<IBackendRes<IModelPaginate<IAdminLesson>>>(urlBackend)
 }
 export const createLessonAPI = (videoFile: File | null, pdfFile: File | null, data: ICreateLessonDTO) => {
   const bodyFormData = new FormData()
@@ -207,7 +207,7 @@ export const createLessonAPI = (videoFile: File | null, pdfFile: File | null, da
     bodyFormData.append('pdfUrl', pdfFile)
   }
 
-  return axios<IBackendRes<ICustomResponse<IAdminLessons>>>({
+  return axios<IBackendRes<ICustomResponse<IAdminLesson>>>({
     method: 'post',
     url: '/lesson',
     data: bodyFormData,
@@ -219,7 +219,7 @@ export const createLessonAPI = (videoFile: File | null, pdfFile: File | null, da
 
 export const getLessonByIdAPI = (idLesson: string) => {
   const urlBackend = `/lesson/${idLesson}`
-  return axios.get<IBackendRes<IAdminLessons>>(urlBackend)
+  return axios.get<IBackendRes<IAdminLesson>>(urlBackend)
 }
 
 export const updateLessonAPI = (
@@ -245,7 +245,7 @@ export const updateLessonAPI = (
     bodyFormData.append('pdfUrl', pdfFile)
   }
 
-  return axios<IBackendRes<ICustomResponse<IAdminLessons>>>({
+  return axios<IBackendRes<ICustomResponse<IAdminLesson>>>({
     method: 'put',
     url: `/lesson/${idLesson}`,
     data: bodyFormData,
@@ -253,4 +253,11 @@ export const updateLessonAPI = (
       'Content-Type': 'multipart/form-data'
     }
   })
+}
+
+//comment
+
+export const getCommentsAPI = (query?: string) => {
+  const urlBackend = `/comment?${query}`
+  return axios.get<IBackendRes<IModelPaginate<IAdminComment>>>(urlBackend)
 }

@@ -2,7 +2,7 @@ import { DrawerForm, ProForm, ProFormDatePicker, ProFormText } from '@ant-design
 import { Form, Image } from 'antd'
 import { useEffect } from 'react'
 
-const DetailUser = ({ selectedUser, onClose }: { selectedUser: IAdminUsers | null; onClose: () => void }) => {
+const DetailUser = ({ selectedUser, onClose }: { selectedUser: IAdminUser | null; onClose: () => void }) => {
   const [form] = Form.useForm()
 
   useEffect(() => {

@@ -25,7 +25,7 @@ const LayoutCreateLesson = () => {
 
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   const [pdfPreview, setPdfPreview] = useState<string | null>(null)
-  const [listLecture, setListLecture] = useState<IAdminLectures[] | null>(null)
+  const [listLecture, setListLecture] = useState<IAdminLecture[] | null>(null)
   const formRef = useRef<any>(null)
 
   const handleUploadChange = ({ fileList }: any, type: 'video' | 'pdf') => {
