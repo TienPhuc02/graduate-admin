@@ -27,17 +27,17 @@ const LayoutAdminComment = () => {
     pages: 0,
     total: 0
   })
-  const [selectedComment, setSelectedComment] = useState<IAdminComment | null>(null)
+  //   const [selectedComment, setSelectedComment] = useState<IAdminComment | null>(null)
 
-  const handleViewComment = (entity: IAdminComment) => {
-    setSelectedComment(entity)
-  }
-  const refreshTable = () => {
-    actionRef.current?.reload()
-  }
-  const handleCloseDrawer = () => {
-    setSelectedComment(null)
-  }
+  //   const handleViewComment = (entity: IAdminComment) => {
+  //     setSelectedComment(entity)
+  //   }
+  //   const refreshTable = () => {
+  //     actionRef.current?.reload()
+  //   }
+  //   const handleCloseDrawer = () => {
+  //     setSelectedComment(null)
+  //   }
   //   const confirm = async (entity: IAdminComment) => {
   //     try {
   //       const res = await deleteCommentAPI(entity.id)
@@ -230,7 +230,10 @@ const LayoutAdminComment = () => {
             </Tooltip>
           </Popconfirm>
           <Tooltip title='Xem chi tiết'>
-            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewComment(entity)} />
+            <EyeOutlined
+              style={{ color: '#167fff', cursor: 'pointer' }}
+              //   onClick={() => handleViewComment(entity)}
+            />
           </Tooltip>
         </Space>
       )
