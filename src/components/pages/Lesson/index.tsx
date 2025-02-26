@@ -1,5 +1,5 @@
 import { deleteLectureAPI, getLessonAPI } from '@/services/api.services'
-import { PlusOutlined } from '@ant-design/icons'
+import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
 import { Badge, Button, message, Popconfirm, Space, Tag, Tooltip } from 'antd'
@@ -7,6 +7,7 @@ import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
+import DetailLesson from './DetailLesson'
 
 const LayoutAdminLesson = () => {
   const actionRef = useRef<ActionType>(null)
@@ -16,17 +17,17 @@ const LayoutAdminLesson = () => {
     pages: 0,
     total: 0
   })
-  // const [selectedLesson, setSelectedLesson] = useState<IAdminLesson | null>(null)
+  const [selectedLesson, setSelectedLesson] = useState<IAdminLesson | null>(null)
 
-  // const handleViewLesson = (entity: IAdminLesson) => {
-  //   setSelectedLesson(entity)
-  // }
+  const handleViewLesson = (entity: IAdminLesson) => {
+    setSelectedLesson(entity)
+  }
   const refreshTable = () => {
     actionRef.current?.reload()
   }
-  // const handleCloseDrawer = () => {
-  //   setSelectedLesson(null)
-  // }
+  const handleCloseDrawer = () => {
+    setSelectedLesson(null)
+  }
 
   const confirm = async (entity: IAdminLesson) => {
     try {
@@ -151,7 +152,7 @@ const LayoutAdminLesson = () => {
             </Tooltip>
           </Popconfirm>
           <Tooltip title='Xem chi tiết'>
-            {/* <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewLesson(entity)} /> */}
+            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewLesson(entity)} />
           </Tooltip>
         </Space>
       )
@@ -209,6 +210,7 @@ const LayoutAdminLesson = () => {
           </Link>
         ]}
       />
+      <DetailLesson selectedLesson={selectedLesson} onClose={handleCloseDrawer} />
     </>
   )
 }
