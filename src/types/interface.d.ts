@@ -197,16 +197,16 @@ declare global {
     content: string
     categoryBlog: string
     authorId: string
-    isPublished?: boolean
-    thumbnail?: string
+    isPublished: 'pending' | 'approved' | 'rejected'
+    thumbnail: string
   }
 
   export interface IUpdateBlogDTO {
-    title?: string
-    content?: string
-    categoryBlog?: string
-    isPublished?: boolean
-    thumbnail?: string
+    title: string
+    content: string
+    categoryBlog: string
+    isPublished: 'pending' | 'approved' | 'rejected'
+    thumbnail: string
   }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }
