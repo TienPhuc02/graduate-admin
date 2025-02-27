@@ -1,4 +1,3 @@
-// import { deleteBlogAPI, getBlogsAPI } from '@/services/api.services'
 import { getBlogsAPI } from '@/services/api.services'
 import { EBadgeStatus, EBlogStatus } from '@/types/enum'
 import {
@@ -19,7 +18,7 @@ import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-// import DetailBlog from './DetailBlog'
+import DetailBlog from './DetailBlog'
 
 const LayoutAdminBlog = () => {
   const actionRef = useRef<ActionType>(null)
@@ -29,17 +28,17 @@ const LayoutAdminBlog = () => {
     pages: 0,
     total: 0
   })
-  // const [selectedBlog, setSelectedBlog] = useState<IAdminBlog | null>(null)
+  const [selectedBlog, setSelectedBlog] = useState<IAdminBlog | null>(null)
 
-  // const handleViewBlog = (entity: IAdminBlog) => {
-  //   setSelectedBlog(entity)
-  // }
+  const handleViewBlog = (entity: IAdminBlog) => {
+    setSelectedBlog(entity)
+  }
   // const refreshTable = () => {
   //   actionRef.current?.reload()
   // }
-  // const handleCloseDrawer = () => {
-  //   setSelectedBlog(null)
-  // }
+  const handleCloseDrawer = () => {
+    setSelectedBlog(null)
+  }
   //   const confirm = async (entity: IAdminBlog) => {
   //     try {
   //       const res = await deleteBlogAPI(entity.id)
@@ -233,7 +232,7 @@ const LayoutAdminBlog = () => {
             </Tooltip>
           </Popconfirm>
           <Tooltip title='Xem chi tiết'>
-            {/* <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewBlog(entity)} /> */}
+            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewBlog(entity)} />
           </Tooltip>
         </Space>
       )
@@ -308,7 +307,7 @@ const LayoutAdminBlog = () => {
           </Link>
         ]}
       />
-      {/* <DetailBlog selectedBlog={selectedBlog} onClose={handleCloseDrawer} /> */}
+      <DetailBlog selectedBlog={selectedBlog} onClose={handleCloseDrawer} />
     </>
   )
 }
