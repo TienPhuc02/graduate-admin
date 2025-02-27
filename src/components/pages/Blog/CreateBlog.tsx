@@ -96,7 +96,7 @@ const LayoutCreateBlog = () => {
           onFinish={handleSubmit}
         >
           <ProFormSelect
-            name='authorId'
+            name='author'
             label='Tác giả'
             placeholder='Chọn tác giả'
             rules={[{ required: true, message: 'Vui lòng chọn tác giả' }]}

@@ -267,18 +267,40 @@ export const getBlogsAPI = (query?: string) => {
   const urlBackend = `/blog?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminBlog>>>(urlBackend)
 }
+export const getBlogByIdAPI = (idBlog: string) => {
+  const urlBackend = `/blog/${idBlog}`
+  return axios.get<IBackendRes<IAdminBlog>>(urlBackend)
+}
 export const createBlogAPI = (thumbnailFile: File, data: ICreateBlogDTO) => {
   const bodyFormData = new FormData()
 
   bodyFormData.append('title', data.title)
   bodyFormData.append('content', data.content)
   bodyFormData.append('categoryBlog', data.categoryBlog)
-  bodyFormData.append('authorId', data.authorId)
+  bodyFormData.append('author', data.author)
   bodyFormData.append('isPublished', data.isPublished)
   bodyFormData.append('thumbnail', thumbnailFile)
   return axios<IBackendRes<ICustomResponse<IAdminBlog>>>({
     method: 'post',
     url: `/blog`,
+    data: bodyFormData,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+export const updateBlogAPI = (idBlog: string, thumbnailFile: File, data: IUpdateBlogDTO) => {
+  const bodyFormData = new FormData()
+
+  bodyFormData.append('title', data.title)
+  bodyFormData.append('content', data.content)
+  bodyFormData.append('categoryBlog', data.categoryBlog)
+  bodyFormData.append('author', data.author)
+  bodyFormData.append('isPublished', data.isPublished)
+  bodyFormData.append('thumbnail', thumbnailFile)
+  return axios<IBackendRes<ICustomResponse<IAdminBlog>>>({
+    method: 'put',
+    url: `/blog/${idBlog}`,
     data: bodyFormData,
     headers: {
       'Content-Type': 'multipart/form-data'

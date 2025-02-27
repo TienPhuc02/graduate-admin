@@ -187,9 +187,9 @@ const LayoutAdminComment = () => {
         <Badge
           status={
             record.status === 'approved'
-              ? EBadgeStatus.ACTIVE
+              ? EBadgeStatus.SUCCESS
               : record.status === 'rejected'
-                ? EBadgeStatus.INACTIVE
+                ? EBadgeStatus.ERROR
                 : 'default'
           }
           text={record.status === 'approved' ? 'Đã duyệt' : record.status === 'rejected' ? 'Từ chối' : 'Đang chờ'}

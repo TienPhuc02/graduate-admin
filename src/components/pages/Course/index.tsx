@@ -100,7 +100,6 @@ const LayoutAdminCourse = () => {
       ellipsis: true,
       search: false
     },
-
     {
       title: (
         <>
@@ -217,12 +216,12 @@ const LayoutAdminCourse = () => {
       dataIndex: 'status',
       ellipsis: true,
       valueEnum: {
-        true: { text: EBadgeStatus.ACTIVE },
-        false: { text: EBadgeStatus.INACTIVE }
+        true: { text: EBadgeStatus.SUCCESS },
+        false: { text: EBadgeStatus.ERROR }
       },
       render: (_, record) => (
         <Badge
-          status={record.status ? EBadgeStatus.ACTIVE : EBadgeStatus.INACTIVE}
+          status={record.status ? EBadgeStatus.SUCCESS : EBadgeStatus.ERROR}
           text={record.status ? 'Hoạt động' : 'Không hoạt động'}
         />
       ),

@@ -182,13 +182,15 @@ declare global {
     title: string
     content: string
     categoryBlog: string
-    authorId: string
+    author: {
+      id: string
+    }
     viewsBlog: number
-    isPublished: boolean
+    isPublished: EBlogStatus
     comments: string[]
-    thumbnail?: string
+    thumbnail: string
     isDeleted: boolean
-    deletedAt?: Date
+    deletedAt: Date
     createdAt: Date
     updatedAt: Date
   }
@@ -196,8 +198,8 @@ declare global {
     title: string
     content: string
     categoryBlog: string
-    authorId: string
-    isPublished: 'pending' | 'approved' | 'rejected'
+    author: string
+    isPublished: EBlogStatus
     thumbnail: string
   }
 
@@ -205,7 +207,8 @@ declare global {
     title: string
     content: string
     categoryBlog: string
-    isPublished: 'pending' | 'approved' | 'rejected'
+    author: string
+    isPublished: EBlogStatus
     thumbnail: string
   }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
