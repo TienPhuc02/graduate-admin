@@ -1,6 +1,6 @@
 // import { deleteBlogAPI, getBlogsAPI } from '@/services/api.services'
 import { getBlogsAPI } from '@/services/api.services'
-import { EBadgeStatus, EErrorMessage } from '@/types/enum'
+import { EBadgeStatus } from '@/types/enum'
 import {
   AppstoreOutlined,
   CalendarOutlined,
@@ -29,17 +29,17 @@ const LayoutAdminBlog = () => {
     pages: 0,
     total: 0
   })
-  const [selectedBlog, setSelectedBlog] = useState<IAdminBlog | null>(null)
+  // const [selectedBlog, setSelectedBlog] = useState<IAdminBlog | null>(null)
 
-  const handleViewBlog = (entity: IAdminBlog) => {
-    setSelectedBlog(entity)
-  }
-  const refreshTable = () => {
-    actionRef.current?.reload()
-  }
-  const handleCloseDrawer = () => {
-    setSelectedBlog(null)
-  }
+  // const handleViewBlog = (entity: IAdminBlog) => {
+  //   setSelectedBlog(entity)
+  // }
+  // const refreshTable = () => {
+  //   actionRef.current?.reload()
+  // }
+  // const handleCloseDrawer = () => {
+  //   setSelectedBlog(null)
+  // }
   //   const confirm = async (entity: IAdminBlog) => {
   //     try {
   //       const res = await deleteBlogAPI(entity.id)
@@ -86,9 +86,7 @@ const LayoutAdminBlog = () => {
       valueType: 'text',
       ellipsis: true,
       search: false,
-      render: (_, record) => (
-        <span>{record.content.length > 100 ? `${record.content.substring(0, 100)}...` : record.content}</span>
-      )
+      render: (_, record) => <div dangerouslySetInnerHTML={{ __html: record.content || 'Không có' }} />
     },
     {
       title: (
@@ -147,6 +145,7 @@ const LayoutAdminBlog = () => {
           Trạng thái xuất bản
         </>
       ),
+      ellipsis: true,
       dataIndex: 'isPublished',
       valueEnum: {
         true: { text: EBadgeStatus.ACTIVE },
@@ -227,7 +226,7 @@ const LayoutAdminBlog = () => {
             </Tooltip>
           </Popconfirm>
           <Tooltip title='Xem chi tiết'>
-            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewBlog(entity)} />
+            {/* <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewBlog(entity)} /> */}
           </Tooltip>
         </Space>
       )

@@ -1,13 +1,23 @@
 import { createBlogAPI, getUsersAPI } from '@/services/api.services'
-import { EBlogStatus, EErrorMessage } from '@/types/enum'
+import { EBlogStatus, ECourseCategory, EErrorMessage } from '@/types/enum'
+import { Editor as TinyMCEEditor } from 'tinymce'
 import { UploadOutlined } from '@ant-design/icons'
-import { FooterToolbar, PageContainer, ProForm, ProFormText, ProFormSelect } from '@ant-design/pro-components'
+import {
+  FooterToolbar,
+  PageContainer,
+  ProForm,
+  ProFormText,
+  ProFormSelect,
+  ProFormItem
+} from '@ant-design/pro-components'
+import { Editor } from '@tinymce/tinymce-react'
 import { Button, Card, Upload, Modal, message, Image } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const LayoutCreateBlog = () => {
   const navigate = useNavigate()
+  const editorRef = useRef<any>(null)
   const [loading, setLoading] = useState(false)
   const [fileList, setFileList] = useState<any[]>([])
   const [previewImage, setPreviewImage] = useState<string | null>(null)
@@ -46,12 +56,13 @@ const LayoutCreateBlog = () => {
 
   const handleSubmit = async (values: ICreateBlogDTO) => {
     try {
+      setLoading(true)
       let thumbnailFile = null
       if (fileList.length > 0) {
         thumbnailFile = fileList[0].originFileObj
       }
-      setLoading(true)
-      const res = await createBlogAPI(thumbnailFile, values)
+      const contentHtml = editorRef.current ? editorRef.current.getContent() : ''
+      const res = await createBlogAPI(thumbnailFile, { ...values, content: contentHtml })
       if (res && res.data) {
         formRef.current?.resetFields()
         setFileList([])
@@ -102,22 +113,34 @@ const LayoutCreateBlog = () => {
             rules={[{ required: true, message: 'Vui lòng nhập tiêu đề bài viết' }]}
           />
 
-          <ProFormText
-            name='content'
-            label='Nội dung bài viết'
-            placeholder='Nhập nội dung bài viết'
-            rules={[{ required: true, message: 'Vui lòng nhập nội dung bài viết' }]}
-            fieldProps={{
-              //   rows: 5,
-              style: { resize: 'vertical' }
-            }}
-          />
-
-          <ProFormText
+          <ProFormItem name='content' label='Nội dung' rules={[{ required: true, message: 'Vui lòng nhập nội dung' }]}>
+            <Editor
+              apiKey={`${import.meta.env.VITE_API_KEY_TINYMCE}`}
+              onInit={(_evt: any, editor: TinyMCEEditor) => {
+                editorRef.current = editor
+                document.querySelector('.tox-tinymce')?.classList.add('tox-tinymce-loaded')
+              }}
+              init={{
+                height: 300,
+                menubar: false,
+                plugins: 'lists link image table code help',
+                toolbar:
+                  'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat | help'
+              }}
+            />
+          </ProFormItem>
+          <ProFormSelect
             name='categoryBlog'
             label='Danh mục'
-            placeholder='Nhập danh mục bài viết'
-            rules={[{ required: true, message: 'Vui lòng nhập danh mục bài viết' }]}
+            valueEnum={{
+              PROGRAMMING: { text: ECourseCategory.PROGRAMMING },
+              DESIGN: { text: ECourseCategory.DESIGN },
+              BUSINESS: { text: ECourseCategory.BUSINESS },
+              MARKETING: { text: ECourseCategory.MARKETING },
+              DATA_SCIENCE: { text: ECourseCategory.DATA_SCIENCE }
+            }}
+            placeholder='Chọn danh mục'
+            rules={[{ required: true, message: 'Vui lòng chọn danh mục' }]}
           />
           <ProFormSelect
             name='isPublished'

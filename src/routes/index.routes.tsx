@@ -97,7 +97,11 @@ export const router = createBrowserRouter([
       {
         path: 'blog/create',
         element: <PageCreateBlog />
-      }
+      },
+      {
+        path: 'blog/update',
+        element: <PageCreateBlog />
+      },
     ]
   },
   {
