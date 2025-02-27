@@ -36,8 +36,11 @@ export enum EErrorMessage {
 export enum EUserErrorMessage {}
 
 export enum EBadgeStatus {
-  ACTIVE = 'success',
-  INACTIVE = 'error'
+  SUCCESS = 'success',
+  DEFAULT = 'default',
+  ERROR = 'error',
+  WARNING = 'warning',
+  PROCESSING = 'processing'
 }
 
 export enum ESortOrder {

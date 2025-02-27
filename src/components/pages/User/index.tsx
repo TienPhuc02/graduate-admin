@@ -86,7 +86,7 @@ const LayoutAdminUser = () => {
       dataIndex: 'isVerified',
       render: (_, record) => (
         <Badge
-          status={record.isVerified ? EBadgeStatus.ACTIVE : EBadgeStatus.INACTIVE}
+          status={record.isVerified ? EBadgeStatus.SUCCESS : EBadgeStatus.ERROR}
           text={record.isVerified ? 'Đã xác minh' : 'Chưa xác minh'}
         />
       ),
@@ -97,7 +97,7 @@ const LayoutAdminUser = () => {
       dataIndex: 'isDeleted',
       render: (_, record) => (
         <Badge
-          status={record.isDeleted ? EBadgeStatus.INACTIVE : EBadgeStatus.ACTIVE}
+          status={record.isDeleted ? EBadgeStatus.ERROR : EBadgeStatus.SUCCESS}
           text={record.isDeleted ? 'Đã xóa' : 'Hoạt động'}
         />
       ),

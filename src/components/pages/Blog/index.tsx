@@ -1,6 +1,6 @@
 // import { deleteBlogAPI, getBlogsAPI } from '@/services/api.services'
 import { getBlogsAPI } from '@/services/api.services'
-import { EBadgeStatus } from '@/types/enum'
+import { EBadgeStatus, EBlogStatus } from '@/types/enum'
 import {
   AppstoreOutlined,
   CalendarOutlined,
@@ -95,7 +95,7 @@ const LayoutAdminBlog = () => {
           Tác giả
         </>
       ),
-      dataIndex: ['author', 'username'],
+      dataIndex: ['author', 'email'],
       valueType: 'text',
       ellipsis: true,
       search: false
@@ -148,12 +148,19 @@ const LayoutAdminBlog = () => {
       ellipsis: true,
       dataIndex: 'isPublished',
       valueEnum: {
-        true: { text: EBadgeStatus.ACTIVE },
-        false: { text: EBadgeStatus.INACTIVE }
+        PENDING: { text: EBlogStatus.PENDING },
+        APPROVED: { text: EBlogStatus.APPROVED },
+        REJECTED: { text: EBlogStatus.REJECTED }
       },
       render: (_, record) => (
         <Badge
-          status={record.isPublished ? EBadgeStatus.ACTIVE : EBadgeStatus.INACTIVE}
+          status={
+            record.isPublished === 'APPROVED'
+              ? EBadgeStatus.SUCCESS
+              : record.isPublished === 'PENDING'
+                ? EBadgeStatus.WARNING
+                : EBadgeStatus.ERROR
+          }
           text={record.isPublished ? 'Đã xuất bản' : 'Chưa xuất bản'}
         />
       ),

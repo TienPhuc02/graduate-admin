@@ -50,7 +50,7 @@ const LayoutAdminHome = () => {
           }}
         >
           <Button
-            type='default'
+            type='text'
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{

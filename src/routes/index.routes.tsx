@@ -19,6 +19,7 @@ import AdminComment from '@/pages/Comment'
 import PageCreateComment from '@/pages/Comment/CreateComment'
 import AdminBlog from '@/pages/Blog'
 import PageCreateBlog from '@/pages/Blog/CreateBlog'
+import PageUpdateBlog from '@/pages/Blog/UpdateBlog'
 
 export const router = createBrowserRouter([
   {
@@ -99,9 +100,9 @@ export const router = createBrowserRouter([
         element: <PageCreateBlog />
       },
       {
-        path: 'blog/update',
-        element: <PageCreateBlog />
-      },
+        path: 'blog/update/:id',
+        element: <PageUpdateBlog />
+      }
     ]
   },
   {
