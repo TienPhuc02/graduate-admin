@@ -17,6 +17,8 @@ import PageCreateLesson from '@/pages/Lesson/CreateLesson'
 import PageUpdateLesson from '@/pages/Lesson/UpdateLesson'
 import AdminComment from '@/pages/Comment'
 import PageCreateComment from '@/pages/Comment/CreateComment'
+import AdminBlog from '@/pages/Blog'
+import PageCreateBlog from '@/pages/Blog/CreateBlog'
 
 export const router = createBrowserRouter([
   {
@@ -87,6 +89,18 @@ export const router = createBrowserRouter([
       {
         path: 'comment/create',
         element: <PageCreateComment />
+      },
+      {
+        path: 'blog',
+        element: <AdminBlog />
+      },
+      {
+        path: 'blog/create',
+        element: <PageCreateBlog />
+      },
+      {
+        path: 'blog/update',
+        element: <PageCreateBlog />
       },
     ]
   },

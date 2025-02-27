@@ -177,5 +177,36 @@ declare global {
     text: string
     parentCommentId?: string
   }
+  export interface IAdminBlog {
+    id: string
+    title: string
+    content: string
+    categoryBlog: string
+    authorId: string
+    viewsBlog: number
+    isPublished: boolean
+    comments: string[]
+    thumbnail?: string
+    isDeleted: boolean
+    deletedAt?: Date
+    createdAt: Date
+    updatedAt: Date
+  }
+  export interface ICreateBlogDTO {
+    title: string
+    content: string
+    categoryBlog: string
+    authorId: string
+    isPublished: 'pending' | 'approved' | 'rejected'
+    thumbnail: string
+  }
+
+  export interface IUpdateBlogDTO {
+    title: string
+    content: string
+    categoryBlog: string
+    isPublished: 'pending' | 'approved' | 'rejected'
+    thumbnail: string
+  }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }

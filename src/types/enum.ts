@@ -8,6 +8,11 @@ export enum EContentLessonType {
   TEXT = 'TEXT',
   PDF = 'PDF'
 }
+export enum EBlogStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED'
+}
 export enum ECourseCategory {
   PROGRAMMING = 'PROGRAMMING',
   DESIGN = 'DESIGN',

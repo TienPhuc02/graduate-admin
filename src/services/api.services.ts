@@ -261,3 +261,27 @@ export const getCommentsAPI = (query?: string) => {
   const urlBackend = `/comment?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminComment>>>(urlBackend)
 }
+
+//blog
+export const getBlogsAPI = (query?: string) => {
+  const urlBackend = `/blog?${query}`
+  return axios.get<IBackendRes<IModelPaginate<IAdminBlog>>>(urlBackend)
+}
+export const createBlogAPI = (thumbnailFile: File, data: ICreateBlogDTO) => {
+  const bodyFormData = new FormData()
+
+  bodyFormData.append('title', data.title)
+  bodyFormData.append('content', data.content)
+  bodyFormData.append('categoryBlog', data.categoryBlog)
+  bodyFormData.append('authorId', data.authorId)
+  bodyFormData.append('isPublished', data.isPublished)
+  bodyFormData.append('thumbnail', thumbnailFile)
+  return axios<IBackendRes<ICustomResponse<IAdminBlog>>>({
+    method: 'post',
+    url: `/blog`,
+    data: bodyFormData,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
