@@ -179,9 +179,9 @@ export const updateLectureAPI = ({
   })
 }
 
-export const deleteLectureAPI = (idCourse: string) => {
-  const urlBackend = `/lecture/${idCourse}`
-  return axios.post<IBackendRes<IAdminLecture>>(urlBackend)
+export const deleteLectureAPI = (idLecture: string) => {
+  const urlBackend = `/lecture/${idLecture}`
+  return axios.delete<IBackendRes<IAdminLecture>>(urlBackend)
 }
 
 //lesson
@@ -254,7 +254,10 @@ export const updateLessonAPI = (
     }
   })
 }
-
+export const deleteLessonAPI = (idLesson: string) => {
+  const urlBackend = `/lesson/${idLesson}`
+  return axios.delete<IBackendRes<IAdminLesson>>(urlBackend)
+}
 //comment
 
 export const getCommentsAPI = (query?: string) => {
@@ -306,4 +309,8 @@ export const updateBlogAPI = (idBlog: string, thumbnailFile: File, data: IUpdate
       'Content-Type': 'multipart/form-data'
     }
   })
+}
+export const deleteBlogAPI = (idBlog: string) => {
+  const urlBackend = `/blog/${idBlog}`
+  return axios.delete<IBackendRes<IAdminBlog>>(urlBackend)
 }
