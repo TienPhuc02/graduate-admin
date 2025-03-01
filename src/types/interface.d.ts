@@ -114,6 +114,9 @@ declare global {
     category: ECourseCategory
     level: ECourseLevel
     price: number
+    viewsCourse: number
+    duration: number
+    rating: number
     thumbnail?: File | string
     requirements: { requirement: string }[]
     benefits: { benefit: string }[]
