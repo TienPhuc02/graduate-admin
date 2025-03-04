@@ -258,12 +258,66 @@ export const deleteLessonAPI = (idLesson: string) => {
   const urlBackend = `/lesson/${idLesson}`
   return axios.delete<IBackendRes<IAdminLesson>>(urlBackend)
 }
+
+
+
 //comment
 
 export const getCommentsAPI = (query?: string) => {
   const urlBackend = `/comment?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminComment>>>(urlBackend)
 }
+
+export const createCommentAPI = ({
+  userId,
+  courseId,
+  blogId,
+  text,
+  parentCommentId
+}: {
+  userId: string
+  courseId?: string
+  blogId?: string
+  text: string
+  parentCommentId?: string
+}) => {
+  const urlBackend = `/comment`
+  return axios.post<IBackendRes<IComment>>(urlBackend, {
+    userId,
+    courseId,
+    blogId,
+    text,
+    parentCommentId
+  })
+}
+
+export const getCommentByIdAPI = (idComment: string) => {
+  const urlBackend = `/comment/${idComment}`
+  return axios.get<IBackendRes<IComment>>(urlBackend)
+}
+
+export const updateCommentAPI = ({
+  idComment,
+  text,
+  status
+}: {
+  idComment: string
+  text?: string
+  status?: 'pending' | 'approved' | 'rejected'
+}) => {
+  const urlBackend = `/comment/${idComment}`
+  return axios.put<IBackendRes<IComment>>(urlBackend, {
+    text,
+    status
+  })
+}
+
+export const deleteCommentAPI = (idComment: string) => {
+  const urlBackend = `/comment/${idComment}`
+  return axios.delete<IBackendRes<IComment>>(urlBackend)
+}
+
+
 
 //blog
 export const getBlogsAPI = (query?: string) => {

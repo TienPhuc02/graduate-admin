@@ -19,6 +19,7 @@ declare global {
           totalLessons?: number
           totalComments?: number
           totalBlogs?: number
+          totalComments?: number
         }
       | undefined
     gotBy: IUserPayload

@@ -214,5 +214,21 @@ declare global {
     isPublished: EBlogStatus
     thumbnail: string
   }
+  interface IComment {
+    id: string
+    user: string
+    course?: string | null
+    blog?: string | null
+    text: string
+    likesCount: number
+    parentCommentId?: string | null
+    isEdited: boolean
+    isDeleted: boolean
+    deletedAt?: string | null
+    createdAt: string
+    updatedAt?: string | null
+    status: 'pending' | 'approved' | 'rejected'
+    replies?: IComment[]
+  }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }
