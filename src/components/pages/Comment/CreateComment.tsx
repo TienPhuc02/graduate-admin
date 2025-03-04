@@ -5,7 +5,7 @@ import {
   FooterToolbar,
   PageContainer,
   ProForm,
-  ProFormText,
+  // ProFormText,
   ProFormSelect,
   ProFormItem
 } from '@ant-design/pro-components'
@@ -21,7 +21,7 @@ const LayoutCreateComment = () => {
   const [users, setUsers] = useState<IAdminUser[] | null>(null)
   const [courses, setCourses] = useState<IAdminCourse[] | null>(null)
   const [blogs, setBlogs] = useState<IAdminBlog[] | null>(null)
-  const [comments, setComments] = useState<IAdminComment[] | null>(null)
+  // const [comments, setComments] = useState<IAdminComment[] | null>(null)
   const formRef = useRef<any>(null)
 
   const handleFooterClick = async () => {
@@ -60,7 +60,7 @@ const LayoutCreateComment = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [usersRes, coursesRes, blogsRes, commentsRes] = await Promise.all([
+        const [usersRes, coursesRes, blogsRes] = await Promise.all([
           getUsersAPI(),
           getCoursesAPI(''),
           getBlogsAPI(''),
@@ -70,7 +70,7 @@ const LayoutCreateComment = () => {
         if (usersRes.data) setUsers(usersRes.data.results)
         if (coursesRes.data) setCourses(coursesRes.data.results)
         if (blogsRes.data) setBlogs(blogsRes.data.results)
-        if (commentsRes.data) setComments(commentsRes.data.results)
+        // if (commentsRes.data) setComments(commentsRes.data.results)
       } catch (error) {
         message.error('Không thể tải dữ liệu ban đầu')
       }
