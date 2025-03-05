@@ -20,6 +20,7 @@ import PageCreateComment from '@/pages/Comment/CreateComment'
 import AdminBlog from '@/pages/Blog'
 import PageCreateBlog from '@/pages/Blog/CreateBlog'
 import PageUpdateBlog from '@/pages/Blog/UpdateBlog'
+import PageUpdateComment from '@/pages/Comment/UpdateComment'
 
 export const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
       {
         path: 'comment/create',
         element: <PageCreateComment />
+      },
+      {
+        path: 'comment/update/:id',
+        element: <PageUpdateComment />
       },
       {
         path: 'blog',

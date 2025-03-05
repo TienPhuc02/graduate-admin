@@ -259,8 +259,6 @@ export const deleteLessonAPI = (idLesson: string) => {
   return axios.delete<IBackendRes<IAdminLesson>>(urlBackend)
 }
 
-
-
 //comment
 
 export const getCommentsAPI = (query?: string) => {
@@ -296,28 +294,15 @@ export const getCommentByIdAPI = (idComment: string) => {
   return axios.get<IBackendRes<IComment>>(urlBackend)
 }
 
-export const updateCommentAPI = ({
-  idComment,
-  text,
-  status
-}: {
-  idComment: string
-  text?: string
-  status?: 'pending' | 'approved' | 'rejected'
-}) => {
+export const updateCommentAPI = (idComment: string, data: IUpdateCommentDTO) => {
   const urlBackend = `/comment/${idComment}`
-  return axios.put<IBackendRes<IComment>>(urlBackend, {
-    text,
-    status
-  })
+  return axios.put<IBackendRes<IComment>>(urlBackend, data)
 }
 
 export const deleteCommentAPI = (idComment: string) => {
   const urlBackend = `/comment/${idComment}`
   return axios.delete<IBackendRes<IComment>>(urlBackend)
 }
-
-
 
 //blog
 export const getBlogsAPI = (query?: string) => {
