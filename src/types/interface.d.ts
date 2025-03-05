@@ -161,7 +161,7 @@ declare global {
     user: User
     course?: Course | null
     blog?: Blog | null
-    text?: string | null
+    text: string
     likesCount: number
     parentCommentId?: string | null
     parentComment?: IComment | null

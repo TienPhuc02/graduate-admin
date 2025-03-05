@@ -1,10 +1,9 @@
-// import LayoutCreateComment from '@/components/pages/Comment/CreateComment'
+import LayoutCreateComment from '@/components/pages/Comment/CreateComment'
 
 const PageCreateComment = () => {
   return (
     <div>
-      {/* <LayoutCreateComment /> */}
-      PageCreateComment
+      <LayoutCreateComment />
     </div>
   )
 }
