@@ -205,7 +205,10 @@ declare global {
     isPublished: EBlogStatus
     thumbnail: string
   }
-
+  export interface IUpdateCommentDTO {
+    text?: string
+    status?: 'pending' | 'approved' | 'rejected'
+  }
   export interface IUpdateBlogDTO {
     title: string
     content: string

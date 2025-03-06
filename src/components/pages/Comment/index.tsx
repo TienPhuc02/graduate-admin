@@ -1,5 +1,5 @@
-import { getCommentsAPI } from '@/services/api.services'
-import { EBadgeStatus } from '@/types/enum'
+import { deleteCommentAPI, getCommentsAPI } from '@/services/api.services'
+import { EBadgeStatus, EErrorMessage } from '@/types/enum'
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
@@ -27,26 +27,26 @@ const LayoutAdminComment = () => {
     pages: 0,
     total: 0
   })
-  //   const [selectedComment, setSelectedComment] = useState<IAdminComment | null>(null)
+    const [selectedComment, setSelectedComment] = useState<IAdminComment | null>(null)
 
-  //   const handleViewComment = (entity: IAdminComment) => {
-  //     setSelectedComment(entity)
-  //   }
-  //   const refreshTable = () => {
-  //     actionRef.current?.reload()
-  //   }
-  //   const handleCloseDrawer = () => {
-  //     setSelectedComment(null)
-  //   }
-  //   const confirm = async (entity: IAdminComment) => {
-  //     try {
-  //       const res = await deleteCommentAPI(entity.id)
-  //       message.success(res.message)
-  //       refreshTable()
-  //     } catch {
-  //       message.error(EErrorMessage.ERROR_VALIDATE)
-  //     }
-  //   }
+    const handleViewComment = (entity: IAdminComment) => {
+      setSelectedComment(entity)
+    }
+    const refreshTable = () => {
+      actionRef.current?.reload()
+    }
+    const handleCloseDrawer = () => {
+      setSelectedComment(null)
+    }
+    const confirm = async (entity: IAdminComment) => {
+      try {
+        const res = await deleteCommentAPI(entity.id)
+        message.success(res.message)
+        refreshTable()
+      } catch {
+        message.error(EErrorMessage.ERROR_VALIDATE)
+      }
+    }
 
   const columns: ProColumns<IAdminComment>[] = [
     {
