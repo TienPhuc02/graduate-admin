@@ -17,6 +17,7 @@ import { Badge, Button, message, Popconfirm, Space, Tag, Tooltip } from 'antd'
 import { useRef, useState } from 'react'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
+import DetailComment from './DetailComment'
 // import DetailComment from './DetailComment'
 
 const LayoutAdminComment = () => {
@@ -27,26 +28,26 @@ const LayoutAdminComment = () => {
     pages: 0,
     total: 0
   })
-    const [selectedComment, setSelectedComment] = useState<IAdminComment | null>(null)
+  const [selectedComment, setSelectedComment] = useState<IAdminComment | null>(null)
 
-    const handleViewComment = (entity: IAdminComment) => {
-      setSelectedComment(entity)
+  const handleViewComment = (entity: IAdminComment) => {
+    setSelectedComment(entity)
+  }
+  const refreshTable = () => {
+    actionRef.current?.reload()
+  }
+  const handleCloseDrawer = () => {
+    setSelectedComment(null)
+  }
+  const confirm = async (entity: IAdminComment) => {
+    try {
+      const res = await deleteCommentAPI(entity.id)
+      message.success(res.message)
+      refreshTable()
+    } catch {
+      message.error(EErrorMessage.ERROR_VALIDATE)
     }
-    const refreshTable = () => {
-      actionRef.current?.reload()
-    }
-    const handleCloseDrawer = () => {
-      setSelectedComment(null)
-    }
-    const confirm = async (entity: IAdminComment) => {
-      try {
-        const res = await deleteCommentAPI(entity.id)
-        message.success(res.message)
-        refreshTable()
-      } catch {
-        message.error(EErrorMessage.ERROR_VALIDATE)
-      }
-    }
+  }
 
   const columns: ProColumns<IAdminComment>[] = [
     {
@@ -221,7 +222,7 @@ const LayoutAdminComment = () => {
           <Popconfirm
             title='Xóa bình luận'
             description='Bạn có chắc chắn muốn xóa bình luận này?'
-            // onConfirm={() => confirm(entity)}
+            onConfirm={() => confirm(entity)}
             okText='Xóa'
             cancelText='Hủy'
           >
@@ -230,10 +231,7 @@ const LayoutAdminComment = () => {
             </Tooltip>
           </Popconfirm>
           <Tooltip title='Xem chi tiết'>
-            <EyeOutlined
-              style={{ color: '#167fff', cursor: 'pointer' }}
-              //   onClick={() => handleViewComment(entity)}
-            />
+            <EyeOutlined style={{ color: '#167fff', cursor: 'pointer' }} onClick={() => handleViewComment(entity)} />
           </Tooltip>
         </Space>
       )
@@ -305,7 +303,7 @@ const LayoutAdminComment = () => {
           </Link>
         ]}
       />
-      {/* <DetailComment selectedComment={selectedComment} onClose={handleCloseDrawer} /> */}
+      <DetailComment selectedComment={selectedComment} onClose={handleCloseDrawer} />
     </>
   )
 }
