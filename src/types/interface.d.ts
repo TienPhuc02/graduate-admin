@@ -297,9 +297,9 @@ declare global {
     } | null
     couponId?: string | null
     isDeleted: boolean
-    createdAt: Date
-    updatedAt: Date
-    deletedAt?: Date | null
+    createdAt: string
+    updatedAt: string
+    deletedAt?: string | null
   }
 
   export interface IUpdateOrderDTO {

@@ -1,5 +1,11 @@
+import LayoutUpdateOrder from '@/components/pages/Order/UpdateOrder'
+
 const PageUpdateOrder = () => {
-  return <div>PageUpdateOrder</div>
+  return (
+    <div>
+      <LayoutUpdateOrder />
+    </div>
+  )
 }
 
 export default PageUpdateOrder

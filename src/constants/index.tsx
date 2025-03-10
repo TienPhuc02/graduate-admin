@@ -32,7 +32,10 @@ export const breadcrumbMap: Record<string, string> = {
   '/coupon/update': 'Cập nhật mã giảm giá',
   '/order-item': 'Mục đơn hàng',
   '/order-item/create': 'Tạo mới mục đơn hàng',
-  '/order-item/update': 'Cập nhật mục đơn hàng'
+  '/order-item/update': 'Cập nhật mục đơn hàng',
+  '/order': 'Đơn hàng',
+  '/order/create': 'Tạo mới đơn hàng',
+  '/order/update': 'Cập nhật đơn hàng'
 }
 export const keyMenuMap: Record<string, string> = {
   '/': '1',

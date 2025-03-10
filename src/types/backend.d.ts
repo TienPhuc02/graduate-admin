@@ -22,6 +22,7 @@ declare global {
           totalComments?: number
           totalCoupons?: number
           totalOrderItems?: number
+          totalOrders?: number
         }
       | undefined
     gotBy: IUserPayload
