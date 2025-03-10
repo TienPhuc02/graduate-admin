@@ -1,9 +1,6 @@
 import LayoutAdminOrder from '@/components/pages/Order'
-import React from 'react'
 
-type Props = {}
-
-const AdminOrder = (props: Props) => {
+const AdminOrder = () => {
   return (
     <div>
       <LayoutAdminOrder />

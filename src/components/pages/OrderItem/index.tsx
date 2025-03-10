@@ -1,6 +1,6 @@
 import { getOrderItemsAPI, deleteOrderItemAPI } from '@/services/api.services'
 import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components'
-import { Button, message, Popconfirm, Space, Tooltip, Tag } from 'antd'
+import { Button, message, Popconfirm, Space, Tooltip } from 'antd'
 import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
@@ -80,7 +80,7 @@ const LayoutAdminOrderItem = () => {
         columns={columns}
         actionRef={actionRef}
         cardBordered
-        request={async (params, sort) => {
+        request={async (params) => {
           let query = `page=${params.current}&pageSize=${params.pageSize}`
           if (params['order.id']) query += `&orderId=${params['order.id']}`
           if (params['course.name']) query += `&courseName=${params['course.name']}`

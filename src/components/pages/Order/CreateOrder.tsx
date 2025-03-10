@@ -6,7 +6,6 @@ import {
   ProForm,
   ProFormSelect,
   ProFormDigit,
-  ProFormText,
   ProFormList
 } from '@ant-design/pro-components'
 import { Button, Card, message } from 'antd'

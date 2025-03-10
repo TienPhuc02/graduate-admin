@@ -3,7 +3,7 @@ import { EErrorMessage } from '@/types/enum'
 import { CalendarOutlined, EyeOutlined, PlusOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
-import { Button, message, Popconfirm, Space, Tag, Tooltip } from 'antd'
+import { Button, message, Popconfirm, Space, Tooltip } from 'antd'
 import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
@@ -154,7 +154,7 @@ const LayoutAdminOrder = () => {
         columns={columns}
         actionRef={actionRef}
         cardBordered
-        request={async (params, sort) => {
+        request={async (params) => {
           let query = `page=${params.current}&pageSize=${params.pageSize}`
           if (params.status) {
             query += `&status=${params.status}`

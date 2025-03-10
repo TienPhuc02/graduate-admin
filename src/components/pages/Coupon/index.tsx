@@ -1,5 +1,5 @@
 import { deleteCouponAPI, getCouponsAPI } from '@/services/api.services'
-import { EBadgeStatus, EErrorMessage } from '@/types/enum'
+import { EErrorMessage } from '@/types/enum'
 import {
   CalendarOutlined,
   CheckCircleOutlined,
