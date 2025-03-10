@@ -5,7 +5,8 @@ import { IoMdBook } from 'react-icons/io'
 import { MdMenuBook } from 'react-icons/md'
 import { MdOutlinePlayLesson } from 'react-icons/md'
 import { FaRegCommentDots } from 'react-icons/fa'
-import { RiBloggerLine } from 'react-icons/ri'
+import { RiAlignItemLeftLine, RiBloggerLine, RiCouponLine } from 'react-icons/ri'
+import { AiOutlineBorder } from 'react-icons/ai'
 //Admin Home
 export const breadcrumbMap: Record<string, string> = {
   '/': 'Trang chủ',
@@ -46,7 +47,16 @@ export const keyMenuMap: Record<string, string> = {
   '/comment/update': '6',
   '/blog': '7',
   '/blog/create': '7',
-  '/blog/update': '7'
+  '/blog/update': '7',
+  '/coupon': '8',
+  '/coupon/create': '8',
+  '/coupon/update': '8',
+  '/orderItem': '9',
+  '/orderItem/create': '9',
+  '/orderItem/update': '9',
+  '/order': '10',
+  '/order/create': '10',
+  '/order/update': '10'
 }
 export const items: TMenuItem[] = [
   getItem(<Link to='/'>Trang chủ</Link>, '1', <DashboardOutlined />),
@@ -55,5 +65,8 @@ export const items: TMenuItem[] = [
   getItem(<Link to='/lecture'>Bài giảng</Link>, '4', <MdMenuBook />),
   getItem(<Link to='/lesson'>Bài học</Link>, '5', <MdOutlinePlayLesson />),
   getItem(<Link to='/comment'>Bình luận</Link>, '6', <FaRegCommentDots />),
-  getItem(<Link to='/blog'>Bài viết</Link>, '7', <RiBloggerLine />)
+  getItem(<Link to='/blog'>Bài viết</Link>, '7', <RiBloggerLine />),
+  getItem(<Link to='/coupon'>Mã giảm giá</Link>, '8', <RiCouponLine />),
+  getItem(<Link to='/orderItem'>Thành phần đơn hàng</Link>, '9', <RiAlignItemLeftLine />),
+  getItem(<Link to='/order'>Đơn hàng</Link>, '10', <AiOutlineBorder />)
 ]
