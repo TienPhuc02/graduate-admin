@@ -6,7 +6,7 @@ import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-// import DetailOrderItem from './DetailOrderItem'
+import DetailOrderItem from './DetailOrderItem'
 
 const LayoutAdminOrderItem = () => {
   const actionRef = useRef<ActionType>(null)
@@ -118,7 +118,7 @@ const LayoutAdminOrderItem = () => {
           </Link>
         ]}
       />
-      {/* <DetailOrderItem selectedOrderItem={selectedOrderItem} onClose={handleCloseDrawer} /> */}
+      <DetailOrderItem selectedOrderItem={selectedOrderItem} onClose={handleCloseDrawer} />
     </>
   )
 }
