@@ -243,6 +243,15 @@ declare global {
     createdAt: string
     updatedAt: string
   }
-
+  export interface ICreateCouponDTO {
+    code: string
+    discountPercentage: number
+    expiryDate: Date
+  }
+  export interface IUpdateOrderDTO {
+    totalAmount?: number
+    status?: 'pending' | 'processing' | 'completed' | 'cancelled'
+    couponId?: string
+  }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }

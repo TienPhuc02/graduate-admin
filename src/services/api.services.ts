@@ -380,12 +380,9 @@ export const getCouponsAPI = (query?: string) => {
   const urlBackend = `/coupon?${query}`
   return axios.get<IBackendRes<IModelPaginate<IAdminCoupon>>>(urlBackend)
 }
-export const createCouponAPI = ({ couponId, title }: { title: string; couponId: string }) => {
+export const createCouponAPI = (data: ICreateCouponDTO) => {
   const urlBackend = `/coupon`
-  return axios.post<IBackendRes<IAdminCoupon>>(urlBackend, {
-    couponId,
-    title
-  })
+  return axios.post<IBackendRes<IAdminCoupon>>(urlBackend, data)
 }
 export const getCouponByIdAPI = (idCoupon: string) => {
   const urlBackend = `/coupon/${idCoupon}`

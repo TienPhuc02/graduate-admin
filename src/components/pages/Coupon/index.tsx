@@ -18,18 +18,6 @@ import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 // import DetailCoupon from './DetailCoupon'
 
-// Định nghĩa interface cho Coupon (dựa trên entity Coupon)
-interface IAdminCoupon {
-  id: string
-  code: string
-  discountPercentage: number
-  expiryDate: string
-  isDeleted: boolean
-  deletedAt?: string | null
-  createdAt: string
-  updatedAt: string
-}
-
 const LayoutAdminCoupon = () => {
   const actionRef = useRef<ActionType>(null)
   const [meta, setMeta] = useState({

@@ -1,10 +1,10 @@
-import React from 'react'
+import LayoutCreateCoupon from '@/components/pages/Coupon/CreateCoupon'
 
-type Props = {}
-
-const PageCreateCoupon = (props: Props) => {
+const PageCreateCoupon = () => {
   return (
-    <div>PageCreateCoupon</div>
+    <div>
+      <LayoutCreateCoupon />
+    </div>
   )
 }
 

@@ -26,7 +26,10 @@ export const breadcrumbMap: Record<string, string> = {
   '/comment/update': 'Cập nhật bình luận',
   '/blog': 'Bài viêt',
   '/blog/create': 'Tạo mới bài viết',
-  '/blog/update': 'Cập nhật bài viết'
+  '/blog/update': 'Cập nhật bài viết',
+  '/coupon': 'Mã giảm giá',
+  '/coupon/create': 'Tạo mới mã giảm giá',
+  '/coupon/update': 'Cập nhật mã giảm giá'
 }
 export const keyMenuMap: Record<string, string> = {
   '/': '1',
