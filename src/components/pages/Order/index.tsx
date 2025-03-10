@@ -8,7 +8,7 @@ import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-// import DetailOrder from './DetailOrder'
+import DetailOrder from './DetailOrder'
 
 const LayoutAdminOrder = () => {
   const actionRef = useRef<ActionType>(null)
@@ -198,7 +198,7 @@ const LayoutAdminOrder = () => {
           </Link>
         ]}
       />
-      {/* <DetailOrder selectedOrder={selectedOrder} onClose={handleCloseDrawer} /> */}
+      <DetailOrder selectedOrder={selectedOrder} onClose={handleCloseDrawer} />
     </>
   )
 }
