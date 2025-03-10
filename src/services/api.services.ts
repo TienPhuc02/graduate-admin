@@ -388,20 +388,9 @@ export const getCouponByIdAPI = (idCoupon: string) => {
   const urlBackend = `/coupon/${idCoupon}`
   return axios.get<IBackendRes<IAdminCoupon>>(urlBackend)
 }
-export const updateCouponAPI = ({
-  couponId,
-  title,
-  idCoupon
-}: {
-  title: string
-  couponId: string
-  idCoupon: string
-}) => {
+export const updateCouponAPI = (idCoupon: string, data: IUpdateCouponDTO) => {
   const urlBackend = `/coupon/${idCoupon}`
-  return axios.put<IBackendRes<IAdminCoupon>>(urlBackend, {
-    couponId,
-    title
-  })
+  return axios.put<IBackendRes<IAdminCoupon>>(urlBackend, data)
 }
 
 export const deleteCouponAPI = (idCoupon: string) => {

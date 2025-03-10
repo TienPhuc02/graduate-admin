@@ -1,10 +1,14 @@
-import React from 'react'
+import LayoutUpdateCoupon from '@/components/pages/Coupon/UpdateCoupon'
+import { useLocation } from 'react-router-dom'
 
-type Props = {}
-
-const PageUpdateCoupon = (props: Props) => {
+const PageUpdateCoupon = () => {
+  const location = useLocation()
+  const pathName = location.pathname
+  const idCoupon = pathName.split('/')[3]
   return (
-    <div>PageUpdateCoupon</div>
+    <div>
+      <LayoutUpdateCoupon idCoupon={idCoupon} />
+    </div>
   )
 }
 

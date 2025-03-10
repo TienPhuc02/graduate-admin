@@ -248,10 +248,11 @@ declare global {
     discountPercentage: number
     expiryDate: Date
   }
-  export interface IUpdateOrderDTO {
-    totalAmount?: number
-    status?: 'pending' | 'processing' | 'completed' | 'cancelled'
-    couponId?: string
+  export interface IUpdateCouponDTO {
+    code?: string
+    discountPercentage?: number
+    expiryDate?: Date
+    isDeleted?: boolean
   }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }
