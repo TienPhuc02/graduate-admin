@@ -96,7 +96,10 @@ const LayoutCreateUser = () => {
             name='phoneNumber'
             label='Số điện thoại'
             placeholder='Nhập số điện thoại'
-            rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}
+            rules={[
+              { required: true, message: 'Vui lòng nhập số điện thoại' },
+              { pattern: /^[0-9]+$/, message: 'Chỉ được nhập số' }
+            ]}
           />
           <ProFormText
             name='address'
@@ -108,9 +111,9 @@ const LayoutCreateUser = () => {
             name='role'
             label='Vai trò'
             valueEnum={{
-              student: ETypeUser.STUDENT,
-              admin: ETypeUser.ADMIN,
-              instructor: ETypeUser.INSTRUCTOR
+              STUDENT: ETypeUser.STUDENT,
+              ADMIN: ETypeUser.ADMIN,
+              INSTRUCTOR: ETypeUser.INSTRUCTOR
             }}
             placeholder='Nhập vai trò'
             rules={[{ required: true, message: 'Vui lòng nhập vai trò!' }]}

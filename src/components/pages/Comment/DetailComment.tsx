@@ -26,7 +26,9 @@ const DetailComment = ({
     >
       <ProDescriptions column={2} bordered>
         <ProDescriptions.Item label='ID'>{selectedComment.id}</ProDescriptions.Item>
-        <ProDescriptions.Item label='Nội dung'>{selectedComment.text}</ProDescriptions.Item>
+        <ProDescriptions.Item label='Nội dung'>
+          <div dangerouslySetInnerHTML={{ __html: selectedComment.text }} />
+        </ProDescriptions.Item>
         <ProDescriptions.Item label='Người dùng'>{selectedComment?.user?.email || 'Ẩn danh'}</ProDescriptions.Item>
         <ProDescriptions.Item label='Khóa học'>{selectedComment.course?.title || 'Không có'}</ProDescriptions.Item>
         <ProDescriptions.Item label='Blog'>{selectedComment.blog?.title || 'Không có'}</ProDescriptions.Item>

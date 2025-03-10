@@ -52,10 +52,10 @@ const LayoutAdminUser = () => {
       ellipsis: true
     },
     {
-      title: 'Tên đầy đủ',
-      dataIndex: 'fullName',
-      render: (_, record) => `${record.firstName} ${record.lastName}`,
-      search: false
+      title: 'Tên',
+      dataIndex: 'lastName',
+      render: (_, record) => `${record.lastName}`,
+      search: true
     },
     {
       title: 'Email',
@@ -75,6 +75,13 @@ const LayoutAdminUser = () => {
     {
       title: 'Vai trò',
       dataIndex: 'role',
+      valueType: 'select',
+      search: false,
+      valueEnum: {
+        admin: { text: ETypeUser.ADMIN },
+        student: { text: ETypeUser.STUDENT },
+        instructor: { text: ETypeUser.INSTRUCTOR }
+      },
       render: (_, record) => {
         const role = record.role
         const color = role === ETypeUser.ADMIN ? 'red' : role === ETypeUser.STUDENT ? 'blue' : 'green'
@@ -107,7 +114,8 @@ const LayoutAdminUser = () => {
       title: 'Thời gian tạo',
       dataIndex: 'createdAt',
       valueType: 'date',
-      sorter: true
+      sorter: true,
+      search: false
     },
     {
       title: 'Khoảng thời gian tạo',

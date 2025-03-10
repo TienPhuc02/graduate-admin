@@ -70,11 +70,11 @@ const LayoutAdminComment = () => {
           Người dùng
         </>
       ),
-      dataIndex: ['user', 'username'],
+      dataIndex: ['user', 'email'],
       valueType: 'text',
       ellipsis: true,
       search: true,
-      render: (_, record) => <span>{record.user?.username || 'Ẩn danh'}</span>
+      render: (_, record) => <span>{record.user?.email || 'Ẩn danh'}</span>
     },
     {
       title: (
@@ -86,8 +86,10 @@ const LayoutAdminComment = () => {
       dataIndex: 'text',
       valueType: 'text',
       ellipsis: true,
-      search: true
+      search: false,
+      render: (_, record) => <div dangerouslySetInnerHTML={{ __html: record.text }} />
     },
+
     {
       title: (
         <>
