@@ -300,7 +300,7 @@ export const createCommentAPI = ({
   parentCommentId?: string
 }) => {
   const urlBackend = `/comment`
-  return axios.post<IBackendRes<IComment>>(urlBackend, {
+  return axios.post<IBackendRes<IAdminComment>>(urlBackend, {
     userId,
     courseId,
     blogId,
@@ -311,17 +311,17 @@ export const createCommentAPI = ({
 
 export const getCommentByIdAPI = (idComment: string) => {
   const urlBackend = `/comment/${idComment}`
-  return axios.get<IBackendRes<IComment>>(urlBackend)
+  return axios.get<IBackendRes<IAdminComment>>(urlBackend)
 }
 
 export const updateCommentAPI = (idComment: string, data: IUpdateCommentDTO) => {
   const urlBackend = `/comment/${idComment}`
-  return axios.put<IBackendRes<IComment>>(urlBackend, data)
+  return axios.put<IBackendRes<IAdminComment>>(urlBackend, data)
 }
 
 export const deleteCommentAPI = (idComment: string) => {
   const urlBackend = `/comment/${idComment}`
-  return axios.delete<IBackendRes<IComment>>(urlBackend)
+  return axios.delete<IBackendRes<IAdminComment>>(urlBackend)
 }
 
 //blog
@@ -372,4 +372,28 @@ export const updateBlogAPI = (idBlog: string, thumbnailFile: File, data: IUpdate
 export const deleteBlogAPI = (idBlog: string) => {
   const urlBackend = `/blog/${idBlog}`
   return axios.delete<IBackendRes<IAdminBlog>>(urlBackend)
+}
+
+//coupon
+
+export const getCouponsAPI = (query?: string) => {
+  const urlBackend = `/coupon?${query}`
+  return axios.get<IBackendRes<IModelPaginate<IAdminCoupon>>>(urlBackend)
+}
+export const createCouponAPI = (data: ICreateCouponDTO) => {
+  const urlBackend = `/coupon`
+  return axios.post<IBackendRes<IAdminCoupon>>(urlBackend, data)
+}
+export const getCouponByIdAPI = (idCoupon: string) => {
+  const urlBackend = `/coupon/${idCoupon}`
+  return axios.get<IBackendRes<IAdminCoupon>>(urlBackend)
+}
+export const updateCouponAPI = (idCoupon: string, data: IUpdateCouponDTO) => {
+  const urlBackend = `/coupon/${idCoupon}`
+  return axios.put<IBackendRes<IAdminCoupon>>(urlBackend, data)
+}
+
+export const deleteCouponAPI = (idCoupon: string) => {
+  const urlBackend = `/coupon/${idCoupon}`
+  return axios.delete<IBackendRes<IAdminLecture>>(urlBackend)
 }

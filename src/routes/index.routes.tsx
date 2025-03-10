@@ -21,6 +21,9 @@ import AdminBlog from '@/pages/Blog'
 import PageCreateBlog from '@/pages/Blog/CreateBlog'
 import PageUpdateBlog from '@/pages/Blog/UpdateBlog'
 import PageUpdateComment from '@/pages/Comment/UpdateComment'
+import AdminCoupon from '@/pages/Coupon'
+import PageUpdateCoupon from '@/pages/Coupon/UpdateCoupon'
+import PageCreateCoupon from '@/pages/Coupon/CreateCoupon'
 
 export const router = createBrowserRouter([
   {
@@ -107,6 +110,18 @@ export const router = createBrowserRouter([
       {
         path: 'blog/update/:id',
         element: <PageUpdateBlog />
+      },
+      {
+        path: 'coupon',
+        element: <AdminCoupon />
+      },
+      {
+        path: 'coupon/create',
+        element: <PageCreateCoupon />
+      },
+      {
+        path: 'coupon/update/:id',
+        element: <PageUpdateCoupon />
       }
     ]
   },

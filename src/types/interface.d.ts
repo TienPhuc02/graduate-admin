@@ -164,8 +164,8 @@ declare global {
     text: string
     likesCount: number
     parentCommentId?: string | null
-    parentComment?: IComment | null
-    replies?: IComment[]
+    parentComment?: IAdminComment | null
+    replies?: IAdminComment[]
     isEdited: boolean
     isDeleted: boolean
     deletedAt?: Date | null
@@ -217,7 +217,7 @@ declare global {
     isPublished: EBlogStatus
     thumbnail: string
   }
-  interface IComment {
+  interface IAdminComment {
     id: string
     user: string
     course?: string | null
@@ -231,7 +231,28 @@ declare global {
     createdAt: string
     updatedAt?: string | null
     status: 'pending' | 'approved' | 'rejected'
-    replies?: IComment[]
+    replies?: IAdminComment[]
+  }
+  export interface IAdminCoupon {
+    id: string
+    code: string
+    discountPercentage: number
+    expiryDate: string
+    isDeleted: boolean
+    deletedAt: string
+    createdAt: string
+    updatedAt: string
+  }
+  export interface ICreateCouponDTO {
+    code: string
+    discountPercentage: number
+    expiryDate: Date
+  }
+  export interface IUpdateCouponDTO {
+    code?: string
+    discountPercentage?: number
+    expiryDate?: Date
+    isDeleted?: boolean
   }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }
