@@ -16,7 +16,7 @@ import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-// import DetailCoupon from './DetailCoupon'
+import DetailCoupon from './DetailCoupon'
 
 const LayoutAdminCoupon = () => {
   const actionRef = useRef<ActionType>(null)
@@ -245,7 +245,7 @@ const LayoutAdminCoupon = () => {
           </Link>
         ]}
       />
-      {/* <DetailCoupon selectedCoupon={selectedCoupon} onClose={handleCloseDrawer} /> */}
+      <DetailCoupon selectedCoupon={selectedCoupon} onClose={handleCloseDrawer} />
     </>
   )
 }
