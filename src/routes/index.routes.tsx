@@ -24,6 +24,9 @@ import PageUpdateComment from '@/pages/Comment/UpdateComment'
 import AdminCoupon from '@/pages/Coupon'
 import PageUpdateCoupon from '@/pages/Coupon/UpdateCoupon'
 import PageCreateCoupon from '@/pages/Coupon/CreateCoupon'
+import AdminOrderItem from '@/pages/OrderItem'
+import PageCreateOrderItem from '@/pages/OrderItem/CreateOrderItem'
+import PageUpdateOrderItem from '@/pages/OrderItem/UpdateOrderItem'
 
 export const router = createBrowserRouter([
   {
@@ -122,6 +125,18 @@ export const router = createBrowserRouter([
       {
         path: 'coupon/update/:id',
         element: <PageUpdateCoupon />
+      },
+      {
+        path: 'order-item',
+        element: <AdminOrderItem />
+      },
+      {
+        path: 'order-item/create',
+        element: <PageCreateOrderItem />
+      },
+      {
+        path: 'order-item/update/:id',
+        element: <PageUpdateOrderItem />
       }
     ]
   },

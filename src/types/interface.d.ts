@@ -254,5 +254,25 @@ declare global {
     expiryDate?: Date
     isDeleted?: boolean
   }
+  export interface IUpdateOrderItemDTO {
+    price?: number
+    quantity?: number
+  }
+  export interface ICreateOrderItemDTO {
+    orderId: string
+    courseId: string
+    price: number
+    quantity?: number
+  }
+  export interface IAdminOrderItem {
+    id: string
+    order: Order
+    course: Course
+    courseId: string
+    price: number
+    quantity?: number
+    createdAt: string
+    updatedAt: string
+  }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }

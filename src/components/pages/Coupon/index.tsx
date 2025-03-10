@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
-import { Badge, Button, message, Popconfirm, Space, Tag, Tooltip } from 'antd'
+import { Button, message, Popconfirm, Space, Tag, Tooltip } from 'antd'
 import { useRef, useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
 import { FiTrash } from 'react-icons/fi'

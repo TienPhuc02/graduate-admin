@@ -29,7 +29,10 @@ export const breadcrumbMap: Record<string, string> = {
   '/blog/update': 'Cập nhật bài viết',
   '/coupon': 'Mã giảm giá',
   '/coupon/create': 'Tạo mới mã giảm giá',
-  '/coupon/update': 'Cập nhật mã giảm giá'
+  '/coupon/update': 'Cập nhật mã giảm giá',
+  '/orderItem': 'Thành phân đơn hàng',
+  '/orderItem/create': 'Tạo mới Mục đơn hàng',
+  '/orderItem/update': 'Cập nhật Mục đơn hàng'
 }
 export const keyMenuMap: Record<string, string> = {
   '/': '1',
@@ -70,6 +73,6 @@ export const items: TMenuItem[] = [
   getItem(<Link to='/comment'>Bình luận</Link>, '6', <FaRegCommentDots />),
   getItem(<Link to='/blog'>Bài viết</Link>, '7', <RiBloggerLine />),
   getItem(<Link to='/coupon'>Mã giảm giá</Link>, '8', <RiCouponLine />),
-  getItem(<Link to='/orderItem'>Thành phần đơn hàng</Link>, '9', <RiAlignItemLeftLine />),
+  getItem(<Link to='/orderItem'>Mục đơn hàng</Link>, '9', <RiAlignItemLeftLine />),
   getItem(<Link to='/order'>Đơn hàng</Link>, '10', <AiOutlineBorder />)
 ]
