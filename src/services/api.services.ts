@@ -421,3 +421,26 @@ export const deleteOrderItemAPI = (idOrderItem: string) => {
   const urlBackend = `/orderItem/${idOrderItem}`
   return axios.delete<IBackendRes<IAdminOrderItem>>(urlBackend)
 }
+
+//order
+export const getOrdersAPI = (query?: string) => {
+  const urlBackend = `/order?${query}`
+  return axios.get<IBackendRes<IModelPaginate<IAdminOrder>>>(urlBackend)
+}
+export const createOrderAPI = (data: ICreateOrderDTO) => {
+  const urlBackend = `/order`
+  return axios.post<IBackendRes<IAdminOrder>>(urlBackend, data)
+}
+export const getOrderByIdAPI = (idOrder: string) => {
+  const urlBackend = `/order/${idOrder}`
+  return axios.get<IBackendRes<IAdminOrder>>(urlBackend)
+}
+export const updateOrderAPI = (idOrder: string, data: IUpdateOrderDTO) => {
+  const urlBackend = `/order/${idOrder}`
+  return axios.put<IBackendRes<IAdminOrder>>(urlBackend, data)
+}
+
+export const deleteOrderAPI = (idOrder: string) => {
+  const urlBackend = `/order/${idOrder}`
+  return axios.delete<IBackendRes<IAdminOrder>>(urlBackend)
+}

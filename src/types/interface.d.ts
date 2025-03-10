@@ -266,13 +266,53 @@ declare global {
   }
   export interface IAdminOrderItem {
     id: string
-    order: Order
-    course: Course
+    order: IAdminOrder
+    course: IAdminCourse
     courseId: string
     price: number
     quantity?: number
     createdAt: string
     updatedAt: string
+  }
+  export interface IAdminOrder {
+    id: string
+    user: {
+      id: string
+      name: string
+      email: string
+    }
+    totalAmount: number
+    status: 'pending' | 'processing' | 'completed' | 'cancelled'
+    orderDate: Date
+    orderItems: {
+      id: string
+      productId: string
+      quantity: number
+      price: number
+    }[]
+    coupon?: {
+      id: string
+      code: string
+      discount: number
+    } | null
+    couponId?: string | null
+    isDeleted: boolean
+    createdAt: Date
+    updatedAt: Date
+    deletedAt?: Date | null
+  }
+
+  export interface IUpdateOrderDTO {
+    totalAmount?: number
+    status?: 'pending' | 'processing' | 'completed' | 'cancelled'
+    couponId?: string
+  }
+  export interface ICreateOrderDTO {
+    userId: string
+    totalAmount: number
+    status: 'pending' | 'processing' | 'completed' | 'cancelled'
+    orderItems: { productId: string; quantity: number }[]
+    couponId?: string
   }
   export interface IUpdateLessonDTO extends ICreateLessonDTO {}
 }

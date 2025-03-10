@@ -30,9 +30,9 @@ export const breadcrumbMap: Record<string, string> = {
   '/coupon': 'Mã giảm giá',
   '/coupon/create': 'Tạo mới mã giảm giá',
   '/coupon/update': 'Cập nhật mã giảm giá',
-  '/orderItem': 'Thành phân đơn hàng',
-  '/orderItem/create': 'Tạo mới Mục đơn hàng',
-  '/orderItem/update': 'Cập nhật Mục đơn hàng'
+  '/order-item': 'Mục đơn hàng',
+  '/order-item/create': 'Tạo mới mục đơn hàng',
+  '/order-item/update': 'Cập nhật mục đơn hàng'
 }
 export const keyMenuMap: Record<string, string> = {
   '/': '1',
@@ -57,9 +57,9 @@ export const keyMenuMap: Record<string, string> = {
   '/coupon': '8',
   '/coupon/create': '8',
   '/coupon/update': '8',
-  '/orderItem': '9',
-  '/orderItem/create': '9',
-  '/orderItem/update': '9',
+  '/order-item': '9',
+  '/order-item/create': '9',
+  '/order-item/update': '9',
   '/order': '10',
   '/order/create': '10',
   '/order/update': '10'
@@ -73,6 +73,6 @@ export const items: TMenuItem[] = [
   getItem(<Link to='/comment'>Bình luận</Link>, '6', <FaRegCommentDots />),
   getItem(<Link to='/blog'>Bài viết</Link>, '7', <RiBloggerLine />),
   getItem(<Link to='/coupon'>Mã giảm giá</Link>, '8', <RiCouponLine />),
-  getItem(<Link to='/orderItem'>Mục đơn hàng</Link>, '9', <RiAlignItemLeftLine />),
+  getItem(<Link to='/order-item'>Mục đơn hàng</Link>, '9', <RiAlignItemLeftLine />),
   getItem(<Link to='/order'>Đơn hàng</Link>, '10', <AiOutlineBorder />)
 ]
