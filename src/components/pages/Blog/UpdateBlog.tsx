@@ -56,7 +56,6 @@ const LayoutUpdateBlog = ({ idBlog }: { idBlog: string }) => {
 
   const handleSubmit = async (values: any) => {
     try {
-      console.log('🚀 ~ handleSubmit ~ values:', values)
 
       const thumbnailFile = thumbnailFileList[0]?.originFileObj || null
       const contentHtml = editorRef.current ? editorRef.current.getContent() : ''
@@ -122,7 +121,6 @@ const LayoutUpdateBlog = ({ idBlog }: { idBlog: string }) => {
 
     fetchBlogData()
   }, [idBlog])
-  console.log('🚀 ~ useEffect ~ idBlog:', idBlog)
 
   if (error) {
     return <PageNotFound />

@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
 
-import { Breadcrumb, Button, Layout, Menu, Switch, theme } from 'antd'
+import { Avatar, Breadcrumb, Button, Dropdown, Layout, Menu, Switch, theme } from 'antd'
 import ThemeContext from '../../../providers/ThemeContext'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { breadcrumbMap, items, keyMenuMap } from '@/constants'
+import { fetchUser, logout } from '@/stores/slice/authSlice'
+import { useAppDispatch, useAppSelector } from '@/hooks/hookStore'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -14,13 +16,28 @@ const LayoutAdminHome = () => {
   const [collapsed, setCollapsed] = useState(false)
   const [keyMenu, setKeyMenu] = useState<string>('')
   const themeContext = useContext(ThemeContext)
+  const dispatch = useAppDispatch()
+  const user = useAppSelector((state: any) => state.auth.user)
   const {
     token: { colorBgContainer, borderRadiusLG, colorBgLayout }
   } = theme.useToken()
   useEffect(() => {
     setKeyMenu(keyMenuMap[pathName])
   }, [pathName])
+  useEffect(() => {
+    dispatch(fetchUser())
+  }, [dispatch])
 
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+  const menu = (
+    <Menu>
+      <Menu.Item key='logout' onClick={handleLogout}>
+        Đăng xuất
+      </Menu.Item>
+    </Menu>
+  )
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
@@ -59,12 +76,26 @@ const LayoutAdminHome = () => {
               height: 40
             }}
           />
-          <Switch
-            checked={themeContext?.isDarkMode}
-            onClick={themeContext?.toggleTheme}
-            checkedChildren='Dark'
-            unCheckedChildren='Light'
-          />
+          <div>
+            <Switch
+              checked={themeContext?.isDarkMode}
+              onClick={themeContext?.toggleTheme}
+              checkedChildren='Dark'
+              unCheckedChildren='Light'
+              style={{
+                marginRight: 20
+              }}
+            />
+            {user ? (
+              <Dropdown overlay={menu} placement='bottomRight' trigger={['click']}>
+                <Avatar src={user.avatar} icon={<UserOutlined />} style={{ cursor: 'pointer' }} />
+              </Dropdown>
+            ) : (
+              <Link to='/login'>
+                <Button>Đăng Nhập</Button>
+              </Link>
+            )}
+          </div>
         </Header>
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>

@@ -10,7 +10,6 @@ const DetailComment = ({
   selectedComment: IAdminComment | null
   onClose: () => void
 }) => {
-  console.log('🚀 ~ selectedComment:', selectedComment)
   if (!selectedComment) return null
 
   return (

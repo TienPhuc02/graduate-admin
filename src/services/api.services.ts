@@ -14,6 +14,26 @@ export const loginAPI = (email: string, password: string) => {
   )
 }
 
+//auth
+
+export const getMe = () => {
+  const urlBackend = '/auth/me'
+  return axios.get<IBackendRes<ILogin>>(urlBackend, {
+    headers: {
+      delay: 1000
+    }
+  })
+}
+
+export const logoutAPI = () => {
+  const urlBackend = '/auth/logout'
+  return axios.post<IBackendRes<any>>(urlBackend, {
+    headers: {
+      delay: 1000
+    }
+  })
+}
+
 //user
 export const getUsersAPI = (query?: string) => {
   const urlBackend = `/user?${query}`
