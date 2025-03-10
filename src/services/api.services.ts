@@ -102,6 +102,9 @@ export const createCourseAPI = (file: File, data: ICreateCourseDTO) => {
   bodyFormData.append('description', data.description)
   bodyFormData.append('category', data.category)
   bodyFormData.append('level', data.level)
+  bodyFormData.append('duration', String(data.duration))
+  bodyFormData.append('rating', String(data.rating))
+  bodyFormData.append('viewsCourse', String(data.viewsCourse))
   bodyFormData.append('price', String(data.price))
 
   if (file) {

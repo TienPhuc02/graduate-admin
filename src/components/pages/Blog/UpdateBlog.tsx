@@ -56,7 +56,6 @@ const LayoutUpdateBlog = ({ idBlog }: { idBlog: string }) => {
 
   const handleSubmit = async (values: any) => {
     try {
-
       const thumbnailFile = thumbnailFileList[0]?.originFileObj || null
       const contentHtml = editorRef.current ? editorRef.current.getContent() : ''
 
@@ -99,7 +98,7 @@ const LayoutUpdateBlog = ({ idBlog }: { idBlog: string }) => {
             editorRef.current.setContent(blogData.content || '')
           }
           if (blogData.thumbnail) {
-            fetchAssetsAsFile(blogData.thumbnail).then((file) => {
+            fetchAssetsAsFile(blogData.thumbnail.replace(/^http:\/\//i, 'https://')).then((file) => {
               setThumbnailFileList([
                 {
                   uid: '-1',
@@ -108,7 +107,7 @@ const LayoutUpdateBlog = ({ idBlog }: { idBlog: string }) => {
                   originFileObj: file
                 }
               ])
-              setThumbnailPreview(blogData.thumbnail)
+              setThumbnailPreview(blogData.thumbnail.replace(/^http:\/\//i, 'https://'))
             })
           }
         } else {

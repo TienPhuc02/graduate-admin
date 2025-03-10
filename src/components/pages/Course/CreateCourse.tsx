@@ -53,6 +53,7 @@ const LayoutCreateCourse = () => {
   }
 
   const handleSubmit = async (values: ICreateCourseDTO) => {
+    console.log("🚀 ~ handleSubmit ~ values:", values)
     try {
       if (fileList.length > 0) {
         const file = fileList[0].originFileObj
@@ -176,7 +177,6 @@ const LayoutCreateCourse = () => {
               { pattern: /^[0-9]+$/, message: 'Chỉ được nhập số' }
             ]}
           />
-
           <Upload
             name='thumbnail'
             maxCount={1}

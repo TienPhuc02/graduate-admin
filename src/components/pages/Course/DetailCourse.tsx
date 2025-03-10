@@ -71,7 +71,7 @@ const DetailCourse = ({ selectedCourse, onClose }: { selectedCourse: IAdminCours
           aria-label='Ảnh đại diện khóa học'
           width={300}
           style={{ borderRadius: 10, boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' }}
-          src={selectedCourse.thumbnail}
+          src={selectedCourse.thumbnail.replace(/^http:\/\//i, 'https://')}
           alt='Thumbnail khóa học'
         />
       </div>

@@ -46,8 +46,8 @@ const DetailBlog = ({ selectedBlog, onClose }: { selectedBlog: IAdminBlog | null
         </ProDescriptions.Item>
         {/* <ProDescriptions.Item label='Số lượng bình luận'>{selectedBlog.comments.length || 0}</ProDescriptions.Item> */}
         <ProDescriptions.Item label='Hình ảnh đại diện'>
-          {selectedBlog.thumbnail ? (
-            <Link to={selectedBlog.thumbnail} target='_blank'>
+          {selectedBlog.thumbnail.replace(/^http:\/\//i, 'https://') ? (
+            <Link to={selectedBlog.thumbnail.replace(/^http:\/\//i, 'https://')} target='_blank'>
               Xem hình ảnh
             </Link>
           ) : (

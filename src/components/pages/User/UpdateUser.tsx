@@ -52,8 +52,14 @@ const LayoutUpdateUser = ({ idUser }: TLayoutUserProps) => {
 
     try {
       if (fileList.length > 0) {
-        const file = fileList[0].originFileObj
+        console.log('🚀 ~ handleSubmit ~ fileList:', fileList)
         setLoading(true)
+        let file = fileList.length > 0 ? fileList[0].originFileObj : null
+        console.log('🚀 ~ handleSubmit ~ file:', file)
+
+        if (!file && fileList.length > 0 && fileList[0].url) {
+          filteredValues.profilePicture = fileList[0].url
+        }
         const res = await updateUserAPI(idUser, file, filteredValues as IUpdateUserDTO)
         if (res && res.data) {
           formRef.current?.resetFields()
@@ -101,6 +107,7 @@ const LayoutUpdateUser = ({ idUser }: TLayoutUserProps) => {
                 url: userData.profilePicture
               }
             ])
+            formRef.current?.setFieldsValue({ profilePicture: userData.profilePicture })
           }
         } else {
           setError(true)

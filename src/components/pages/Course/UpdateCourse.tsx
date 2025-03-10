@@ -107,7 +107,7 @@ const LayoutUpdateCourse = ({ idCourse }: TLayoutCourseProps) => {
           })
 
           if (courseData.thumbnail) {
-            fetchAssetsAsFile(courseData.thumbnail).then((file) => {
+            fetchAssetsAsFile(courseData.thumbnail.replace(/^http:\/\//i, 'https://')).then((file) => {
               setFileList([
                 {
                   uid: '-1',
