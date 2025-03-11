@@ -18,7 +18,10 @@ const LayoutCreateOrder = () => {
   const [loading, setLoading] = useState(false)
   const [users, setUsers] = useState<{ label: string; value: string }[]>([])
   const [coupons, setCoupons] = useState<{ label: string; value: string }[]>([])
-  const [courses, setCourses] = useState<{ label: string; value: string }[]>([])
+  const [courses, setCourses] = useState<{ label: string; value: string; price?: number }[]>([])
+  const [coursePrices, setCoursePrices] = useState<{ [key: string]: number }>({}) // Lưu giá khóa học theo courseId
+
+  // Fetch danh sách người dùng
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -36,16 +39,26 @@ const LayoutCreateOrder = () => {
     }
     fetchUsers()
   }, [])
+
+  // Fetch danh sách khóa học và lưu giá
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const res = await getCoursesAPI()
         if (res && res.data) {
-          const options = res.data.results.map((course: IAdminCourse) => ({
+          const courseData = res.data.results.map((course: any) => ({
             label: course.title,
-            value: course.id
+            value: course.id,
+            price: course.price // Giả sử API trả về trường price
           }))
-          setCourses(options)
+          setCourses(courseData)
+
+          // Lưu giá khóa học vào object để dễ tra cứu
+          const priceMap = res.data.results.reduce((acc: any, course: any) => {
+            acc[course.id] = course.price
+            return acc
+          }, {})
+          setCoursePrices(priceMap)
         }
       } catch {
         message.error('Không thể tải danh sách khóa học')
@@ -53,6 +66,8 @@ const LayoutCreateOrder = () => {
     }
     fetchCourses()
   }, [])
+
+  // Fetch danh sách mã giảm giá
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
@@ -71,6 +86,28 @@ const LayoutCreateOrder = () => {
     fetchCoupons()
   }, [])
 
+  // Hàm xử lý tính toán totalAmount
+  const calculateTotalAmount = (courseId: string, quantity: number) => {
+    const price = coursePrices[courseId] || 0
+    return price * quantity
+  }
+
+  // Xử lý khi giá trị form thay đổi
+  const handleValuesChange = (changedValues: any, allValues: any) => {
+    if (changedValues.orderItems) {
+      const updatedOrderItems = allValues.orderItems.map((item: any, index: number) => {
+        const { courseId, quantity } = item || {}
+        if (courseId && quantity) {
+          const totalAmount = calculateTotalAmount(courseId, parseInt(quantity) || 0)
+          return { ...item, totalAmount }
+        }
+        return item
+      })
+
+      formRef.current?.setFieldsValue({ orderItems: updatedOrderItems })
+    }
+  }
+
   const handleFooterClick = async () => {
     try {
       const values = await formRef.current?.validateFields()
@@ -81,6 +118,7 @@ const LayoutCreateOrder = () => {
   }
 
   const handleSubmit = async (values: any) => {
+    console.log('🚀 ~ handleSubmit ~ values:', values)
     try {
       setLoading(true)
       const res = await createOrderAPI(values)
@@ -103,6 +141,7 @@ const LayoutCreateOrder = () => {
           formRef={formRef}
           submitter={{ render: (_, dom) => <FooterToolbar>{dom}</FooterToolbar> }}
           onFinish={handleSubmit}
+          onValuesChange={handleValuesChange} // Theo dõi sự thay đổi của form
         >
           <ProFormSelect
             name='userId'
@@ -113,7 +152,6 @@ const LayoutCreateOrder = () => {
             showSearch
           />
 
-          {/* Order Status */}
           <ProFormSelect
             name='status'
             label='Trạng thái đơn hàng'
@@ -148,13 +186,14 @@ const LayoutCreateOrder = () => {
               name='quantity'
               label='Số lượng'
               placeholder='Nhập số lượng'
-              rules={[{ required: true, min: 1 }]}
+              rules={[{ required: true, message: 'Vui lòng nhập số lượng', type: 'number', min: 1 }]}
             />
             <ProFormText
               name='totalAmount'
               label='Tổng tiền'
-              placeholder='Nhập số lượng'
-              rules={[{ required: true, min: 1 }]}
+              placeholder='Tổng tiền sẽ được tính tự động'
+              disabled
+              rules={[{ required: true, message: 'Tổng tiền không được để trống' }]}
             />
           </ProFormList>
 

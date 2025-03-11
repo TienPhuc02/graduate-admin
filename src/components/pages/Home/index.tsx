@@ -5,7 +5,7 @@ import { Avatar, Breadcrumb, Button, Dropdown, Layout, Menu, Switch, theme } fro
 import ThemeContext from '../../../providers/ThemeContext'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { breadcrumbMap, items, keyMenuMap } from '@/constants'
-import { logout } from '@/stores/slice/authSlice'
+import { fetchUser, logout } from '@/stores/slice/authSlice'
 import { useAppDispatch, useAppSelector } from '@/hooks/hookStore'
 
 const { Header, Content, Footer, Sider } = Layout
@@ -25,6 +25,9 @@ const LayoutAdminHome = () => {
   useEffect(() => {
     setKeyMenu(keyMenuMap[pathName])
   }, [pathName])
+  useEffect(() => {
+    dispatch(fetchUser())
+  }, [dispatch])
 
   const handleLogout = () => {
     dispatch(logout())

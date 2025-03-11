@@ -1,5 +1,6 @@
 import { getMe, logoutAPI } from '@/services/api.services'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { FaBullseye } from 'react-icons/fa'
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async () => {
   const res = await getMe()
@@ -23,10 +24,6 @@ const authSlice = createSlice({
     error: undefined as string | undefined
   },
   reducers: {
-    // setUser: (state, action) => {
-    //   console.log('🚀 ~ action:', action)
-    //   state.user = action.payload
-    // }
   },
   extraReducers: (builder) => {
     builder

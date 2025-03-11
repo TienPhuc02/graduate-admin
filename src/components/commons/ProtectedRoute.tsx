@@ -9,8 +9,17 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const user = useSelector((state: RootState) => state.auth.user)
+  const isFetching = useSelector((state: RootState) => state.auth.loading)
 
-  if (!user || !user.id) {
+  if (isFetching) {
+    return <p>Loading...</p>
+  }
+
+  if (user === null) {
+    return null
+  }
+
+  if (!user?.id) {
     return <Navigate to='/login' replace />
   }
 
