@@ -5,7 +5,6 @@ import {
   PageContainer,
   ProForm,
   ProFormSelect,
-  ProFormDigit,
   ProFormList,
   ProFormText
 } from '@ant-design/pro-components'
