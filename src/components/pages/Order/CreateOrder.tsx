@@ -150,6 +150,12 @@ const LayoutCreateOrder = () => {
               placeholder='Nhập số lượng'
               rules={[{ required: true, min: 1 }]}
             />
+            <ProFormText
+              name='totalAmount'
+              label='Tổng tiền'
+              placeholder='Nhập số lượng'
+              rules={[{ required: true, min: 1 }]}
+            />
           </ProFormList>
 
           <FooterToolbar>
