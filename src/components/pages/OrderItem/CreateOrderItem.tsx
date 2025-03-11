@@ -17,7 +17,8 @@ const LayoutCreateOrderItem = () => {
   const formRef = useRef<any>(null)
   const [loading, setLoading] = useState(false)
   const [orders, setOrders] = useState<{ label: string; value: string }[]>([])
-  const [courses, setCourses] = useState<{ label: string; value: string }[]>([])
+  const [courses, setCourses] = useState<{ label: string; value: string; price: number }[]>([])
+  const [selectedCoursePrice, setSelectedCoursePrice] = useState<number>(0)
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -44,7 +45,8 @@ const LayoutCreateOrderItem = () => {
         if (res && res.data) {
           const options = res.data.results.map((course: IAdminCourse) => ({
             label: course.title,
-            value: course.id
+            value: course.id,
+            price: course.price
           }))
           setCourses(options)
         }
@@ -54,6 +56,20 @@ const LayoutCreateOrderItem = () => {
     }
     fetchCourses()
   }, [])
+
+  // Khi chọn courseId, cập nhật selectedCoursePrice
+  const handleCourseChange = (courseId: string) => {
+    const course = courses.find((c) => c.value === courseId)
+    if (course) {
+      setSelectedCoursePrice(course.price)
+      formRef.current?.setFieldsValue({ price: course.price }) // Cập nhật giá vào form
+    }
+  }
+
+  // Khi quantity thay đổi, cập nhật price
+  const handleQuantityChange = (quantity: number | null) => {
+    formRef.current?.setFieldsValue({ price: selectedCoursePrice * (quantity || 1) })
+  }
 
   const handleFooterClick = async () => {
     try {
@@ -71,7 +87,7 @@ const LayoutCreateOrderItem = () => {
       if (res && res.data) {
         formRef.current?.resetFields()
         message.success(res.message)
-        navigate('/order-items')
+        navigate('/order-item')
       }
     } catch {
       message.error(EErrorMessage.ERROR_VALIDATE)
@@ -88,7 +104,6 @@ const LayoutCreateOrderItem = () => {
           submitter={{ render: (_, dom) => <FooterToolbar>{dom}</FooterToolbar> }}
           onFinish={handleSubmit}
         >
-          {/* Select Order */}
           <ProFormSelect
             name='orderId'
             label='Mã đơn hàng'
@@ -106,14 +121,9 @@ const LayoutCreateOrderItem = () => {
             options={courses}
             rules={[{ required: true, message: 'Vui lòng chọn mã khóa học' }]}
             showSearch
-          />
-
-          <ProFormDigit
-            name='price'
-            label='Giá'
-            placeholder='Nhập giá'
-            rules={[{ required: true, message: 'Vui lòng nhập giá' }]}
-            fieldProps={{ precision: 2, step: 0.1 }}
+            fieldProps={{
+              onChange: handleCourseChange
+            }}
           />
 
           <ProFormDigit
@@ -121,7 +131,19 @@ const LayoutCreateOrderItem = () => {
             label='Số lượng'
             placeholder='Nhập số lượng'
             rules={[{ type: 'number', min: 1, message: 'Số lượng phải lớn hơn hoặc bằng 1' }]}
-            fieldProps={{ precision: 0, step: 1 }}
+            fieldProps={{
+              precision: 0,
+              step: 1,
+              onChange: handleQuantityChange
+            }}
+          />
+
+          <ProFormDigit
+            name='price'
+            label='Tổng giá'
+            placeholder='Tự động tính toán'
+            disabled
+            fieldProps={{ precision: 2 }}
           />
 
           <FooterToolbar>

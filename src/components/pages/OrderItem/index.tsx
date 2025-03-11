@@ -38,8 +38,8 @@ const LayoutAdminOrderItem = () => {
   const columns: ProColumns<IAdminOrderItem>[] = [
     { dataIndex: 'index', valueType: 'indexBorder', width: 48 },
     { title: 'ID', dataIndex: 'id', valueType: 'text', ellipsis: true, search: false },
-    { title: 'Đơn hàng', dataIndex: 'order.id', valueType: 'text', ellipsis: true, search: true },
-    { title: 'Khóa học', dataIndex: 'course.name', valueType: 'text', ellipsis: true, search: true },
+    { title: 'Đơn hàng', dataIndex: ['order', 'id'], valueType: 'text', ellipsis: true, search: true },
+    { title: 'Khóa học', dataIndex: ['course', 'title'], valueType: 'text', ellipsis: true, search: true },
     { title: 'Giá', dataIndex: 'price', valueType: 'money', ellipsis: true, search: false },
     { title: 'Số lượng', dataIndex: 'quantity', valueType: 'digit', ellipsis: true, search: false },
     { title: 'Ngày tạo', dataIndex: 'createdAt', valueType: 'date', sorter: true, search: false },

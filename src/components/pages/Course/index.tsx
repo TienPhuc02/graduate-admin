@@ -216,13 +216,13 @@ const LayoutAdminCourse = () => {
       dataIndex: 'status',
       ellipsis: true,
       valueEnum: {
-        true: { text: EBadgeStatus.SUCCESS },
-        false: { text: EBadgeStatus.ERROR }
+        ACTIVE: { text: EBadgeStatus.SUCCESS },
+        INACTIVE: { text: EBadgeStatus.ERROR }
       },
       render: (_, record) => (
         <Badge
-          status={record.status ? EBadgeStatus.SUCCESS : EBadgeStatus.ERROR}
-          text={record.status ? 'Hoạt động' : 'Không hoạt động'}
+          status={record.status === 'ACTIVE' ? EBadgeStatus.SUCCESS : EBadgeStatus.ERROR}
+          text={record.status === 'ACTIVE' ? 'Hoạt động' : 'Không hoạt động'}
         />
       ),
       search: true
@@ -250,8 +250,7 @@ const LayoutAdminCourse = () => {
       valueType: 'money',
       ellipsis: true,
       search: false,
-      render: (_, entity) =>
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(parseInt(entity.price))
+      render: (_, entity) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(entity.price)
     },
 
     {

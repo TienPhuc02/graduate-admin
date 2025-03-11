@@ -34,7 +34,7 @@ const DetailCourse = ({ selectedCourse, onClose }: { selectedCourse: IAdminCours
         <ProDescriptions.Item label='Số lượng xem'>{selectedCourse.viewsCourse}</ProDescriptions.Item>
         <ProDescriptions.Item label='Giá'>
           {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-            parseInt(selectedCourse.price)
+            (selectedCourse.price)
           )}
         </ProDescriptions.Item>
         <ProDescriptions.Item label='Yêu cầu'>

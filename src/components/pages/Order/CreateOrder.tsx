@@ -19,9 +19,8 @@ const LayoutCreateOrder = () => {
   const [users, setUsers] = useState<{ label: string; value: string }[]>([])
   const [coupons, setCoupons] = useState<{ label: string; value: string }[]>([])
   const [courses, setCourses] = useState<{ label: string; value: string; price?: number }[]>([])
-  const [coursePrices, setCoursePrices] = useState<{ [key: string]: number }>({}) // Lưu giá khóa học theo courseId
+  const [coursePrices, setCoursePrices] = useState<{ [key: string]: number }>({})
 
-  // Fetch danh sách người dùng
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -40,7 +39,6 @@ const LayoutCreateOrder = () => {
     fetchUsers()
   }, [])
 
-  // Fetch danh sách khóa học và lưu giá
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -49,11 +47,10 @@ const LayoutCreateOrder = () => {
           const courseData = res.data.results.map((course: any) => ({
             label: course.title,
             value: course.id,
-            price: course.price // Giả sử API trả về trường price
+            price: course.price
           }))
           setCourses(courseData)
 
-          // Lưu giá khóa học vào object để dễ tra cứu
           const priceMap = res.data.results.reduce((acc: any, course: any) => {
             acc[course.id] = course.price
             return acc
@@ -67,7 +64,6 @@ const LayoutCreateOrder = () => {
     fetchCourses()
   }, [])
 
-  // Fetch danh sách mã giảm giá
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
@@ -86,25 +82,37 @@ const LayoutCreateOrder = () => {
     fetchCoupons()
   }, [])
 
-  // Hàm xử lý tính toán totalAmount
   const calculateTotalAmount = (courseId: string, quantity: number) => {
     const price = coursePrices[courseId] || 0
     return price * quantity
   }
 
-  // Xử lý khi giá trị form thay đổi
   const handleValuesChange = (changedValues: any, allValues: any) => {
     if (changedValues.orderItems) {
+      let totalOrderAmount = 0
+
       const updatedOrderItems = allValues.orderItems.map((item: any, index: number) => {
         const { courseId, quantity } = item || {}
         if (courseId && quantity) {
-          const totalAmount = calculateTotalAmount(courseId, parseInt(quantity) || 0)
-          return { ...item, totalAmount }
+          const totalAmountItem = calculateTotalAmount(courseId, parseInt(quantity) || 0)
+
+          formRef.current?.setFields([
+            {
+              name: ['orderItems', index, 'totalAmountItem'],
+              value: totalAmountItem
+            }
+          ])
+
+          totalOrderAmount += totalAmountItem
+          return { ...item, totalAmountItem }
         }
         return item
       })
 
-      formRef.current?.setFieldsValue({ orderItems: updatedOrderItems })
+      formRef.current?.setFieldsValue({
+        orderItems: updatedOrderItems,
+        totalAmount: totalOrderAmount
+      })
     }
   }
 
@@ -119,13 +127,19 @@ const LayoutCreateOrder = () => {
 
   const handleSubmit = async (values: any) => {
     console.log('🚀 ~ handleSubmit ~ values:', values)
+
+    const sanitizedValues = {
+      ...values,
+      orderItems: values.orderItems.map(({ totalAmountItem, ...rest }: any) => rest)
+    }
+
     try {
       setLoading(true)
-      const res = await createOrderAPI(values)
+      const res = await createOrderAPI(sanitizedValues)
       if (res && res.data) {
         formRef.current?.resetFields()
         message.success(res.message)
-        navigate('/orders')
+        navigate('/order')
       }
     } catch {
       message.error(EErrorMessage.ERROR_VALIDATE)
@@ -172,6 +186,12 @@ const LayoutCreateOrder = () => {
             options={coupons}
             allowClear
           />
+          <ProFormText
+            name='totalAmount'
+            label='Tổng giá trị đơn hàng'
+            placeholder='Tổng tiền sẽ được tính tự động'
+            disabled
+          />
 
           <ProFormList name='orderItems' label='Sản phẩm' creatorButtonProps={{ position: 'bottom' }}>
             <ProFormSelect
@@ -186,11 +206,15 @@ const LayoutCreateOrder = () => {
               name='quantity'
               label='Số lượng'
               placeholder='Nhập số lượng'
-              rules={[{ required: true, message: 'Vui lòng nhập số lượng', type: 'number', min: 1 }]}
+              rules={[
+                { required: true, message: 'Vui lòng nhập số lượng' },
+                { pattern: /^[0-9]+$/, message: 'Chỉ được nhập số' }
+              ]}
             />
             <ProFormText
-              name='totalAmount'
+              name='totalAmountItem'
               label='Tổng tiền'
+              hidden
               placeholder='Tổng tiền sẽ được tính tự động'
               disabled
               rules={[{ required: true, message: 'Tổng tiền không được để trống' }]}

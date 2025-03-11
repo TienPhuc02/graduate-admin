@@ -87,11 +87,11 @@ declare global {
     category: string
     qna: Qna[]
     requirements: string[]
-    status: boolean
+    status: string
     isDeleted: boolean
     benefits: string[]
     level: string
-    price: string
+    price: number
     thumbnail: string
     viewsCourse: number
     duration: number

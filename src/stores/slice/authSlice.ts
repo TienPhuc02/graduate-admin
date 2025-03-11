@@ -1,14 +1,12 @@
 import { getMe, logoutAPI } from '@/services/api.services'
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { FaBullseye } from 'react-icons/fa'
-
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 export const fetchUser = createAsyncThunk('auth/fetchUser', async () => {
   const res = await getMe()
   console.log('🚀 ~ fetchUser ~ res:', res)
   return res.data
 })
 
-export const logout = createAsyncThunk('auth/logout', async () => {
+export const logoutThunk = createAsyncThunk('auth/logout', async () => {
   const res = await logoutAPI()
   if (res && res.message) {
     localStorage.setItem('access_token', '')
@@ -24,6 +22,16 @@ const authSlice = createSlice({
     error: undefined as string | undefined
   },
   reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload
+    },
+    logout: (state) => {
+      state.user = null
+      localStorage.removeItem('access_token')
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -39,11 +47,11 @@ const authSlice = createSlice({
         state.loading = false
         state.error = action.error.message || 'Có lỗi xảy ra'
       })
-      .addCase(logout.fulfilled, (state) => {
+      .addCase(logoutThunk.fulfilled, (state) => {
         state.user = null
       })
   }
 })
 
-// export const { setUser } = authSlice.actions
+export const { setUser, setLoading, logout } = authSlice.actions
 export default authSlice.reducer

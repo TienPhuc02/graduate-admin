@@ -90,7 +90,7 @@ const LayoutAdminHome = () => {
             />
             {user ? (
               <Dropdown overlay={menu} placement='bottomRight' trigger={['click']}>
-                <Avatar src={user.avatar} icon={<UserOutlined />} style={{ cursor: 'pointer' }} />
+                <Avatar src={user.profilePicture} icon={<UserOutlined />} style={{ cursor: 'pointer' }} />
               </Dropdown>
             ) : (
               <Link to='/login'>
