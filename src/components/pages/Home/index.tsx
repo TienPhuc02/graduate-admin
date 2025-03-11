@@ -3,7 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/
 
 import { Avatar, Breadcrumb, Button, Dropdown, Layout, Menu, Switch, theme } from 'antd'
 import ThemeContext from '../../../providers/ThemeContext'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { breadcrumbMap, items, keyMenuMap } from '@/constants'
 import { fetchUser, logout } from '@/stores/slice/authSlice'
 import { useAppDispatch, useAppSelector } from '@/hooks/hookStore'
@@ -12,6 +12,7 @@ const { Header, Content, Footer, Sider } = Layout
 
 const LayoutAdminHome = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const pathName = location.pathname
   const [collapsed, setCollapsed] = useState(false)
   const [keyMenu, setKeyMenu] = useState<string>('')
@@ -30,6 +31,7 @@ const LayoutAdminHome = () => {
 
   const handleLogout = () => {
     dispatch(logout())
+    navigate('/')
   }
   const menu = (
     <Menu>

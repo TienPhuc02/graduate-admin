@@ -69,7 +69,7 @@ export const updateUserAPI = (idUser: string, file: any, data: IUpdateUserDTO) =
   bodyFormData.append('lastName', data.lastName)
   bodyFormData.append('address', data.address)
   bodyFormData.append('phoneNumber', data.phoneNumber)
-  bodyFormData.append('profilePicture', file)
+  bodyFormData.append('profilePicture', file ?? data.profilePicture)
   bodyFormData.append('role', data.role)
   return axios<IBackendRes<ICustomResponse<IAdminUser>>>({
     method: 'put',

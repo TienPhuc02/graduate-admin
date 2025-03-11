@@ -1,60 +1,41 @@
-import { DrawerForm, ProForm, ProFormDatePicker, ProFormText } from '@ant-design/pro-components'
-import { Form, Image } from 'antd'
-import { useEffect } from 'react'
+import { Drawer, Descriptions, Image } from 'antd'
+import dayjs from 'dayjs'
 
 const DetailUser = ({ selectedUser, onClose }: { selectedUser: IAdminUser | null; onClose: () => void }) => {
-  const [form] = Form.useForm()
-
-  useEffect(() => {
-    if (selectedUser) {
-      form.setFieldsValue(selectedUser)
-    }
-  }, [selectedUser, form])
-
   return (
-    <DrawerForm
-      title='Chi tiết người dùng'
-      open={!!selectedUser}
-      onOpenChange={(visible) => {
-        if (!visible) {
-          onClose()
-        }
-      }}
-      form={form}
-      autoFocusFirstInput
-      drawerProps={{
-        destroyOnClose: true
-      }}
-      submitter={false}
-      width={500}
-    >
-      <ProForm.Group>
-        <ProFormText disabled name='firstName' label='Tên Họ' />
-        <ProFormText disabled name='lastName' label='Tên' />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText disabled name='email' label='Email' />
-        <ProFormText disabled name='phoneNumber' label='Số điện thoại' />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText disabled name='address' label='Địa chỉ' />
-        <ProFormText disabled name='role' label='Vai trò' />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText disabled name='isVerified' label='Xác minh' />
-        <ProFormText disabled name='isDeleted' label='Đã xóa' />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormDatePicker disabled name='createdAt' label='Ngày tạo' />
-        <ProFormDatePicker disabled name='updatedAt' label='Ngày cập nhật' />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormDatePicker disabled name='deletedAt' label='Ngày xóa' />
-      </ProForm.Group>
-      <ProForm.Group>
-        <Image aria-label='Ảnh đại diện' width={200} src={selectedUser?.profilePicture} />
-      </ProForm.Group>
-    </DrawerForm>
+    <Drawer title='Chi tiết người dùng' open={!!selectedUser} onClose={onClose} destroyOnClose width={800}>
+      {selectedUser && (
+        <Descriptions column={2} bordered size='middle'>
+          <Descriptions.Item label='Tên Họ'>{selectedUser.firstName}</Descriptions.Item>
+          <Descriptions.Item label='Tên'>{selectedUser.lastName}</Descriptions.Item>
+          <Descriptions.Item label='Email' span={2}>
+            {selectedUser.email}
+          </Descriptions.Item>
+          <Descriptions.Item label='Số điện thoại'>{selectedUser.phoneNumber}</Descriptions.Item>
+          <Descriptions.Item label='Địa chỉ'>{selectedUser.address}</Descriptions.Item>
+          <Descriptions.Item label='Vai trò'>{selectedUser.role}</Descriptions.Item>
+          <Descriptions.Item label='Xác minh'>
+            {selectedUser.isVerified ? '✔ Đã xác minh' : '❌ Chưa xác minh'}
+          </Descriptions.Item>
+          <Descriptions.Item label='Đã xóa'>{selectedUser.isDeleted ? '✔ Đã xóa' : '❌ Chưa xóa'}</Descriptions.Item>
+          <Descriptions.Item label='Ngày tạo'>
+            {dayjs(selectedUser.createdAt).format('DD/MM/YYYY HH:mm')}
+          </Descriptions.Item>
+          <Descriptions.Item label='Ngày cập nhật'>
+            {dayjs(selectedUser.updatedAt).format('DD/MM/YYYY HH:mm')}
+          </Descriptions.Item>
+          {selectedUser.deletedAt && (
+            <Descriptions.Item label='Ngày xóa' span={2}>
+              {dayjs(selectedUser.deletedAt).format('DD/MM/YYYY HH:mm')}
+            </Descriptions.Item>
+          )}
+          <Descriptions.Item label='Ảnh đại diện' span={2}>
+            <Image width={200} src={selectedUser.profilePicture?.replace(/^http:\/\//i, 'https://')} />
+          </Descriptions.Item>
+        </Descriptions>
+      )}
+    </Drawer>
   )
 }
+
 export default DetailUser

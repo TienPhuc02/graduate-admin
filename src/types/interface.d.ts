@@ -52,12 +52,12 @@ declare global {
     isVerified: boolean
     profilePicture?: string
     resetPasswordToken?: string
-    resetPasswordExpires?: Date
+    resetPasswordExpires?: string
     socialProvider?: ESocialType
     isDeleted: boolean
-    deletedAt?: Date
-    createdAt?: Date
-    updatedAt?: Date
+    deletedAt?: string
+    createdAt?: string
+    updatedAt?: string
   }
   export interface ICreateUserDTO {
     role: ETypeUser

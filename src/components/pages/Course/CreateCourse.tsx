@@ -7,8 +7,7 @@ import {
   ProForm,
   ProFormText,
   ProFormSelect,
-  ProFormList,
-  ProFormDigit
+  ProFormList
 } from '@ant-design/pro-components'
 import { Button, Card, Upload, Modal, message, Image } from 'antd'
 import { useEffect, useRef, useState } from 'react'
@@ -53,7 +52,7 @@ const LayoutCreateCourse = () => {
   }
 
   const handleSubmit = async (values: ICreateCourseDTO) => {
-    console.log("🚀 ~ handleSubmit ~ values:", values)
+    console.log('🚀 ~ handleSubmit ~ values:', values)
     try {
       if (fileList.length > 0) {
         const file = fileList[0].originFileObj
@@ -138,45 +137,43 @@ const LayoutCreateCourse = () => {
             placeholder='Chọn cấp độ'
             rules={[{ required: true, message: 'Vui lòng chọn cấp độ' }]}
           />
-          <ProFormDigit
+          <ProFormText
             name='price'
             label='Giá'
-            min={0}
             placeholder='Nhập giá khóa học'
             rules={[
               { required: true, message: 'Vui lòng nhập giá khóa học' },
               { pattern: /^[0-9]+$/, message: 'Chỉ được nhập số' }
             ]}
           />
-          <ProFormDigit
+          <ProFormText
             name='viewsCourse'
             label='Số lượng xem'
-            min={0}
             placeholder='Nhập số lượng xem khóa học'
             rules={[
               { required: true, message: 'Vui lòng nhập số lượng xem khóa học' },
               { pattern: /^[0-9]+$/, message: 'Chỉ được nhập số' }
             ]}
           />
-          <ProFormDigit
+          <ProFormText
             name='duration'
             label='Thời lượng'
-            min={0}
             placeholder='Nhập thời lượng khóa học'
             rules={[
               { required: true, message: 'Vui lòng nhập thời lượng khóa học' },
               { pattern: /^[0-9]+$/, message: 'Chỉ được nhập số' }
             ]}
           />
-          <ProFormDigit
+          <ProFormText
             name='rating'
             label='Đánh giá'
             placeholder='Nhập đánh giá khóa học'
             rules={[
               { required: true, message: 'Vui lòng nhập đánh giá khóa học' },
-              { pattern: /^[0-9]+$/, message: 'Chỉ được nhập số' }
+              { pattern: /^[1-5]$/, message: 'Chỉ được nhập số từ 1 đến 5' }
             ]}
           />
+
           <Upload
             name='thumbnail'
             maxCount={1}

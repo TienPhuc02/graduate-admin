@@ -104,10 +104,12 @@ const LayoutUpdateUser = ({ idUser }: TLayoutUserProps) => {
                 uid: '-1',
                 name: 'avatar.png',
                 status: 'done',
-                url: userData.profilePicture
+                url: userData.profilePicture?.replace(/^http:\/\//i, 'https://')
               }
             ])
-            formRef.current?.setFieldsValue({ profilePicture: userData.profilePicture })
+            formRef.current?.setFieldsValue({
+              profilePicture: userData.profilePicture?.replace(/^http:\/\//i, 'https://')
+            })
           }
         } else {
           setError(true)
@@ -122,6 +124,7 @@ const LayoutUpdateUser = ({ idUser }: TLayoutUserProps) => {
   if (error) {
     return <PageNotFound />
   }
+  console.log('🚀 ~ LayoutUpdateUser ~ previewImage:', previewImage)
   return (
     <PageContainer title='Cập nhật người dùng'>
       <Card>
