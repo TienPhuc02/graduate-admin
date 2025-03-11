@@ -6,7 +6,8 @@ import {
   ProForm,
   ProFormSelect,
   ProFormDigit,
-  ProFormList
+  ProFormList,
+  ProFormText
 } from '@ant-design/pro-components'
 import { Button, Card, message } from 'antd'
 import { useEffect, useRef, useState } from 'react'
@@ -144,7 +145,7 @@ const LayoutCreateOrder = () => {
               rules={[{ required: true, message: 'Vui lòng chọn mã khóa học' }]}
               showSearch
             />
-            <ProFormDigit
+            <ProFormText
               name='quantity'
               label='Số lượng'
               placeholder='Nhập số lượng'
