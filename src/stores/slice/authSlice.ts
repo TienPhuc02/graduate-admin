@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async () => {
   const res = await getMe()
+  console.log('🚀 ~ fetchUser ~ res:', res)
   return res.data
 })
 
@@ -21,13 +22,19 @@ const authSlice = createSlice({
     loading: false,
     error: undefined as string | undefined
   },
-  reducers: {},
+  reducers: {
+    // setUser: (state, action) => {
+    //   console.log('🚀 ~ action:', action)
+    //   state.user = action.payload
+    // }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.pending, (state) => {
         state.loading = true
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
+        console.log('🚀 ~ .addCase ~ action:', action)
         state.loading = false
         state.user = action.payload
       })
@@ -41,4 +48,5 @@ const authSlice = createSlice({
   }
 })
 
+// export const { setUser } = authSlice.actions
 export default authSlice.reducer

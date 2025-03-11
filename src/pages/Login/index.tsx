@@ -1,7 +1,9 @@
 import Github from '@/components/commons/icons/IconGithub'
 import Google from '@/components/commons/icons/IconGoogle'
 import IconLogo from '@/components/commons/icons/IconLogo'
+import { useAppDispatch } from '@/hooks/hookStore'
 import { loginAPI } from '@/services/api.services'
+import { fetchUser } from '@/stores/slice/authSlice'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { LoginForm, ProConfigProvider, ProFormCheckbox, ProFormText } from '@ant-design/pro-components'
 import { Space, message, theme } from 'antd'
@@ -10,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 const PageLogin = () => {
   const { token } = theme.useToken()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   return (
     <ProConfigProvider hashed={false}>
       <div style={{ backgroundColor: token.colorBgContainer }}>
@@ -20,6 +23,7 @@ const PageLogin = () => {
 
               if (res && res.data) {
                 message.success('Đăng nhập thành công!')
+                dispatch(fetchUser())
                 navigate('/')
                 localStorage.setItem('access_token', res.data?.accessToken)
               } else {

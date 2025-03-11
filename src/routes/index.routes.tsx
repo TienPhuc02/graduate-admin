@@ -17,10 +17,10 @@ import PageCreateLesson from '@/pages/Lesson/CreateLesson'
 import PageUpdateLesson from '@/pages/Lesson/UpdateLesson'
 import AdminComment from '@/pages/Comment'
 import PageCreateComment from '@/pages/Comment/CreateComment'
+import PageUpdateComment from '@/pages/Comment/UpdateComment'
 import AdminBlog from '@/pages/Blog'
 import PageCreateBlog from '@/pages/Blog/CreateBlog'
 import PageUpdateBlog from '@/pages/Blog/UpdateBlog'
-import PageUpdateComment from '@/pages/Comment/UpdateComment'
 import AdminCoupon from '@/pages/Coupon'
 import PageUpdateCoupon from '@/pages/Coupon/UpdateCoupon'
 import PageCreateCoupon from '@/pages/Coupon/CreateCoupon'
@@ -30,137 +30,242 @@ import PageUpdateOrderItem from '@/pages/OrderItem/UpdateOrderItem'
 import AdminOrder from '@/pages/Order'
 import PageCreateOrder from '@/pages/Order/CreateOrder'
 import PageUpdateOrder from '@/pages/Order/UpdateOrder'
+import ProtectedRoute from '@/components/commons/ProtectedRoute'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <>
-        <PageAdminHome />
-      </>
-    ),
+    element: <PageAdminHome />,
     errorElement: <PageNotFound />,
     children: [
       {
         index: true,
-        element: <AdminDashBoard />
+        element: (
+          <ProtectedRoute>
+            <AdminDashBoard />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'user',
-        element: <AdminUser />
+        element: (
+          <ProtectedRoute>
+            <AdminUser />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'user/create',
-        element: <PageCreateUser />
+        element: (
+          <ProtectedRoute>
+            <PageCreateUser />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'user/update/:id',
-        element: <PageUpdateUser />
+        element: (
+          <ProtectedRoute>
+            <PageUpdateUser />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'course',
-        element: <AdminCourse />
+        element: (
+          <ProtectedRoute>
+            <AdminCourse />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'course/create',
-        element: <PageCreateCourse />
+        element: (
+          <ProtectedRoute>
+            <PageCreateCourse />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'course/update/:id',
-        element: <PageUpdateCourse />
+        element: (
+          <ProtectedRoute>
+            <PageUpdateCourse />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'lecture',
-        element: <AdminLecture />
+        element: (
+          <ProtectedRoute>
+            <AdminLecture />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'lecture/create',
-        element: <PageCreateLecture />
+        element: (
+          <ProtectedRoute>
+            <PageCreateLecture />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'lecture/update/:id',
-        element: <PageUpdateLecture />
+        element: (
+          <ProtectedRoute>
+            <PageUpdateLecture />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'lesson',
-        element: <AdminLesson />
+        element: (
+          <ProtectedRoute>
+            <AdminLesson />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'lesson/create',
-        element: <PageCreateLesson />
+        element: (
+          <ProtectedRoute>
+            <PageCreateLesson />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'lesson/update/:id',
-        element: <PageUpdateLesson />
+        element: (
+          <ProtectedRoute>
+            <PageUpdateLesson />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'comment',
-        element: <AdminComment />
+        element: (
+          <ProtectedRoute>
+            <AdminComment />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'comment/create',
-        element: <PageCreateComment />
+        element: (
+          <ProtectedRoute>
+            <PageCreateComment />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'comment/update/:id',
-        element: <PageUpdateComment />
+        element: (
+          <ProtectedRoute>
+            <PageUpdateComment />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'blog',
-        element: <AdminBlog />
+        element: (
+          <ProtectedRoute>
+            <AdminBlog />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'blog/create',
-        element: <PageCreateBlog />
+        element: (
+          <ProtectedRoute>
+            <PageCreateBlog />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'blog/update/:id',
-        element: <PageUpdateBlog />
+        element: (
+          <ProtectedRoute>
+            <PageUpdateBlog />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'coupon',
-        element: <AdminCoupon />
+        element: (
+          <ProtectedRoute>
+            <AdminCoupon />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'coupon/create',
-        element: <PageCreateCoupon />
+        element: (
+          <ProtectedRoute>
+            <PageCreateCoupon />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'coupon/update/:id',
-        element: <PageUpdateCoupon />
+        element: (
+          <ProtectedRoute>
+            <PageUpdateCoupon />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'order-item',
-        element: <AdminOrderItem />
+        element: (
+          <ProtectedRoute>
+            <AdminOrderItem />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'order-item/create',
-        element: <PageCreateOrderItem />
+        element: (
+          <ProtectedRoute>
+            <PageCreateOrderItem />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'order-item/update/:id',
-        element: <PageUpdateOrderItem />
+        element: (
+          <ProtectedRoute>
+            <PageUpdateOrderItem />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'order',
-        element: <AdminOrder />
+        element: (
+          <ProtectedRoute>
+            <AdminOrder />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'order/create',
-        element: <PageCreateOrder />
+        element: (
+          <ProtectedRoute>
+            <PageCreateOrder />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'order/update/:id',
-        element: <PageUpdateOrder />
+        element: (
+          <ProtectedRoute>
+            <PageUpdateOrder />
+          </ProtectedRoute>
+        )
       }
     ]
   },
   {
     path: '/login',
-    element: (
-      <>
-        <PageLogin />
-      </>
-    )
+    element: <PageLogin />
   }
 ])
