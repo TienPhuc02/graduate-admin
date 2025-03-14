@@ -84,8 +84,7 @@ const LayoutAdminBlog = () => {
       dataIndex: 'content',
       valueType: 'text',
       ellipsis: true,
-      search: false,
-      render: (_, record) => <div dangerouslySetInnerHTML={{ __html: record.content || 'Không có' }} />
+      search: false
     },
     {
       title: (

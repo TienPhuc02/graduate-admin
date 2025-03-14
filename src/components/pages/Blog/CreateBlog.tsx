@@ -125,7 +125,7 @@ const LayoutCreateBlog = () => {
                 menubar: false,
                 plugins: 'lists link image table code help',
                 toolbar:
-                  'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat | help'
+                  'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | image | removeformat | help'
               }}
             />
           </ProFormItem>
