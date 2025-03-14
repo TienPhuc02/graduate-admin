@@ -27,7 +27,7 @@ const LayoutUpdateOrder = ({ idOrder }: { idOrder: string }) => {
       const res = await updateOrderAPI(idOrder, values)
       if (res && res.data) {
         message.success(res.message)
-        navigate('/orders')
+        navigate('/order')
       }
     } catch {
       message.error(EErrorMessage.ERROR_VALIDATE)
