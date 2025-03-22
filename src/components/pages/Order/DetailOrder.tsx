@@ -20,7 +20,7 @@ const DetailOrder = ({ selectedOrder, onClose }: { selectedOrder: IAdminOrder | 
     >
       <ProDescriptions column={2} bordered>
         <ProDescriptions.Item label='ID'>{selectedOrder.id}</ProDescriptions.Item>
-        <ProDescriptions.Item label='Khách hàng'>{selectedOrder.user.name}</ProDescriptions.Item>
+        <ProDescriptions.Item label='Khách hàng'>{selectedOrder.user.email}</ProDescriptions.Item>
         <ProDescriptions.Item label='Email'>{selectedOrder.user.email}</ProDescriptions.Item>
         <ProDescriptions.Item label='Tổng tiền'>{selectedOrder.totalAmount.toLocaleString()} VNĐ</ProDescriptions.Item>
         <ProDescriptions.Item label='Trạng thái'>{selectedOrder.status}</ProDescriptions.Item>

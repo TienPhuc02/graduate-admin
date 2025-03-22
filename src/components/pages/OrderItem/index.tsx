@@ -83,7 +83,7 @@ const LayoutAdminOrderItem = () => {
         request={async (params) => {
           let query = `page=${params.current}&pageSize=${params.pageSize}`
           if (params['order.id']) query += `&orderId=${params['order.id']}`
-          if (params['course.name']) query += `&courseName=${params['course.name']}`
+          // if (params['course.name']) query += `&courseName=${params['course.name']}`
           query += '&sort=-createdAt'
 
           const res = await getOrderItemsAPI(query)

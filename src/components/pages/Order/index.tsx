@@ -64,11 +64,7 @@ const LayoutAdminOrder = () => {
       ),
       dataIndex: 'user',
       valueType: 'text',
-      render: (_, record) => (
-        <span>
-          {record.user.name} ({record.user.email})
-        </span>
-      ),
+      render: (_, record) => <span>{record?.user?.email}</span>,
       search: false
     },
     {
